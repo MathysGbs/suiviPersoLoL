@@ -179,11 +179,13 @@ const rankCache = {};
 
 async function fetchRankForSummoner(summonerId) {
     if (rankCache[summonerId] !== undefined) return rankCache[summonerId];
+    
     try {
         const r = await axios.get(
             `https://${REGION_PLATFORM}.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerId}`,
             { headers: { 'X-Riot-Token': RIOT_API_KEY } }
         );
+        
         const soloQ = r.data.find(e => e.queueType === 'RANKED_SOLO_5x5');
         if (!soloQ) {
             rankCache[summonerId] = { tier: null, division: null, score: -1, label: 'Non classé' };
@@ -197,22 +199,22 @@ async function fetchRankForSummoner(summonerId) {
             };
         }
     } catch (e) {
+        // Si l'API nous bloque (Rate Limit), on met en pause et on réessaie
+        if (e.response && e.response.status === 429) {
+            // Riot fournit un header "Retry-After" indiquant le temps d'attente requis en secondes.
+            const retryAfter = e.response.headers['retry-after'] 
+                ? parseInt(e.response.headers['retry-after']) * 1000 
+                : 10000; // 10 secondes par défaut
+            
+            console.log(`\n      [!] Limite API (Rangs) atteinte. Attente de ${retryAfter / 1000}s...`);
+            await sleep(retryAfter + 500); // Marge de sécurité
+            return fetchRankForSummoner(summonerId); // Appel récursif après l'attente
+        }
+        
+        // Pour toute autre erreur (ex: 404 joueur introuvable), on le marque Non classé
         rankCache[summonerId] = { tier: null, division: null, score: -1, label: 'Non classé' };
     }
     return rankCache[summonerId];
-}
-
-async function getTeamRankStats(participants) {
-    const ranks = [];
-    for (const p of participants) {
-        if (!p.summonerId) continue;
-        await sleep(300); // petit délai pour éviter rate limit
-        const r = await fetchRankForSummoner(p.summonerId);
-        if (r.score >= 0) ranks.push(r.score);
-    }
-    if (!ranks.length) return { avgScore: -1, avgLabel: 'Non classé' };
-    const avg = ranks.reduce((s, v) => s + v, 0) / ranks.length;
-    return { avgScore: parseFloat(avg.toFixed(2)), avgLabel: scoreToLabel(Math.round(avg)) };
 }
 
 // ============================================================
