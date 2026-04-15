@@ -14,5 +14,13 @@
     "axios": "^1.15.0",
     "dotenv": "^17.4.2",
     "exceljs": "^4.4.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MathysGbs/suiviPersoLoL.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MathysGbs/suiviPersoLoL/issues"
+  },
+  "homepage": "https://github.com/MathysGbs/suiviPersoLoL#readme"
 }

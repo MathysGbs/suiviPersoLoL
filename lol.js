@@ -16,7 +16,7 @@ const DUO_TAG          = 'EUW';
 
 const EXCEL_FILENAME   = 'Suivi_Comportemental_Challenger.xlsx';
 const JSON_FILENAME    = 'historique_matches.json';
-const MATCHES_TO_FETCH = 50;
+const MATCHES_TO_FETCH = 200;
 const QUEUE_FILTER     = 420;   // Ranked Solo/Duo uniquement. null = toutes files.
 const API_DELAY_MS     = 1500;
 
@@ -58,7 +58,7 @@ const sleep  = ms  => new Promise(r => setTimeout(r, ms));
 const safeN  = (v, d = 0)   => { const n = parseFloat(v); return isNaN(n) ? d : n; };
 const safeV  = (v, d = '-') => (v !== undefined && v !== null) ? v : d;
 const avgOf  = (arr, k)     => arr.length ? arr.reduce((s, x) => s + safeN(x[k]), 0) / arr.length : 0;
-const winPct = arr           => arr.length ? (arr.filter(g => g.win === 'Victoire').length / arr.length) * 100 : 0;
+const winPct = arr => arr.length ? (arr.filter(g => g.win === 'Victoire').length / arr.length) : 0;
 const rowBg  = idx           => idx % 2 === 0 ? C.rowA : C.rowB;
 
 function pushTo(map, key, value) {
@@ -74,12 +74,31 @@ function bestMultiKill(me) {
     return '-';
 }
 
-function sessionInfo(currentDate, prev) {
-    if (!prev) return { sessionId: 1, gameInSession: 1 };
-    const diffH = (new Date(currentDate) - new Date(prev.rawDate)) / 3_600_000;
-    return diffH < 2
-        ? { sessionId: prev.sessionId,     gameInSession: prev.gameInSession + 1 }
-        : { sessionId: prev.sessionId + 1, gameInSession: 1 };
+function recalculateTimeline(data) {
+    // 1. Tri chronologique absolu (du plus ancien au plus récent)
+    data.sort((a, b) => new Date(a.rawDate) - new Date(b.rawDate));
+
+    // 2. Recalcul des sessions et des compteurs de parties
+    let currentSessionId = 1;
+    let gameInSession = 1;
+
+    for (let i = 0; i < data.length; i++) {
+        if (i > 0) {
+            const prevDate = new Date(data[i - 1].rawDate);
+            const currDate = new Date(data[i].rawDate);
+            const diffH = (currDate - prevDate) / 3_600_000;
+
+            if (diffH < 2) {
+                gameInSession++;
+            } else {
+                currentSessionId++;
+                gameInSession = 1;
+            }
+        }
+        data[i].sessionId = currentSessionId;
+        data[i].gameInSession = gameInSession;
+    }
+    return data;
 }
 
 // ============================================================
@@ -176,13 +195,35 @@ async function getPlayerData(name, tag) {
 }
 
 async function getMatchIds(puuid) {
-    let url = `https://${REGION}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=${MATCHES_TO_FETCH}`;
-    if (QUEUE_FILTER) url += `&queue=${QUEUE_FILTER}`;
-    const r = await axios.get(url, { headers: { 'X-Riot-Token': RIOT_API_KEY } });
-    return r.data;
+    let allIds = [];
+    let start = 0;
+    const limit = 100; // Limite stricte de Riot par appel
+
+    while (allIds.length < MATCHES_TO_FETCH) {
+        // Calcule le nombre restant à récupérer (max 100)
+        const count = Math.min(limit, MATCHES_TO_FETCH - allIds.length);
+        
+        let url = `https://${REGION}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=${start}&count=${count}`;
+        if (QUEUE_FILTER) url += `&queue=${QUEUE_FILTER}`;
+        
+        const r = await axios.get(url, { headers: { 'X-Riot-Token': RIOT_API_KEY } });
+        const ids = r.data;
+        
+        if (ids.length === 0) break; // Fin de l'historique disponible
+        
+        allIds = allIds.concat(ids);
+        start += count;
+        
+        // Pause pour éviter le HTTP 429 (Rate Limit) entre deux requêtes de pagination
+        if (allIds.length < MATCHES_TO_FETCH) {
+            await sleep(API_DELAY_MS);
+        }
+    }
+    return allIds;
 }
 
-async function extractMatchMetrics(matchId, myPuuid, duoPuuid, prev) {
+// Retire le paramètre 'prev'
+async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
     const r = await axios.get(
         `https://${REGION}.api.riotgames.com/lol/match/v5/matches/${matchId}`,
         { headers: { 'X-Riot-Token': RIOT_API_KEY } }
@@ -202,15 +243,15 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid, prev) {
     const dmgShare   = teamDamage === 0 ? 0 : (me.totalDamageDealtToChampions / teamDamage) * 100;
     const totalCS    = (me.totalMinionsKilled || 0) + (me.neutralMinionsKilled || 0);
     const gameDate   = new Date(match.info.gameCreation);
-    const sess       = sessionInfo(gameDate, prev);
 
     return {
         matchId,
         rawDate:             gameDate.toISOString(),
         date:                gameDate.toLocaleDateString('fr-FR'),
         time:                gameDate.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
-        sessionId:           sess.sessionId,
-        gameInSession:       sess.gameInSession,
+        // Ces deux valeurs seront écrasées par recalculateTimeline plus tard
+        sessionId:           0, 
+        gameInSession:       0,
         gameDuration:        parseFloat(minutes.toFixed(1)),
         champion:            me.championName,
         type:                isDuo ? 'Duo' : 'Solo',
@@ -238,7 +279,6 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid, prev) {
         largestKillingSpree: me.largestKillingSpree || 0,
         firstBlood:          me.firstBloodKill ? 'Oui' : 'Non',
         withYuumi:           (isDuo && duo.championName === 'Yuumi') ? 'Oui' : 'Non',
-        // Yuumi dans l'équipe alliée (quel que soit le joueur)
         yuumiAlliee:         myTeam.some(p => p.puuid !== myPuuid && p.championName === 'Yuumi') ? 'Oui' : 'Non',
     };
 }
@@ -352,11 +392,11 @@ function colorResult(cell, win) {
 
 // Coloring Win Rate par seuil
 function colorWR(cell, wr) {
-    cell.numFmt = '0.0"%"';
-    if (wr >= 55) {
+    cell.numFmt = '0.0%'; // Vrai formatage pourcentage Excel
+    if (wr >= 0.55) {     // 0.55 équivaut à 55%
         cell.font = { bold: true, color: { argb: C.winFg  }, size: 10 };
         cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.winBg  } };
-    } else if (wr <= 45) {
+    } else if (wr <= 0.45) { // 0.45 équivaut à 45%
         cell.font = { bold: true, color: { argb: C.lossFg }, size: 10 };
         cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.lossBg } };
     }
@@ -565,7 +605,7 @@ function buildChampionSheet(sheet, data) {
             games:    games.length,
             wins,
             losses:   games.length - wins,
-            winRate:  parseFloat(winPct(games).toFixed(1)),
+            winRate:  parseFloat(winPct(games)),
             kda:      parseFloat(avgOf(games, 'kda').toFixed(2)),
             cs:       parseFloat(avgOf(games, 'csPerMin').toFixed(1)),
             gpm:      Math.round(avgOf(games, 'gpm')),
@@ -689,32 +729,41 @@ function buildTendancesSheet(sheet, data, a) {
     const SPAN = 6;
     let r = 1;
 
-    // Ligne clé/valeur (2 colonnes)
-    function kv(rowNum, label, value, idx) {
+    // Helper interne pour les lignes Clé / Valeur
+    function kv(rowNum, label, value, idx, isPercent = false) {
         const row = sheet.getRow(rowNum);
         const bg  = rowBg(idx);
         const c1  = row.getCell(1);
         const c2  = row.getCell(2);
-        c1.value     = label;
-        c1.font      = { bold: true, size: 10 };
-        c1.fill      = { type: 'pattern', pattern: 'solid', fgColor: { argb: bg } };
-        c1.alignment = { horizontal: 'left', vertical: 'middle' };
-        c2.value     = value;
-        c2.font      = { size: 10 };
-        c2.fill      = { type: 'pattern', pattern: 'solid', fgColor: { argb: bg } };
+
+        c1.value = label;
+        c1.font = { bold: true, size: 10 };
+        c1.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: bg } };
+        
+        c2.value = value;
+        c2.font = { size: 10 };
+        c2.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: bg } };
         c2.alignment = { horizontal: 'center', vertical: 'middle' };
-        row.height   = 20;
+        
+        if (isPercent && typeof value === 'number') {
+            c2.numFmt = '0.0%';
+        }
+        row.height = 20;
     }
 
-    // Ligne tableau multi-colonnes
-    function tRow(rowNum, values, idx) {
+    // Helper interne pour les lignes de tableau
+    function tRow(rowNum, values, idx, percentCols = []) {
         const row = sheet.getRow(rowNum);
         values.forEach((v, i) => {
-            const cell     = row.getCell(i + 1);
-            cell.value     = v;
-            cell.fill      = { type: 'pattern', pattern: 'solid', fgColor: { argb: rowBg(idx) } };
-            cell.font      = { bold: i === 0, size: 10 };
+            const cell = row.getCell(i + 1);
+            cell.value = v;
+            cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: rowBg(idx) } };
+            cell.font = { bold: i === 0, size: 10 };
             cell.alignment = { horizontal: i === 0 ? 'left' : 'center', vertical: 'middle' };
+            
+            if (percentCols.includes(i + 1) && typeof v === 'number') {
+                cell.numFmt = '0.0%';
+            }
         });
         row.height = 20;
     }
@@ -722,55 +771,62 @@ function buildTendancesSheet(sheet, data, a) {
     // ── VUE D'ENSEMBLE ────────────────────────────────────────
     sectionTitle(sheet, r, "Vue d'Ensemble Globale", SPAN, C.hTend); r++;
     [
-        ["Parties totales",      a.overall.total],
-        ["Win Rate global",      a.overall.winRate.toFixed(1) + ' %'],
-        ["KDA moyen",            a.overall.avgKDA.toFixed(2)],
-        ["CS/Min moyen",         a.overall.avgCS.toFixed(1)],
-        ["DPM moyen",            Math.round(a.overall.avgDPM)],
-        ["GPM moyen",            Math.round(a.overall.avgGPM)],
-        ["% DMG Equipe moyen",   a.overall.avgDmgShare.toFixed(1) + ' %'],
-        ["KP % moyen",           a.overall.avgKP.toFixed(1) + ' %'],
-        ["Vision Score moyen",   a.overall.avgVision.toFixed(1)],
-    ].forEach(([label, value], i) => { kv(r, label, value, i); r++; });
+        ["Parties totales",      a.overall.total, false],
+        ["Win Rate global",      a.overall.winRate, true], // ratio 0.XX
+        ["KDA moyen",            a.overall.avgKDA.toFixed(2), false],
+        ["CS/Min moyen",         a.overall.avgCS.toFixed(1), false],
+        ["DPM moyen",            Math.round(a.overall.avgDPM), false],
+        ["GPM moyen",            Math.round(a.overall.avgGPM), false],
+        ["% DMG Equipe moyen",   (a.overall.avgDmgShare).toFixed(1) + ' %', false],
+        ["KP % moyen",           (a.overall.avgKP).toFixed(1) + ' %', false],
+        ["Vision Score moyen",   a.overall.avgVision.toFixed(1), false],
+    ].forEach(([label, value, isPct], i) => { 
+        kv(r, label, value, i, isPct); r++; 
+    });
     r++;
 
     // ── SERIE & TENDANCE ──────────────────────────────────────
     sectionTitle(sheet, r, "Serie Actuelle & Tendance", SPAN, C.hTend); r++;
     const wr10   = winPct(a.recent10);
     const wrGlob = a.overall.winRate;
-    const trend  = wr10 > wrGlob + 2 ? 'En progression' : wr10 < wrGlob - 2 ? 'En regression' : 'Stable';
+    // Seuil de tendance ajusté (2% = 0.02)
+    const trend  = wr10 > wrGlob + 0.02 ? 'En progression' : wr10 < wrGlob - 0.02 ? 'En regression' : 'Stable';
+    
     [
-        ["Serie actuelle",             a.streak.count + ' ' + a.streak.type + ' consecutives'],
-        ["Win Rate (10 dernieres)",    wr10.toFixed(1) + ' %'],
-        ["Win Rate global",            wrGlob.toFixed(1) + ' %'],
-        ["Tendance recente",           trend],
-        ["KDA (10 dernieres)",         avgOf(a.recent10, 'kda').toFixed(2)],
-        ["DPM (10 dernieres)",         Math.round(avgOf(a.recent10, 'dpm'))],
-        ["CS/Min (10 dernieres)",      avgOf(a.recent10, 'csPerMin').toFixed(1)],
-    ].forEach(([label, value], i) => { kv(r, label, value, i); r++; });
+        ["Serie actuelle",          a.streak.count + ' ' + a.streak.type + ' consecutives'],
+        ["Win Rate (10 derniers)",  wr10],
+        ["Win Rate global",         wrGlob],
+        ["Tendance recente",        trend],
+        ["KDA (10 derniers)",       avgOf(a.recent10, 'kda').toFixed(2)],
+        ["DPM (10 derniers)",       Math.round(avgOf(a.recent10, 'dpm'))],
+    ].forEach(([label, value], i) => { 
+        kv(r, label, value, i, label.includes('Win Rate')); r++; 
+    });
     r++;
 
     // ── FATIGUE COGNITIVE ─────────────────────────────────────
     sectionTitle(sheet, r, "Fatigue Cognitive — Performance par Partie en Session", SPAN, C.hTend); r++;
     writeHeaderRow(sheet, r, ['Partie dans Session', 'Nb Parties', 'Win Rate %', 'KDA Moy.', 'CS/Min', 'DPM'], C.subH); r++;
+    
     [1, 2, 3, 4].forEach((gNum, idx) => {
         const games = a.byGameInSession[gNum] || [];
         const wr    = winPct(games);
+        
         tRow(r, [
             gNum < 4 ? ('Partie ' + gNum) : 'Partie 4+',
             games.length,
-            games.length ? wr.toFixed(1) + ' %' : '-',
+            games.length ? wr : '-',
             games.length ? avgOf(games, 'kda').toFixed(2) : '-',
             games.length ? avgOf(games, 'csPerMin').toFixed(1) : '-',
             games.length ? Math.round(avgOf(games, 'dpm')) : '-',
-        ], idx);
-        // Coloring Win Rate fatigue
+        ], idx, [3]);
+
         if (games.length) {
             const wrCell = sheet.getRow(r).getCell(3);
-            if (wr >= 55) {
-                wrCell.font = { bold: true, color: { argb: C.winFg  }, size: 10 };
-                wrCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.winBg  } };
-            } else if (wr <= 45) {
+            if (wr >= 0.55) {
+                wrCell.font = { bold: true, color: { argb: C.winFg }, size: 10 };
+                wrCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.winBg } };
+            } else if (wr <= 0.45) {
                 wrCell.font = { bold: true, color: { argb: C.lossFg }, size: 10 };
                 wrCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.lossBg } };
             }
@@ -782,26 +838,29 @@ function buildTendancesSheet(sheet, data, a) {
     // ── PAR TRANCHE HORAIRE ───────────────────────────────────
     sectionTitle(sheet, r, "Performance par Tranche Horaire", SPAN, C.hTend); r++;
     writeHeaderRow(sheet, r, ['Tranche Horaire', 'Parties', 'Win Rate %', 'KDA Moy.', 'DPM Moy.', 'Diagnostic'], C.subH); r++;
+    
     Object.entries(a.timeSlots).forEach(([slot, games], idx) => {
         const wr   = winPct(games);
         const diag = games.length < 3 ? 'Echantillon faible'
-                   : wr >= 55          ? 'Tranche favorable'
-                   : wr <= 45          ? 'Tranche defavorable'
+                   : wr >= 0.55       ? 'Tranche favorable'
+                   : wr <= 0.45       ? 'Tranche defavorable'
                    :                    'Neutre';
+        
         tRow(r, [
-            slot, games.length,
-            games.length ? wr.toFixed(1) + ' %' : '-',
+            slot, 
+            games.length,
+            games.length ? wr : '-',
             games.length ? avgOf(games, 'kda').toFixed(2) : '-',
             games.length ? Math.round(avgOf(games, 'dpm')) : '-',
             diag,
-        ], idx);
-        // Coloring Win Rate heure
+        ], idx, [3]);
+
         if (games.length) {
             const wrCell = sheet.getRow(r).getCell(3);
-            if (wr >= 55) {
-                wrCell.font = { bold: true, color: { argb: C.winFg  }, size: 10 };
-                wrCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.winBg  } };
-            } else if (wr <= 45) {
+            if (wr >= 0.55) {
+                wrCell.font = { bold: true, color: { argb: C.winFg }, size: 10 };
+                wrCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.winBg } };
+            } else if (wr <= 0.45) {
                 wrCell.font = { bold: true, color: { argb: C.lossFg }, size: 10 };
                 wrCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.lossBg } };
             }
@@ -813,26 +872,32 @@ function buildTendancesSheet(sheet, data, a) {
     // ── INDICATEUR DE TILT ────────────────────────────────────
     sectionTitle(sheet, r, "Indicateur de Tilt — Perf. apres Victoire vs Defaite", SPAN, C.hTend); r++;
     writeHeaderRow(sheet, r, ['Contexte', 'Parties', 'Win Rate %', 'KDA Moy.', 'DPM Moy.', 'Diagnostic'], C.subH); r++;
+    
     const wrW   = winPct(a.afterWin);
     const wrL   = winPct(a.afterLoss);
     const delta = wrW - wrL;
-    const tiltDiag = delta > 10 ? 'Tilt detecte — Stopper apres defaite'
-                   : delta > 5  ? 'Legere regression post-defaite'
-                   :              'Mental stable';
+    
+    // Diagnostic basé sur les ratios (0.10 = 10%)
+    const tiltDiag = delta > 0.10 ? 'Tilt detecte — Stopper apres defaite'
+                   : delta > 0.05 ? 'Legere regression post-defaite'
+                   :                'Mental stable';
+    
     [
-        ['Apres une Victoire', a.afterWin.length,  wrW.toFixed(1) + ' %', avgOf(a.afterWin,  'kda').toFixed(2), Math.round(avgOf(a.afterWin,  'dpm')), ''],
-        ['Apres une Defaite',  a.afterLoss.length, wrL.toFixed(1) + ' %', avgOf(a.afterLoss, 'kda').toFixed(2), Math.round(avgOf(a.afterLoss, 'dpm')), tiltDiag],
+        ['Apres une Victoire', a.afterWin.length,  wrW, avgOf(a.afterWin,  'kda').toFixed(2), Math.round(avgOf(a.afterWin,  'dpm')), ''],
+        ['Apres une Defaite',  a.afterLoss.length, wrL, avgOf(a.afterLoss, 'kda').toFixed(2), Math.round(avgOf(a.afterLoss, 'dpm')), tiltDiag],
     ].forEach((rowData, idx) => {
-        tRow(r, rowData, idx);
+        tRow(r, rowData, idx, [3]);
         const wrCell = sheet.getRow(r).getCell(3);
-        const wrVal  = parseFloat(wrCell.value) || 0;
-        wrCell.numFmt = '0.0"%"';
-        if (wrVal >= 55) {
-            wrCell.font = { bold: true, color: { argb: C.winFg  }, size: 10 };
-            wrCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.winBg  } };
-        } else if (wrVal <= 45) {
-            wrCell.font = { bold: true, color: { argb: C.lossFg }, size: 10 };
-            wrCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.lossBg } };
+        const wrVal  = wrCell.value;
+        
+        if (typeof wrVal === 'number') {
+            if (wrVal >= 0.55) {
+                wrCell.font = { bold: true, color: { argb: C.winFg }, size: 10 };
+                wrCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.winBg } };
+            } else if (wrVal <= 0.45) {
+                wrCell.font = { bold: true, color: { argb: C.lossFg }, size: 10 };
+                wrCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.lossBg } };
+            }
         }
         r++;
     });
@@ -855,38 +920,25 @@ function buildTendancesSheet(sheet, data, a) {
             const rawVal = safeN(rec[key]);
             const val    = dec === 0 ? Math.round(rawVal) : parseFloat(rawVal.toFixed(dec));
 
-            // Cellule 1 : label
             const c1 = rRow.getCell(1);
-            c1.value     = label;
-            c1.font      = { bold: true, size: 10 };
-            c1.fill      = { type: 'pattern', pattern: 'solid', fgColor: { argb: rowBg(idx) } };
-            c1.alignment = { horizontal: 'left', vertical: 'middle' };
+            c1.value = label;
+            c1.font = { bold: true, size: 10 };
+            c1.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: rowBg(idx) } };
 
-            // Cellule 2 : valeur (accent indigo, jamais color: undefined)
             const c2 = rRow.getCell(2);
-            c2.value     = val;
-            c2.font      = { bold: true, size: 10, color: { argb: C.accent } };
-            c2.fill      = { type: 'pattern', pattern: 'solid', fgColor: { argb: rowBg(idx) } };
-            c2.alignment = { horizontal: 'center', vertical: 'middle' };
-            c2.numFmt    = dec === 2 ? '0.00' : dec === 1 ? '0.0' : '0';
+            c2.value = val;
+            c2.font = { bold: true, size: 10, color: { argb: C.accent } };
+            c2.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: rowBg(idx) } };
+            c2.numFmt = dec === 2 ? '0.00' : dec === 1 ? '0.0' : '0';
 
-            // Cellules 3-6 : champion, date, résultat
             [rec.champion, rec.date, rec.win, ''].forEach((v, i) => {
-                const cell     = rRow.getCell(i + 3);
-                cell.value     = v;
-                cell.fill      = { type: 'pattern', pattern: 'solid', fgColor: { argb: rowBg(idx) } };
-                cell.font      = { size: 10 };
+                const cell = rRow.getCell(i + 3);
+                cell.value = v;
+                cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: rowBg(idx) } };
+                cell.font = { size: 10 };
                 cell.alignment = { horizontal: 'center', vertical: 'middle' };
             });
             colorResult(rRow.getCell(5), rec.win);
-        } else {
-            ['Categorie', '-', '-', '-', '-', ''].forEach((v, i) => {
-                const cell = rRow.getCell(i + 1);
-                cell.value = i === 0 ? label : '-';
-                cell.fill  = { type: 'pattern', pattern: 'solid', fgColor: { argb: rowBg(idx) } };
-                cell.font  = { bold: i === 0, size: 10 };
-                cell.alignment = { horizontal: i === 0 ? 'left' : 'center', vertical: 'middle' };
-            });
         }
         r++;
     });
@@ -953,6 +1005,10 @@ async function rebuildExcel(data) {
 
             // Migration des entrées incomplètes (anciennes versions du script)
             const migrated = await migrateOldEntries(data, player.puuid, duo.puuid);
+            
+            // Recalcul de sécurité de la timeline au cas où le JSON aurait été altéré manuellement
+            data = recalculateTimeline(data);
+
             if (migrated > 0) {
                 console.log('   -> Sauvegarde JSON apres migration...');
                 fs.writeFileSync(JSON_FILENAME, JSON.stringify(data, null, 4));
@@ -963,21 +1019,20 @@ async function rebuildExcel(data) {
             return;
         }
 
-        newIds.reverse();
         console.log('-> ' + newIds.length + ' nouvelle(s) partie(s).');
 
         console.log('4. Analyse des nouvelles parties...');
-        let prev = data.length > 0 ? data[data.length - 1] : null;
         let ok = 0, ko = 0;
+        const newMatches = [];
 
         for (let i = 0; i < newIds.length; i++) {
             process.stdout.write('   [' + (i + 1) + '/' + newIds.length + '] ' + newIds[i] + '... ');
             try {
-                const m = await extractMatchMetrics(newIds[i], player.puuid, duo.puuid, prev);
-                data.push(m);
-                prev = m;
+                // L'extraction se fait désormais sans dépendre de la partie précédente
+                const m = await extractMatchMetrics(newIds[i], player.puuid, duo.puuid);
+                newMatches.push(m);
                 ok++;
-                console.log('OK  ' + m.champion + ' — ' + m.win + ' (S' + m.sessionId + ' G' + m.gameInSession + ')');
+                console.log('OK  ' + m.champion + ' — ' + m.win);
             } catch (e) {
                 ko++;
                 console.log('KO  ' + e.message);
@@ -985,11 +1040,18 @@ async function rebuildExcel(data) {
             await sleep(API_DELAY_MS);
         }
 
-        console.log('\n5. Sauvegarde JSON...');
-        fs.writeFileSync(JSON_FILENAME, JSON.stringify(data, null, 4));
-        console.log('   -> ' + data.length + ' parties enregistrees.');
+        console.log('\n5. Consolidation et recalcul chronologique...');
+        // Fusion des anciennes données avec les nouvelles
+        data = data.concat(newMatches);
+        
+        // Retri complet et recalcul des IDs de session/parties pour garantir une timeline parfaite
+        data = recalculateTimeline(data);
 
-        // Migration des entrées encore incomplètes (si besoin)
+        console.log('   -> Sauvegarde JSON...');
+        fs.writeFileSync(JSON_FILENAME, JSON.stringify(data, null, 4));
+        console.log('   -> ' + data.length + ' parties au total enregistrees.');
+
+        // Migration de sécurité finale si des champs manquent encore
         const migrated = await migrateOldEntries(data, player.puuid, duo.puuid);
         if (migrated > 0) {
             fs.writeFileSync(JSON_FILENAME, JSON.stringify(data, null, 4));
