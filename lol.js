@@ -338,6 +338,18 @@ async function getMatchIds(puuid) {
 }
 
 // ============================================================
+// API TIMELINE (Pour l'analyse de lane)
+// ============================================================
+async function getMatchTimeline(matchId) {
+    const r = await axios.get(
+        `https://${REGION}.api.riotgames.com/lol/match/v5/matches/${matchId}/timeline`,
+        { headers: { 'X-Riot-Token': RIOT_API_KEY } }
+    );
+    return r.data;
+}
+
+
+// ============================================================
 // EXTRACTION MÉTRIQUES MATCH (v2 — avec rangs, rôle, pings, ganks)
 // ============================================================
 async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
@@ -380,12 +392,31 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
     // Pings "négatifs" = danger + retreat + enemyMissing (tilt/stress)
     const negativePings     = dangerPings + retreatPings + enemyMissingPings;
 
-    // ── Ganks (jungler) ────────────────────────────────────────
-    const role = me.teamPosition || me.individualPosition || '-';
-    let ganksPerformed = null;
-    if (role === 'JUNGLE') {
-        // Utilise les challenges si dispo, sinon null
-        ganksPerformed = me.challenges?.killsOnLanersEarlyJungleAsJungler ?? null;
+// ── Ganks Subis (Laner - via Timeline) ────────────────────
+    console.log('   -> Analyse de la Timeline (Ganks subis)...');
+    let fatalGanksReceived = 0;
+    try {
+        const timeline = await getMatchTimeline(matchId);
+        // Identification du jungler ennemi
+        const enemyJungler = match.info.participants.find(p => p.teamId !== me.teamId && p.teamPosition === 'JUNGLE');
+        const enemyJunglerId = enemyJungler ? enemyJungler.participantId : null;
+        
+        if (enemyJunglerId) {
+            for (const frame of timeline.info.frames) {
+                if (frame.timestamp > 14 * 60 * 1000) break; // Phase de lane (14 min)
+                for (const event of frame.events) {
+                    if (event.type === 'CHAMPION_KILL' && event.victimId === me.participantId) {
+                        // Le jungler ennemi est-il impliqué (kill ou assist) ?
+                        if (event.killerId === enemyJunglerId || (event.assistingParticipantIds && event.assistingParticipantIds.includes(enemyJunglerId))) {
+                            fatalGanksReceived++;
+                        }
+                    }
+                }
+            }
+        }
+    } catch (e) {
+        console.log('      (Avertissement : Timeline indisponible)');
+        fatalGanksReceived = null;
     }
 
     // ── Rangs ─────────────────────────────────────────────────
@@ -496,7 +527,8 @@ function needsMigration(m) {
         || m.objDpm          == null
         || m.role            == null
         || m.totalPings      == null
-        || m.myRankScore     == null;
+        || m.myRankScore     == null
+        || m.fatalGanksReceived === undefined; // Déclenche la mise à jour
 }
 
 async function migrateOldEntries(data, myPuuid, duoPuuid) {
@@ -791,9 +823,9 @@ function buildRawDataSheet(sheet, data) {
         },
         {
             bg: C.grpGanks,
-            labels: ['Ganks'],
-            keys:   ['ganksPerformed'],
-            widths: [7],
+            labels: ['Ganks Subis (Early)'],
+            keys:   ['fatalGanksReceived'],
+            widths: [16],
         },
         {
             bg: C.grpRank,
@@ -1287,29 +1319,29 @@ function buildTendancesSheet(sheet, data, a) {
     });
     r++;
 
-    // ── WINRATE APRÈS N GANKS (Jungle uniquement) ─────────────
-    const junglerGames = data.filter(m => m.role === 'JUNGLE' && m.ganksPerformed != null);
-    if (junglerGames.length >= 5) {
-        sectionTitle(sheet, r, "Winrate par Nombre de Ganks (Jungle)", SPAN, C.hTend); r++;
-        writeHeaderRow(sheet, r, ['Ganks/Partie', 'Parties', 'Win Rate', 'KDA', 'K/D/A', 'DPM', '', 'Tendance'], C.subH); r++;
+// ── WINRATE SELON LA PRESSION SUBIE (Bottom/Laner) ────────
+    const lanerGames = data.filter(m => m.fatalGanksReceived !== null && m.fatalGanksReceived !== undefined);
+    if (lanerGames.length >= 5) {
+        sectionTitle(sheet, r, "Winrate par Ganks Mortels Subis (Phase de Lane)", SPAN, C.hTend); r++;
+        writeHeaderRow(sheet, r, ['Ganks Subis', 'Parties', 'Win Rate', 'KDA', 'K/D/A', 'DPM', '', 'Tendance'], C.subH); r++;
 
-        // Buckets : 0, 1, 2, 3, 4, 5+
-        const gankBuckets = [0, 1, 2, 3, 4, 5];
+        const gankBuckets = [0, 1, 2, 3]; // On regroupe au-delà de 3
         gankBuckets.forEach((gNum, idx) => {
-            const games = gNum < 5
-                ? junglerGames.filter(m => (m.ganksPerformed || 0) === gNum)
-                : junglerGames.filter(m => (m.ganksPerformed || 0) >= 5);
+            const games = gNum < 3
+                ? lanerGames.filter(m => m.fatalGanksReceived === gNum)
+                : lanerGames.filter(m => m.fatalGanksReceived >= 3);
+            
             if (!games.length) return;
             const wr  = winPct(games);
             tRow(r, [
-                gNum < 5 ? `${gNum} gank(s)` : '5+ ganks',
+                gNum < 3 ? `${gNum} gank(s) mortel(s)` : '3+ ganks mortels',
                 games.length,
                 wr,
                 avgOf(games, 'kda').toFixed(2),
                 `${avgOf(games,'kills').toFixed(1)}/${avgOf(games,'deaths').toFixed(1)}/${avgOf(games,'assists').toFixed(1)}`,
                 Math.round(avgOf(games, 'dpm')),
                 '',
-                wr >= 0.55 ? 'Favorable' : wr <= 0.45 ? 'Defavorable' : 'Neutre',
+                wr >= 0.55 ? 'Excellente resistance' : wr <= 0.45 ? 'Impact critique' : 'Stable',
             ], idx, [3]);
             colorWRCell(r, 3, wr);
             r++;
