@@ -388,7 +388,7 @@ function buildDuoSoloSheet(sheet, data) {
         ['Parties', ...cats.map((c) => c.games.length)],
         ['Victoires', ...cats.map((c) => c.games.filter((g) => g.win === 'Victoire').length)],
         ['Defaites', ...cats.map((c) => c.games.filter((g) => g.win !== 'Victoire').length)],
-        ['Win Rate %', ...cats.map((c) => parseFloat((winPct(c.games) * 100).toFixed(1)))],
+        ['Win Rate %', ...cats.map((c) => parseFloat(winPct(c.games).toFixed(3)))],
         ['KDA Moyen', ...cats.map((c) => parseFloat(avgOf(c.games, 'kda').toFixed(2)))],
         ['K Moyen', ...cats.map((c) => parseFloat(avgOf(c.games, 'kills').toFixed(1)))],
         ['D Moyen', ...cats.map((c) => parseFloat(avgOf(c.games, 'deaths').toFixed(1)))],
@@ -413,14 +413,14 @@ function buildDuoSoloSheet(sheet, data) {
             cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: rowBg(idx) } };
             cell.font = { bold: ci === 0, size: 10 };
             cell.alignment = { horizontal: ci === 0 ? 'left' : 'center', vertical: 'middle' };
-            if (rowData[0] === 'Win Rate %' && typeof val === 'number') cell.numFmt = '0.0"%"';
+            if (rowData[0] === 'Win Rate %' && typeof val === 'number') cell.numFmt = '0.0%';
         });
         shRow.height = 22;
 
         if (rowData[0] === 'Win Rate %') {
             for (let ci = 1; ci <= cats.length; ci++) {
                 const cell = shRow.getCell(ci + 1);
-                colorWR(cell, (parseFloat(cell.value) || 0) / 100);
+                colorWR(cell, parseFloat(cell.value) || 0);
             }
         }
         if (rowData[0] === 'KDA Moyen') {

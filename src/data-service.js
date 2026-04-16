@@ -25,6 +25,81 @@ const {
 } = require('./utils');
 
 const rankCache = {};
+let itemCatalogCache = null;
+
+async function getItemCatalog() {
+    if (itemCatalogCache) return itemCatalogCache;
+
+    const versionsResp = await axios.get('https://ddragon.leagueoflegends.com/api/versions.json');
+    const latest = Array.isArray(versionsResp.data) && versionsResp.data.length ? versionsResp.data[0] : null;
+    if (!latest) throw new Error('Version Data Dragon introuvable');
+
+    const itemResp = await axios.get(`https://ddragon.leagueoflegends.com/cdn/${latest}/data/fr_FR/item.json`);
+    itemCatalogCache = itemResp.data?.data || {};
+    return itemCatalogCache;
+}
+
+function isCoreItemId(itemId, itemCatalog) {
+    if (!itemId) return false;
+    const item = itemCatalog?.[String(itemId)];
+    if (!item) return false;
+
+    const tags = item.tags || [];
+    const totalCost = item.gold?.total || 0;
+    const purchasable = item.gold?.purchasable !== false;
+    const onSummonersRift = item.maps?.['11'] !== false;
+    const isConsumable = !!item.consumed || !!item.consumeOnFull || tags.includes('Consumable') || tags.includes('Trinket');
+    const isStarter = tags.includes('Lane') || tags.includes('Jungle') || tags.includes('GoldPer') || tags.includes('Vision');
+    const buildsIntoOtherItems = Array.isArray(item.into) && item.into.length > 0;
+
+    return purchasable
+        && onSummonersRift
+        && !isConsumable
+        && !isStarter
+        && !buildsIntoOtherItems
+        && totalCost >= 2200;
+}
+
+function computeFirstCoreItemMin(timeline, myPId, itemCatalog) {
+    const candidateCorePurchases = [];
+
+    for (const frame of timeline.info.frames) {
+        const ts = frame.timestamp;
+        for (const event of frame.events || []) {
+            if (event.participantId !== myPId) continue;
+
+            if (event.type === 'ITEM_PURCHASED' && isCoreItemId(event.itemId, itemCatalog)) {
+                candidateCorePurchases.push({ itemId: event.itemId, ts });
+            }
+
+            if (event.type === 'ITEM_UNDO' && event.beforeId) {
+                for (let i = candidateCorePurchases.length - 1; i >= 0; i--) {
+                    if (candidateCorePurchases[i].itemId === event.beforeId) {
+                        candidateCorePurchases.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    if (!candidateCorePurchases.length) return null;
+    return parseFloat((candidateCorePurchases[0].ts / 60_000).toFixed(1));
+}
+
+function hasSuspiciousFirstCore(entry) {
+    return typeof entry.firstCoreItemMin === 'number' && entry.firstCoreItemMin > 0 && entry.firstCoreItemMin < 7;
+}
+
+function needsTimelineMigration(entry) {
+    return entry.fatalGanksReceived === undefined
+        || entry.csDiff10 === undefined
+        || entry.goldDiff10 === undefined
+        || entry.csDiff15 === undefined
+        || entry.goldDiff15 === undefined
+        || entry.firstCoreItemMin === undefined
+        || hasSuspiciousFirstCore(entry);
+}
 
 function loadData() {
     if (!fs.existsSync(JSON_FILENAME)) return [];
@@ -187,6 +262,7 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
     try {
         const timeline = await getMatchTimeline(matchId);
         const myPId = me.participantId;
+        const itemCatalog = await getItemCatalog();
 
         const enemyJungler = enemies.find((p) => p.teamPosition === 'JUNGLE');
         const enemyJunglerId = enemyJungler ? enemyJungler.participantId : null;
@@ -214,15 +290,9 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
                 }
             }
 
-            if (firstCoreItemMin === null) {
-                for (const event of frame.events) {
-                    if (event.type === 'ITEM_PURCHASED' && event.participantId === myPId && ts >= 90_000) {
-                        firstCoreItemMin = parseFloat((ts / 60_000).toFixed(1));
-                        break;
-                    }
-                }
-            }
         }
+
+        firstCoreItemMin = computeFirstCoreItemMin(timeline, myPId, itemCatalog);
 
         function laneStats(frame, pid) {
             const pf = frame?.participantFrames?.[String(pid)];
@@ -409,6 +479,7 @@ function needsMigration(m) {
         || m.dpg === undefined
         || m.dmgRatio === undefined
         || m.firstCoreItemMin === undefined
+        || hasSuspiciousFirstCore(m)
         || m.enemyADC === undefined;
 }
 
@@ -522,10 +593,11 @@ async function migrateOldEntries(data, myPuuid, duoPuuid) {
                 entry.rankDiff = (avgA >= 0 && avgE >= 0) ? parseFloat((avgA - avgE).toFixed(2)) : null;
             }
 
-            if (entry.csDiff10 === undefined) {
+            if (needsTimelineMigration(entry)) {
                 try {
                     const timeline = await getMatchTimeline(entry.matchId);
                     const myPId = me.participantId;
+                    const itemCatalog = await getItemCatalog();
                     const enemies = match.info.participants.filter((p) => p.teamId !== me.teamId);
                     const enemyLaner = enemies.find((p) => p.teamPosition === entry.role);
                     const enemyLanerId = enemyLaner ? enemyLaner.participantId : null;
@@ -555,15 +627,9 @@ async function migrateOldEntries(data, myPuuid, duoPuuid) {
                             }
                         }
 
-                        if (entry.firstCoreItemMin == null) {
-                            for (const event of frame.events) {
-                                if (event.type === 'ITEM_PURCHASED' && event.participantId === myPId && ts >= 90_000) {
-                                    entry.firstCoreItemMin = parseFloat((ts / 60_000).toFixed(1));
-                                    break;
-                                }
-                            }
-                        }
                     }
+
+                    entry.firstCoreItemMin = computeFirstCoreItemMin(timeline, myPId, itemCatalog);
 
                     function laneStats(frame, pid) {
                         const pf = frame?.participantFrames?.[String(pid)];
@@ -595,11 +661,11 @@ async function migrateOldEntries(data, myPuuid, duoPuuid) {
                     entry.goldDiff15 = entry.goldDiff15 ?? null;
                     await sleep(API_DELAY_MS);
                 } catch (e) {
-                    entry.csDiff10 = null;
-                    entry.goldDiff10 = null;
-                    entry.csDiff15 = null;
-                    entry.goldDiff15 = null;
-                    entry.firstCoreItemMin = null;
+                    entry.csDiff10 = entry.csDiff10 ?? null;
+                    entry.goldDiff10 = entry.goldDiff10 ?? null;
+                    entry.csDiff15 = entry.csDiff15 ?? null;
+                    entry.goldDiff15 = entry.goldDiff15 ?? null;
+                    entry.firstCoreItemMin = entry.firstCoreItemMin ?? null;
                 }
             }
 
