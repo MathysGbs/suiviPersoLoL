@@ -376,6 +376,17 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
     const totalCS    = (me.totalMinionsKilled || 0) + (me.neutralMinionsKilled || 0);
     const gameDate   = new Date(match.info.gameCreation);
 
+    // Rôle et métriques d'efficacité
+    const role           = me.teamPosition || me.individualPosition || '-';
+    const ganksPerformed = role === 'JUNGLE'
+        ? (me.challenges?.killsOnLanersEarlyJungleAsJungler ?? null)
+        : null;
+    const dpg            = parseFloat((me.totalDamageDealtToChampions / Math.max(1, me.goldEarned)).toFixed(3));
+    const dmgRatio       = parseFloat((me.totalDamageDealtToChampions / Math.max(1, me.totalDamageTaken)).toFixed(2));
+
+    // ADC adverse (pour tracking matchup)
+    const enemyADC = enemies.find(p => p.teamPosition === 'BOTTOM')?.championName || null;
+
     // ── Pings ─────────────────────────────────────────────────
     const allInPings        = me.allInPings            || 0;
     const basicPings        = me.basicPings            || 0;
@@ -394,36 +405,96 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
     // Pings "négatifs" = danger + retreat + enemyMissing (tilt/stress)
     const negativePings     = dangerPings + retreatPings + enemyMissingPings;
 
-// ── Ganks Subis (Laner - via Timeline) ────────────────────
-    console.log('   -> Analyse de la Timeline (Ganks subis)...');
+// ── Timeline : Ganks subis + CSD/GD + premier objet core ────
+    console.log('   -> Analyse de la Timeline (Ganks, Lane phase, Core item)...');
     let fatalGanksReceived = 0;
+    let csDiff10 = null, goldDiff10 = null;
+    let csDiff15 = null, goldDiff15 = null;
+    let firstCoreItemMin = null;
     try {
         const timeline = await getMatchTimeline(matchId);
-        // Identification du jungler ennemi
-        const enemyJungler = match.info.participants.find(p => p.teamId !== me.teamId && p.teamPosition === 'JUNGLE');
+        const myPId    = me.participantId;
+
+        // ── Jungler ennemi (ganks subis) ──────────────────────
+        const enemyJungler   = enemies.find(p => p.teamPosition === 'JUNGLE');
         const enemyJunglerId = enemyJungler ? enemyJungler.participantId : null;
-        
-        if (enemyJunglerId) {
-            for (const frame of timeline.info.frames) {
-                if (frame.timestamp > 14 * 60 * 1000) break; // Phase de lane (14 min)
+
+        // ── ADC ennemi (diff de lane) ─────────────────────────
+        const enemyLaner   = enemies.find(p => p.teamPosition === me.teamPosition);
+        const enemyLanerId = enemyLaner ? enemyLaner.participantId : null;
+
+        // Snapshots aux frames les plus proches de 10 et 15 min
+        const MS_10 = 10 * 60 * 1000;
+        const MS_15 = 15 * 60 * 1000;
+        let snap10 = null, snap15 = null;
+
+        for (const frame of timeline.info.frames) {
+            const ts = frame.timestamp;
+
+            // Mise à jour des snapshots de lane diff
+            if (ts <= MS_10) snap10 = frame;
+            if (ts <= MS_15) snap15 = frame;
+
+            // Ganks phase de lane (< 14 min)
+            if (ts > 14 * 60 * 1000) { /* on continue pour lire le reste */ }
+            else if (enemyJunglerId) {
                 for (const event of frame.events) {
-                    if (event.type === 'CHAMPION_KILL' && event.victimId === me.participantId) {
-                        // Le jungler ennemi est-il impliqué (kill ou assist) ?
-                        if (event.killerId === enemyJunglerId || (event.assistingParticipantIds && event.assistingParticipantIds.includes(enemyJunglerId))) {
+                    if (event.type === 'CHAMPION_KILL' && event.victimId === myPId) {
+                        if (event.killerId === enemyJunglerId ||
+                            (event.assistingParticipantIds || []).includes(enemyJunglerId)) {
                             fatalGanksReceived++;
                         }
                     }
                 }
             }
+
+            // Premier objet core (premier achat après 90 s, hors starter)
+            if (firstCoreItemMin === null) {
+                for (const event of frame.events) {
+                    if (event.type === 'ITEM_PURCHASED' && event.participantId === myPId
+                        && ts >= 90_000) {
+                        firstCoreItemMin = parseFloat((ts / 60_000).toFixed(1));
+                        break;
+                    }
+                }
+            }
         }
+
+        // Calcul des diffs de lane
+        function laneStats(frame, pid) {
+            const pf = frame?.participantFrames?.[String(pid)];
+            if (!pf) return null;
+            return {
+                cs:   (pf.minionsKilled || 0) + (pf.jungleMinionsKilled || 0),
+                gold: pf.totalGold || 0,
+            };
+        }
+
+        if (snap10 && enemyLanerId) {
+            const me10    = laneStats(snap10, myPId);
+            const enemy10 = laneStats(snap10, enemyLanerId);
+            if (me10 && enemy10) {
+                csDiff10   = me10.cs   - enemy10.cs;
+                goldDiff10 = me10.gold - enemy10.gold;
+            }
+        }
+        if (snap15 && enemyLanerId) {
+            const me15    = laneStats(snap15, myPId);
+            const enemy15 = laneStats(snap15, enemyLanerId);
+            if (me15 && enemy15) {
+                csDiff15   = me15.cs   - enemy15.cs;
+                goldDiff15 = me15.gold - enemy15.gold;
+            }
+        }
+
     } catch (e) {
-        console.log('      (Avertissement : Timeline indisponible)');
+        console.log('      (Avertissement : Timeline indisponible — ' + e.message + ')');
         fatalGanksReceived = null;
     }
 
     // ── Rangs ─────────────────────────────────────────────────
-    // On récupère les summonerId depuis les participants
-    const allySummonerIds  = myTeam.map(p => p.summonerId).filter(Boolean);
+    // On exclut soi-même de l'average alliés pour ne pas biaiser la moyenne
+    const allySummonerIds  = myTeam.filter(p => p.puuid !== myPuuid).map(p => p.summonerId).filter(Boolean);
     const enemySummonerIds = enemies.map(p => p.summonerId).filter(Boolean);
 
     console.log('   -> Récupération rangs alliés...');
@@ -434,7 +505,7 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
         if (rk.score >= 0) allyRanks.push(rk.score);
     }
     const myRankEntry = await fetchRankForSummoner(me.summonerId);
-    // Rang moyen alliés (moi inclus)
+    // Rang moyen alliés (moi EXCLU — 4 coéquipiers uniquement)
     const avgAllyScore = allyRanks.length
         ? parseFloat((allyRanks.reduce((s, v) => s + v, 0) / allyRanks.length).toFixed(2))
         : -1;
@@ -507,6 +578,16 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
         visionClearedPings,
         // Ganks
         ganksPerformed,
+        fatalGanksReceived,
+        // Lane diff (CSD / GD)
+        csDiff10, goldDiff10,
+        csDiff15, goldDiff15,
+        // Matchup
+        enemyADC,
+        // Efficacité
+        dpg,
+        dmgRatio,
+        firstCoreItemMin,
         // Rangs
         myRank:           myRankEntry.label,
         myRankScore:      myRankEntry.score,
@@ -530,7 +611,12 @@ function needsMigration(m) {
         || m.role            == null
         || m.totalPings      == null
         || m.myRankScore     == null
-        || m.fatalGanksReceived === undefined; // Déclenche la mise à jour
+        || m.fatalGanksReceived === undefined
+        || m.csDiff10           === undefined  // Lane diff
+        || m.dpg                === undefined  // Efficacité ressources
+        || m.dmgRatio           === undefined  // Ratio dmg
+        || m.firstCoreItemMin   === undefined  // Premier objet core
+        || m.enemyADC           === undefined; // Matchup
 }
 
 async function migrateOldEntries(data, myPuuid, duoPuuid) {
@@ -602,6 +688,18 @@ async function migrateOldEntries(data, myPuuid, duoPuuid) {
                 ? (me.challenges?.killsOnLanersEarlyJungleAsJungler ?? null)
                 : null;
 
+            // Efficacité ressources (calcul depuis données match)
+            if (entry.dpg === undefined) {
+                entry.dpg      = parseFloat((me.totalDamageDealtToChampions / Math.max(1, me.goldEarned)).toFixed(3));
+                entry.dmgRatio = parseFloat((me.totalDamageDealtToChampions / Math.max(1, me.totalDamageTaken)).toFixed(2));
+            }
+
+            // Matchup ADC adverse
+            if (entry.enemyADC === undefined) {
+                const enemies = match.info.participants.filter(p => p.teamId !== me.teamId);
+                entry.enemyADC = enemies.find(p => p.teamPosition === 'BOTTOM')?.championName || null;
+            }
+
             // Rangs (migration coûteuse — on essaie)
             if (entry.myRankScore == null) {
                 await sleep(350);
@@ -609,10 +707,12 @@ async function migrateOldEntries(data, myPuuid, duoPuuid) {
                 entry.myRank      = myRk.label;
                 entry.myRankScore = myRk.score;
 
-                const enemies    = match.info.participants.filter(p => p.teamId !== me.teamId);
+                // Exclure soi-même du calcul alliés
+                const enemies     = match.info.participants.filter(p => p.teamId !== me.teamId);
+                const allyPlayers = myTeam.filter(p => p.puuid !== myPuuid);
                 const allyScores = [], enemyScores = [];
 
-                for (const p of myTeam) {
+                for (const p of allyPlayers) {
                     if (!p.summonerId) continue;
                     await sleep(300);
                     const rk = await fetchRankForSummoner(p.summonerId);
@@ -627,11 +727,75 @@ async function migrateOldEntries(data, myPuuid, duoPuuid) {
 
                 const avgA = allyScores.length  ? allyScores.reduce((s, v)  => s + v, 0) / allyScores.length  : -1;
                 const avgE = enemyScores.length ? enemyScores.reduce((s, v) => s + v, 0) / enemyScores.length : -1;
-                entry.avgAllyRank      = scoreToLabel(Math.round(avgA));
-                entry.avgAllyRankScore = avgA >= 0 ? parseFloat(avgA.toFixed(2)) : -1;
-                entry.avgEnemyRank     = scoreToLabel(Math.round(avgE));
+                entry.avgAllyRank       = scoreToLabel(Math.round(avgA));
+                entry.avgAllyRankScore  = avgA >= 0 ? parseFloat(avgA.toFixed(2)) : -1;
+                entry.avgEnemyRank      = scoreToLabel(Math.round(avgE));
                 entry.avgEnemyRankScore = avgE >= 0 ? parseFloat(avgE.toFixed(2)) : -1;
-                entry.rankDiff         = (avgA >= 0 && avgE >= 0) ? parseFloat((avgA - avgE).toFixed(2)) : null;
+                entry.rankDiff          = (avgA >= 0 && avgE >= 0) ? parseFloat((avgA - avgE).toFixed(2)) : null;
+            }
+
+            // Timeline : CSD/GD à 10/15 min + premier objet core
+            if (entry.csDiff10 === undefined) {
+                try {
+                    const timeline     = await getMatchTimeline(entry.matchId);
+                    const myPId        = me.participantId;
+                    const enemies      = match.info.participants.filter(p => p.teamId !== me.teamId);
+                    const enemyLaner   = enemies.find(p => p.teamPosition === entry.role);
+                    const enemyLanerId = enemyLaner ? enemyLaner.participantId : null;
+                    const MS_10 = 10 * 60 * 1000, MS_15 = 15 * 60 * 1000;
+                    let snap10 = null, snap15 = null;
+
+                    entry.fatalGanksReceived = entry.fatalGanksReceived ?? 0;
+                    const enemyJungler   = enemies.find(p => p.teamPosition === 'JUNGLE');
+                    const enemyJunglerId = enemyJungler ? enemyJungler.participantId : null;
+
+                    for (const frame of timeline.info.frames) {
+                        const ts = frame.timestamp;
+                        if (ts <= MS_10) snap10 = frame;
+                        if (ts <= MS_15) snap15 = frame;
+
+                        if (ts <= 14 * 60 * 1000 && enemyJunglerId) {
+                            for (const event of frame.events) {
+                                if (event.type === 'CHAMPION_KILL' && event.victimId === myPId &&
+                                    (event.killerId === enemyJunglerId ||
+                                     (event.assistingParticipantIds || []).includes(enemyJunglerId))) {
+                                    entry.fatalGanksReceived++;
+                                }
+                            }
+                        }
+                        if (entry.firstCoreItemMin == null) {
+                            for (const event of frame.events) {
+                                if (event.type === 'ITEM_PURCHASED' && event.participantId === myPId && ts >= 90_000) {
+                                    entry.firstCoreItemMin = parseFloat((ts / 60_000).toFixed(1));
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    function laneStats(frame, pid) {
+                        const pf = frame?.participantFrames?.[String(pid)];
+                        if (!pf) return null;
+                        return { cs: (pf.minionsKilled || 0) + (pf.jungleMinionsKilled || 0), gold: pf.totalGold || 0 };
+                    }
+                    if (snap10 && enemyLanerId) {
+                        const m10 = laneStats(snap10, myPId), e10 = laneStats(snap10, enemyLanerId);
+                        if (m10 && e10) { entry.csDiff10 = m10.cs - e10.cs; entry.goldDiff10 = m10.gold - e10.gold; }
+                    }
+                    if (snap15 && enemyLanerId) {
+                        const m15 = laneStats(snap15, myPId), e15 = laneStats(snap15, enemyLanerId);
+                        if (m15 && e15) { entry.csDiff15 = m15.cs - e15.cs; entry.goldDiff15 = m15.gold - e15.gold; }
+                    }
+                    entry.csDiff10   = entry.csDiff10   ?? null;
+                    entry.goldDiff10 = entry.goldDiff10 ?? null;
+                    entry.csDiff15   = entry.csDiff15   ?? null;
+                    entry.goldDiff15 = entry.goldDiff15 ?? null;
+                    await sleep(API_DELAY_MS);
+                } catch (e) {
+                    entry.csDiff10 = null; entry.goldDiff10 = null;
+                    entry.csDiff15 = null; entry.goldDiff15 = null;
+                    entry.firstCoreItemMin = null;
+                }
             }
 
             ok++;
@@ -801,9 +965,9 @@ function buildRawDataSheet(sheet, data) {
         },
         {
             bg: C.grpCombat,
-            labels: ['KDA','K','D','A','% Mort','KP %','% DMG'],
-            keys:   ['kda','kills','deaths','assists','pctDeadTime','kp','dmgShare'],
-            widths: [7, 5, 5, 5, 8, 8, 8],
+            labels: ['KDA','K','D','A','% Mort','KP %','% DMG','DMG/Gold','Ratio DMG'],
+            keys:   ['kda','kills','deaths','assists','pctDeadTime','kp','dmgShare','dpg','dmgRatio'],
+            widths: [7, 5, 5, 5, 8, 8, 8, 10, 10],
         },
         {
             bg: C.grpFarm,
@@ -825,9 +989,9 @@ function buildRawDataSheet(sheet, data) {
         },
         {
             bg: C.grpGanks,
-            labels: ['Ganks Subis (Early)'],
-            keys:   ['fatalGanksReceived'],
-            widths: [16],
+            labels: ['Ganks Subis (Early)', 'CSD@10', 'GD@10', 'CSD@15', 'GD@15', 'Core Item (min)'],
+            keys:   ['fatalGanksReceived',  'csDiff10','goldDiff10','csDiff15','goldDiff15','firstCoreItemMin'],
+            widths: [16,                     9,         10,          9,         10,           15],
         },
         {
             bg: C.grpRank,
@@ -837,9 +1001,9 @@ function buildRawDataSheet(sheet, data) {
         },
         {
             bg: C.grpDivers,
-            labels: ['Multi-Kill','First Blood','Duo Yuumi','Yuumi Alli.'],
-            keys:   ['bestMultiKill','firstBlood','withYuumi','yuumiAlliee'],
-            widths: [11, 11, 10, 12],
+            labels: ['Multi-Kill','First Blood','Duo Yuumi','Yuumi Alli.','ADC Adverse'],
+            keys:   ['bestMultiKill','firstBlood','withYuumi','yuumiAlliee','enemyADC'],
+            widths: [11, 11, 10, 12, 14],
         },
     ];
 
@@ -892,6 +1056,44 @@ function buildRawDataSheet(sheet, data) {
             row.getCell('rankDiff').numFmt = '+0.0;-0.0;0.0';
             colorRankDiff(row.getCell('rankDiff'), m.rankDiff);
         }
+
+        // DPG / dmgRatio
+        if (typeof m.dpg === 'number') {
+            row.getCell('dpg').numFmt = '0.000';
+            if (m.dpg >= 1.5) {
+                row.getCell('dpg').font = { bold: true, color: { argb: C.winFg }, size: 10 };
+                row.getCell('dpg').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.good } };
+            } else if (m.dpg < 0.9) {
+                row.getCell('dpg').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.bad } };
+            }
+        }
+        if (typeof m.dmgRatio === 'number') {
+            row.getCell('dmgRatio').numFmt = '0.00';
+            if (m.dmgRatio >= 1.5) {
+                row.getCell('dmgRatio').font = { bold: true, color: { argb: C.winFg }, size: 10 };
+                row.getCell('dmgRatio').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.good } };
+            } else if (m.dmgRatio < 0.8) {
+                row.getCell('dmgRatio').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.bad } };
+            }
+        }
+
+        // CSD / GD (vert si positif, rouge si négatif)
+        ['csDiff10','csDiff15'].forEach(key => {
+            const v = m[key];
+            if (typeof v === 'number') {
+                row.getCell(key).numFmt = '+0;-0;0';
+                if (v > 0)       row.getCell(key).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.good } };
+                else if (v < 0)  row.getCell(key).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.bad  } };
+            }
+        });
+        ['goldDiff10','goldDiff15'].forEach(key => {
+            const v = m[key];
+            if (typeof v === 'number') {
+                row.getCell(key).numFmt = '+0;-0;0';
+                if (v > 200)      row.getCell(key).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.good } };
+                else if (v < -200) row.getCell(key).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.bad  } };
+            }
+        });
 
         // Pings négatifs colorés en amber si élevés
         const negP = safeN(m.negativePings, 0);
