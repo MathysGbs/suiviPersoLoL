@@ -566,7 +566,7 @@ function chartRank(data){
       borderColor:C.gold,backgroundColor:grd,borderWidth:2.5,pointRadius:2,fill:true,tension:.3}]},
   options:{responsive:true,maintainAspectRatio:false,
     scales:{x:{...axD(),ticks:{...axD().ticks,maxTicksLimit:10,maxRotation:0}},
-      y:{...axD(),ticks:{callback:v=>scoreToLabel(Math.round(v))}}},
+      y:{...axD(),ticks:{stepSize:1,callback:v=>Number.isInteger(v)?scoreToLabel(v):''}}},
     plugins:{tooltip:{callbacks:{label:ctx=>' '+scoreToLabel(Math.round(ctx.raw))}}},
   }});
 }

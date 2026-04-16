@@ -788,6 +788,7 @@ let ws;
 let isRunning = false;
 let defaultMatchesToFetch = 200;
 let pendingFetchResolver = null;
+const MATCHES_STORAGE_KEY = 'lolTracker.matchesToFetch';
 
 function connectWS() {
     const proto = location.protocol === 'https:' ? 'wss' : 'ws';
@@ -862,10 +863,25 @@ function setDefaultMatchesToFetch(value) {
     const parsed = Number.parseInt(value, 10);
     if (Number.isFinite(parsed) && parsed > 0) {
         defaultMatchesToFetch = parsed;
+        try {
+            localStorage.setItem(MATCHES_STORAGE_KEY, String(parsed));
+        } catch (_) {
+            // Ignore localStorage failures (private mode, blocked storage, etc.)
+        }
         const input = document.getElementById('gamesInput');
         if (input && !input.value) {
             input.value = String(parsed);
         }
+    }
+}
+
+function getStoredMatchesToFetch() {
+    try {
+        const raw = localStorage.getItem(MATCHES_STORAGE_KEY);
+        const parsed = Number.parseInt(raw, 10);
+        return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+    } catch (_) {
+        return null;
     }
 }
 
@@ -1041,7 +1057,10 @@ checkExcelFile();
 fetch('/api/status')
     .then(r => r.json())
     .then(data => {
-        if (data.defaults?.matchesToFetch) {
+        const storedMatches = getStoredMatchesToFetch();
+        if (storedMatches) {
+            setDefaultMatchesToFetch(storedMatches);
+        } else if (data.defaults?.matchesToFetch) {
             setDefaultMatchesToFetch(data.defaults.matchesToFetch);
         }
         if (data.isRunning) {
