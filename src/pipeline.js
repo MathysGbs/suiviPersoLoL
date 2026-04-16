@@ -20,7 +20,7 @@ async function runFetchOnly() {
     console.log(`   -> Duo    : ${duo.gameName}#${duo.tagLine}`);
 
     console.log(`3. Recuperation des IDs (queue: ${QUEUE_FILTER || 'toutes'})...`);
-    const { newIds, newMatches, ok, ko } = await fetchNewMatches(data, player.puuid, duo.puuid);
+    const { newIds, newMatches, ok, ko, stopped } = await fetchNewMatches(data, player.puuid, duo.puuid);
 
     if (newIds.length === 0) {
         console.log('\n-> Aucune nouvelle partie detectee.');
@@ -28,13 +28,18 @@ async function runFetchOnly() {
     }
 
     console.log('\n4. Consolidation et recalcul chronologique...');
-    data = recalculateTimeline(data.concat(newMatches));
-
-    console.log('   -> Sauvegarde JSON...');
-    saveData(data);
+    if (newMatches.length > 0) {
+        data = recalculateTimeline(data.concat(newMatches));
+        console.log('   -> Sauvegarde JSON...');
+        saveData(data);
+    }
     console.log(`   -> ${data.length} parties au total enregistrees.`);
 
-    return { data, added: newIds.length, ok, ko, player, duo };
+    if (stopped) {
+        console.log('\n[!] Le processus a ete interrompu manuellement, mais les donnees ont ete sauvegardees.');
+    }
+
+    return { data, added: newMatches.length, totalFound: newIds.length, ok, ko, stopped, player, duo };
 }
 
 async function runMigrateOnly() {
@@ -88,6 +93,10 @@ async function runAll() {
         console.log('\n[SUCCES] Tableau de bord deja a jour.');
     } else {
         console.log(`\n[SUCCES] ${fetchResult.ok} partie(s) ajoutee(s)${fetchResult.ko ? `, ${fetchResult.ko} ignoree(s)` : ''}${migrated ? `, ${migrated} migree(s)` : ''}.`);
+    }
+    
+    if (fetchResult.stopped) {
+        console.log('         (Processus interrompu avec Ctrl+C)');
     }
 }
 

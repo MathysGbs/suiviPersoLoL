@@ -417,6 +417,23 @@ header {
     color: var(--accent2);
 }
 
+.btn-stop {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 4px;
+    background: transparent;
+    border: 1px solid var(--red);
+    color: var(--red);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-stop:hover {
+    background: var(--red-bg);
+}
+
 #terminal {
     height: 360px;
     overflow-y: auto;
@@ -615,8 +632,9 @@ header {
       <div class="terminal-dots">
         <span class="d1"></span><span class="d2"></span><span class="d3"></span>
       </div>
-      <div class="terminal-title">lol-tracker — output</div>
+      <div class="terminal-title">lol-tracker — output <span id="terminalProgress" style="color:var(--accent2); margin-left:8px;"></span></div>
       <div class="terminal-actions">
+        <button class="btn-stop" id="btnStop" onclick="requestStop()" style="display:none">Stop</button>
         <button class="btn-clear" onclick="clearTerminal()">Effacer</button>
       </div>
     </div>
@@ -671,16 +689,26 @@ function handleMessage(msg) {
             setStatus('running', `${msg.mode.toUpperCase()} en cours…`);
             setCardsDisabled(true);
             setProgressBar(true);
+            document.getElementById('btnStop').style.display = 'inline-flex';
+            document.getElementById('terminalProgress').textContent = '';
+            document.querySelector('.progress-bar-inner').style.width = '0%';
             appendLog(`▶ Mode ${msg.mode.toUpperCase()} démarré`, 'system');
             break;
         case 'log':
             appendLog(msg.message, msg.level === 'error' ? 'error' : detectLevel(msg.message));
+            break;
+        case 'progress':
+            document.getElementById('terminalProgress').textContent = `[${msg.percent}%]`;
+            document.querySelector('.progress-bar-inner').style.width = msg.percent + '%';
             break;
         case 'done':
             isRunning = false;
             setStatus('success', 'Terminé');
             setCardsDisabled(false);
             setProgressBar(false);
+            document.getElementById('btnStop').style.display = 'none';
+            document.getElementById('terminalProgress').textContent = '';
+            document.querySelector('.progress-bar-inner').style.width = '0%';
             appendLog('✓ Terminé avec succès', 'ok');
             if (msg.stats) updateStats(msg.stats);
             break;
@@ -689,8 +717,25 @@ function handleMessage(msg) {
             setStatus('error', 'Erreur');
             setCardsDisabled(false);
             setProgressBar(false);
+            document.getElementById('btnStop').style.display = 'none';
+            document.getElementById('terminalProgress').textContent = '';
+            document.querySelector('.progress-bar-inner').style.width = '0%';
             appendLog('✗ ' + msg.message, 'error');
             break;
+    }
+}
+
+async function requestStop() {
+    try {
+        const res = await fetch('/api/stop', { method: 'POST' });
+        if (!res.ok) {
+            const err = await res.json();
+            appendLog(err.error || 'Erreur inconnue', 'error');
+        } else {
+            appendLog('Arrêt demandé, veuillez patienter...', 'system');
+        }
+    } catch(err) {
+        appendLog('Erreur réseau lors de la demande d\'arrêt.', 'error');
     }
 }
 

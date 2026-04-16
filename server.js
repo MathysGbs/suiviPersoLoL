@@ -7,6 +7,7 @@ const fs        = require('fs');
 const path      = require('path');
 
 const { runAll, runFetchOnly, runMigrateOnly, runExcelOnly } = require('./src/pipeline');
+const { requestStop } = require('./src/data-service');
 const { JSON_FILENAME } = require('./src/config');
 
 // ── Serveur HTTP + WebSocket ───────────────────────────────
@@ -32,6 +33,7 @@ function broadcast(type, data = {}) {
 function patchConsole() {
     const origLog   = console.log;
     const origError = console.error;
+    const origWrite = process.stdout.write;
 
     console.log = (...args) => {
         origLog(...args);
@@ -41,10 +43,27 @@ function patchConsole() {
         origError(...args);
         broadcast('log', { level: 'error', message: args.join(' ') });
     };
+    
+    process.stdout.write = (chunk, encoding, callback) => {
+        origWrite.call(process.stdout, chunk, encoding, callback);
+        const str = String(chunk);
+        
+        // Match progress like `[1/123 - 42%]`
+        const match = str.match(/\[\d+\/\d+\s*-\s*(\d+)%\]/);
+        if (match) {
+            broadcast('progress', { percent: parseInt(match[1], 10) });
+        }
+        
+        // Optionally emit partial updates
+        if (str.trim() && !str.includes('\n') && str.includes('[')) {
+            broadcast('log', { level: 'info', message: str.trim() });
+        }
+    };
 
     return () => {
         console.log   = origLog;
         console.error = origError;
+        process.stdout.write = origWrite;
     };
 }
 
@@ -109,6 +128,14 @@ app.post('/api/run/all',     runMode(runAll,         'all'));
 app.post('/api/run/fetch',   runMode(runFetchOnly,   'fetch'));
 app.post('/api/run/migrate', runMode(runMigrateOnly, 'migrate'));
 app.post('/api/run/excel',   runMode(runExcelOnly,   'excel'));
+
+app.post('/api/stop', (req, res) => {
+    if (!isRunning) {
+        return res.status(400).json({ error: "Aucun processus en cours." });
+    }
+    requestStop();
+    res.json({ ok: true, message: "Arrêt demandé, veuillez patienter..." });
+});
 
 // ── Log WS connect/disconnect ──────────────────────────────
 wss.on('connection', () => {

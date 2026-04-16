@@ -577,7 +577,14 @@ async function migrateOldEntries(data, myPuuid, duoPuuid) {
     return ok;
 }
 
+let programmaticStopRequested = false;
+
+function requestStop() {
+    programmaticStopRequested = true;
+}
+
 async function fetchNewMatches(data, playerPuuid, duoPuuid) {
+    programmaticStopRequested = false; // Reset au lancement
     const allIds = await getMatchIds(playerPuuid);
     const savedIds = new Set(data.map((m) => m.matchId));
     const newIds = allIds.filter((id) => !savedIds.has(id));
@@ -588,15 +595,29 @@ async function fetchNewMatches(data, playerPuuid, duoPuuid) {
             newMatches: [],
             ok: 0,
             ko: 0,
+            stopped: false,
         };
     }
 
     let ok = 0;
     let ko = 0;
+    let stopRequested = false;
     const newMatches = [];
 
+    const onSigint = () => {
+        console.log('\n[!] Interruption (Ctrl+C) détectée. Arrêt du processus après le téléchargement du match en cours...');
+        stopRequested = true;
+    };
+    process.on('SIGINT', onSigint);
+
     for (let i = 0; i < newIds.length; i++) {
-        process.stdout.write(`   [${i + 1}/${newIds.length}] ${newIds[i]}... `);
+        if (stopRequested || programmaticStopRequested) {
+            console.log('\n[!] Arret du fetch. Sauvegarde des donnees recuperees en cours...');
+            break;
+        }
+
+        const progressPercent = Math.round(((i + 1) / newIds.length) * 100);
+        process.stdout.write(`   [${i + 1}/${newIds.length} - ${progressPercent}%] ${newIds[i]}... `);
         try {
             const m = await extractMatchMetrics(newIds[i], playerPuuid, duoPuuid);
             newMatches.push(m);
@@ -609,7 +630,9 @@ async function fetchNewMatches(data, playerPuuid, duoPuuid) {
         await sleep(API_DELAY_MS);
     }
 
-    return { newIds, newMatches, ok, ko };
+    process.removeListener('SIGINT', onSigint);
+
+    return { newIds, newMatches, ok, ko, stopped: stopRequested || programmaticStopRequested };
 }
 
 module.exports = {
@@ -619,4 +642,5 @@ module.exports = {
     fetchNewMatches,
     migrateOldEntries,
     recalculateTimeline,
+    requestStop,
 };
