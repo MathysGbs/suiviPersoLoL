@@ -2,6 +2,8 @@
 
 Outil de tracking personnel pour League of Legends qui récupère automatiquement tes parties ranked via l'API Riot, les stocke en JSON et génère un fichier Excel d'analyse comportementale multi-feuilles.
 
+Utilisable en **interface web** (`server.js`) ou en **ligne de commande** (`lol.js`).
+
 ---
 
 ## 📋 Prérequis
@@ -18,6 +20,8 @@ Outil de tracking personnel pour League of Legends qui récupère automatiquemen
 npm install
 ```
 
+> La commande installe automatiquement toutes les dépendances déclarées dans `package.json`, y compris `express` et `ws` pour l'interface web.
+
 ---
 
 ## 🔑 Configuration — fichier `.env`
@@ -30,7 +34,7 @@ RIOT_API_KEY=RGAPI-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 > **Obtenir une clé API Riot :**
 > Rendez-toi sur [developer.riotgames.com](https://developer.riotgames.com), connecte-toi et génère une clé de développement.
-> ⚠️ Les clés de développement expirent toutes les **24h** — tu devras la renouveler régulièrement.
+> ⚠️ Les clés de développement expirent toutes les **24h** — tu devras la renouveler avant chaque session.
 > Pour un usage permanent, fais une demande de clé de production sur le même portail.
 
 ---
@@ -40,10 +44,10 @@ RIOT_API_KEY=RGAPI-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 Les noms et tags des deux comptes sont définis dans `src/config.js` :
 
 ```js
-const MY_NAME  = 'xxxx';       // Ton Riot ID
+const MY_NAME  = 'xxxxx';       // Ton Riot ID
 const MY_TAG   = 'EUW';         // Ton tag
 
-const DUO_NAME = 'xxxx'; // Le Riot ID de ton duo
+const DUO_NAME = 'xxx'; // Le Riot ID de ton duo
 const DUO_TAG  = 'EUW';         // Le tag de ton duo
 ```
 
@@ -51,7 +55,28 @@ Modifie ces valeurs si tu changes de compte.
 
 ---
 
-## 🚀 Modes d'exécution
+## 🖥️ Interface Web (recommandé)
+
+Lance le serveur web :
+
+```bash
+node server.js
+```
+
+Puis ouvre [http://localhost:3000](http://localhost:3000) dans ton navigateur.
+
+L'interface propose :
+- **4 boutons** pour déclencher chaque mode en un clic
+- **Terminal en temps réel** — les logs s'affichent au fur et à mesure via WebSocket
+- **Stats** — nombre de parties enregistrées et date de la dernière
+- **Indicateur d'état** — idle / en cours / succès / erreur
+- Les boutons se **désactivent automatiquement** pendant qu'un mode tourne pour éviter les conflits
+
+---
+
+## 💻 Ligne de commande
+
+`lol.js` reste entièrement fonctionnel en CLI si tu préfères sans navigateur.
 
 ### `all` — Flux complet *(par défaut)*
 
@@ -61,14 +86,8 @@ node lol.js
 node lol.js all
 ```
 
-Enchaîne dans l'ordre :
-1. Récupération des nouvelles parties via l'API Riot
-2. Migration des anciennes entrées incomplètes
-3. Reconstruction du fichier Excel
-
+Enchaîne dans l'ordre : fetch → migrate → excel.
 **Durée estimée :** 10–20 min pour 200 parties (délais API Riot inclus).
-
----
 
 ### `fetch` — Récupération des parties uniquement
 
@@ -76,11 +95,7 @@ Enchaîne dans l'ordre :
 node lol.js fetch
 ```
 
-Contacte l'API Riot pour télécharger les nouvelles parties depuis la dernière exécution, met à jour le fichier `historique_matches.json`. Ne touche pas à l'Excel.
-
-**Utile quand :** tu veux juste mettre à jour la base de données sans régénérer l'Excel.
-
----
+Contacte l'API Riot, met à jour `historique_matches.json`. Ne touche pas à l'Excel.
 
 ### `migrate` — Migration des entrées incomplètes
 
@@ -88,11 +103,7 @@ Contacte l'API Riot pour télécharger les nouvelles parties depuis la dernière
 node lol.js migrate
 ```
 
-Parcourt le JSON existant et complète les parties qui manquent de champs (rangs, pings, lane diff, ganks subis…). Se produit automatiquement quand le schéma de données a évolué.
-
-**Utile quand :** tu as des parties récupérées avec une ancienne version du programme et tu veux les enrichir avec les nouveaux champs.
-
----
+Complète les anciennes entrées avec les champs manquants (rangs, pings, lane diff, ganks…).
 
 ### `excel` — Reconstruction Excel uniquement
 
@@ -100,9 +111,7 @@ Parcourt le JSON existant et complète les parties qui manquent de champs (rangs
 node lol.js excel
 ```
 
-Relit `historique_matches.json` et régénère intégralement `Suivi_Comportemental_Challenger.xlsx`. Aucun appel API.
-
-**Utile quand :** tu veux modifier la mise en forme ou les analyses sans retoucher à l'API, ou que tu as déjà un JSON à jour.
+Relit le JSON et régénère l'Excel. Aucun appel API — instantané.
 
 ---
 
@@ -120,7 +129,7 @@ Relit `historique_matches.json` et régénère intégralement `Suivi_Comportemen
 Le fichier contient **4 feuilles** :
 
 ### 1. Données Brutes
-Toutes les parties, une par ligne, avec mise en forme conditionnelle par groupes de colonnes colorés :
+Toutes les parties avec mise en forme conditionnelle par groupes colorés :
 
 | Groupe | Colonnes |
 |---|---|
@@ -140,36 +149,60 @@ Statistiques agrégées par champion, triées par nombre de parties jouées.
 Comparaison de toutes les métriques entre tes parties solo, duo, avec/sans Yuumi.
 
 ### 4. Tendances Comportementales
-Analyses avancées :
-- Vue d'ensemble globale et KDA/CS/DPM moyens
-- Série actuelle et tendance récente (10 dernières parties)
+- Vue d'ensemble globale, série actuelle, tendance récente
 - **Fatigue cognitive** : performance par partie dans la session (P1 → P4+)
 - Performance par tranche horaire (Nuit / Matin / Après-midi / Soir)
 - **Indicateur de tilt** : win rate après victoire vs après défaite
-- Analyse des pings selon le résultat
-- Impact des ganks subis sur le win rate
-- Records personnels (meilleur KDA, DPM, CS/Min…)
+- Analyse des pings selon le résultat, impact des ganks, records personnels
 
 ---
 
 ## 🏗️ Architecture du projet
 
 ```
-lol.js                  ← Point d'entrée (dispatch des modes)
+lol.js               ← Point d'entrée CLI (inchangé)
+server.js            ← Point d'entrée interface web (Express + WebSocket)
+public/
+  └── index.html     ← Interface web (HTML/CSS/JS vanilla)
 src/
-  ├── config.js         ← Constantes, couleurs, fonctions de rang
-  ├── utils.js          ← Fonctions utilitaires pures (sleep, avgOf, secToMmSs…)
-  ├── analytics.js      ← Calcul des analyses comportementales
-  ├── data-service.js   ← Appels API Riot, lecture/écriture JSON
-  ├── excel-service.js  ← Construction du fichier Excel
-  └── pipeline.js       ← Orchestration des modes (runAll, runFetch…)
+  ├── config.js      ← Constantes, couleurs, fonctions de rang
+  ├── utils.js       ← Fonctions utilitaires pures
+  ├── analytics.js   ← Calcul des analyses comportementales
+  ├── data-service.js  ← Appels API Riot, lecture/écriture JSON
+  ├── excel-service.js ← Construction du fichier Excel
+  └── pipeline.js    ← Orchestration des modes
+```
+
+---
+
+## 📦 Dépendances à ajouter
+
+Si `express` et `ws` ne sont pas encore dans ton `package.json` :
+
+```bash
+npm install express ws
+```
+
+Vérifie que `package.json` contient bien :
+
+```json
+{
+  "dependencies": {
+    "axios":   "...",
+    "dotenv":  "...",
+    "exceljs": "...",
+    "express": "^4.18.0",
+    "ws":      "^8.0.0"
+  }
+}
 ```
 
 ---
 
 ## ⚠️ Limitations connues
 
-- **Rate limit Riot** : le programme gère automatiquement les erreurs 429 et attend le délai indiqué par l'API avant de réessayer.
-- **Clé dev Riot** : expire toutes les 24h, pense à la renouveler avant chaque session.
-- **Timeline API** : si l'API timeline est indisponible pour un match, les champs `csDiff10/15`, `goldDiff10/15` et `fatalGanksReceived` seront `null` pour cette partie — ce n'est pas bloquant.
-- **Serveur** : le programme est configuré pour **EUW** (`euw1` / `europe`). Pour un autre serveur, modifie `REGION` et `REGION_PLATFORM` dans `src/config.js`.
+- **Rate limit Riot** : géré automatiquement — le programme attend le délai indiqué par l'API (header `Retry-After`) avant de réessayer.
+- **Clé dev Riot** : expire toutes les 24h, renouvelle-la avant chaque session.
+- **Timeline API** : si indisponible pour un match, les champs `csDiff`, `goldDiff` et `fatalGanksReceived` seront `null` — non bloquant.
+- **Serveur** : configuré pour **EUW**. Pour un autre serveur, modifie `REGION` et `REGION_PLATFORM` dans `src/config.js`.
+- **Concurrence** : l'interface web empêche le lancement simultané de deux modes.
