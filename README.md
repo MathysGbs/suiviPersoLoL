@@ -1,158 +1,120 @@
-# 🎮 LoL Suivi Comportemental — Tracker Ranked
+# LoL Suivi Comportemental
 
-Outil de tracking personnel pour League of Legends qui récupère automatiquement tes parties ranked via l'API Riot, les stocke en JSON et génère un fichier Excel d'analyse comportementale multi-feuilles.
+Application personnelle de suivi pour League of Legends. Elle récupère automatiquement les parties ranked via l'API Riot, les stocke dans un fichier JSON local et génère un tableau de bord Excel avec plusieurs feuilles d'analyse. Le projet est utilisable en interface web ou en ligne de commande.
 
-Utilisable en **interface web** (`server.js`) ou en **ligne de commande** (`lol.js`).
+## Prérequis
 
----
+- Node.js 16 ou supérieur
+- Une clé API Riot Games valide
+- Deux comptes à suivre sur le serveur configuré dans le projet
 
-## 📋 Prérequis
-
-- **Node.js** v16 ou supérieur
-- Un compte Riot Games avec un **API Key** (voir ci-dessous)
-- Les deux comptes à tracker doivent exister sur le serveur EUW
-
----
-
-## ⚙️ Installation
+## Installation
 
 ```bash
 npm install
 ```
 
----
+## Configuration
 
-## 🔑 Configuration — fichier `.env`
-
-Crée un fichier `.env` à la racine du projet :
+Créer un fichier `.env` à la racine du projet :
 
 ```env
 RIOT_API_KEY=RGAPI-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
-> **Obtenir une clé API Riot :**
-> [developer.riotgames.com](https://developer.riotgames.com) → connecte-toi → génère une clé de développement.
-> ⚠️ Les clés de développement expirent toutes les **24h**.
+La clé Riot de développement expire toutes les 24h. Il faut donc la renouveler régulièrement.
 
----
+Les pseudos suivis se règlent dans [src/config.js](src/config.js) : `MY_NAME`, `MY_TAG`, `DUO_NAME` et `DUO_TAG`.
 
-## 👤 Paramètres joueurs (`src/config.js`)
+Les valeurs importantes par défaut sont aussi définies dans ce fichier :
 
-```js
-const MY_NAME  = 'xxxxx';
-const MY_TAG   = 'EUW';
-const DUO_NAME = 'xxxx';
-const DUO_TAG  = 'EUW';
-```
+- `REGION = europe`
+- `REGION_PLATFORM = euw1`
+- `QUEUE_FILTER = 420` pour les parties ranked solo/duo
+- `MATCHES_TO_FETCH = 200`
+- `API_DELAY_MS = 1500`
 
----
+## Lancement
 
-## 🖥️ Interface Web (recommandé)
+### Interface web
 
 ```bash
-node server.js
-# → http://localhost:3000
+npm start
 ```
 
-### Page principale `/`
-- 4 boutons pour déclencher chaque mode
-- Terminal live (logs en temps réel via WebSocket)
-- Stats : total parties, date de la dernière
-- Indicateur d'état et verrou anti-concurrence
+Le serveur démarre sur `http://localhost:3000` et expose :
 
-### Dashboard `/dashboard.html`
-Visualisation complète des données avec **10 graphiques** :
+- une page principale de contrôle avec les modes `all`, `fetch`, `migrate` et `excel`
+- un terminal live via WebSocket pour suivre les logs en temps réel
+- des endpoints API pour l'état, les données et l'arrêt du traitement
+- le dashboard analytics sur `/dashboard.html`
 
-| Graphique | Description |
-|---|---|
-| Win Rate glissant | Courbe du WR sur fenêtre de 10 parties + WR global |
-| KDA par partie | Barres colorées victoire/défaite sur les 50 dernières |
-| Progression du rang | Évolution du rank score dans le temps |
-| Top Champions | Win rate + nombre de parties par champion (horizontal) |
-| Distribution des rôles | Donut par rôle joué |
-| Fatigue cognitive | Win rate par position dans la session (P1 → P4+) |
-| Indicateur de Tilt | Comparaison WR/KDA/CS/DPM après victoire vs défaite |
-| Performance horaire | Win rate par tranche (Nuit / Matin / Après-midi / Soir) |
-| CS/Min & GPM | Double axe, évolution sur 50 parties |
-| Solo vs Duo | Donut + win rate par contexte Yuumi |
-
-Et un tableau des **50 dernières parties** avec : champion, rôle, KDA, K/D/A, CS/min, DPM, vision, rang.
-
----
-
-## 💻 Ligne de commande
-
-`lol.js` reste entièrement fonctionnel sans navigateur.
+### Ligne de commande
 
 ```bash
-node lol.js          # Flux complet (fetch + migrate + excel)
-node lol.js fetch    # Récupère les nouvelles parties uniquement
-node lol.js migrate  # Complète les entrées incomplètes
-node lol.js excel    # Régénère l'Excel (sans appel API)
+node lol.js all
+node lol.js fetch
+node lol.js migrate
+node lol.js excel
 ```
 
-Quand tu lances `fetch` ou `all` dans un terminal interactif, le script te demande si tu veux modifier le nombre de games avant de lancer la récupération.
+Scripts npm disponibles :
 
----
-
-## 📂 Fichiers générés
-
-| Fichier | Description |
-|---|---|
-| `historique_matches.json` | Base de données locale |
-| `Suivi_Comportemental_Challenger.xlsx` | Tableau de bord Excel (4 feuilles) |
-
----
-
-## 📊 Contenu du fichier Excel
-
-**4 feuilles :** Données Brutes · Par Champion · Solo vs Duo · Tendances Comportementales
-
-Les Données Brutes incluent 8 groupes colorés : Identité, Combat (KDA/DMG/KP), Farm, Vision, Pings, Ganks/Lane diff, Rang, Divers.
-
-Les Tendances incluent : vue d'ensemble, fatigue cognitive, performance horaire, indicateur de tilt, analyse des pings, impact des ganks, records personnels.
-
----
-
-## 🏗️ Architecture
-
+```bash
+npm run all
+npm run fetch
+npm run migrate
+npm run excel
+npm run legacy
 ```
-lol.js               ← CLI (inchangé)
-server.js            ← Serveur web Express + WebSocket + route /api/data
+
+Quand `all` ou `fetch` est lancé dans un terminal interactif, le script demande si tu veux modifier le nombre de parties à récupérer avant de démarrer.
+
+## Interface web
+
+La page principale sert de panneau de contrôle. Elle affiche l'état du traitement, les statistiques locales et permet de lancer chaque mode sans quitter le navigateur.
+
+Le dashboard sur [public/dashboard.html](public/dashboard.html) propose une vue analytique complète avec 13 graphiques et un tableau détaillé des parties récentes. On y retrouve notamment :
+
+- le win rate glissant
+- le KDA des dernières parties
+- la progression du rang
+- les champions les plus joués
+- la répartition des rôles
+- la fatigue au fil de la session
+- les signaux de tilt et de performance après victoire ou défaite
+- la performance selon l'heure
+- le CS/min et le GPM
+- la répartition solo vs duo
+
+Le tableau de détail permet d'explorer les dernières parties avec les informations clés comme le champion, le rôle, le KDA, le CS/min, le DPM, la vision et le rang.
+
+## Fichiers générés
+
+- [historique_matches.json](historique_matches.json) : base locale des parties
+- [Suivi_Comportemental_Challenger.xlsx](Suivi_Comportemental_Challenger.xlsx) : export Excel généré par le pipeline
+
+## Structure
+
+```text
+lol.js               CLI principale
+server.js            Serveur HTTP + WebSocket
 public/
-  ├── index.html     ← Page de contrôle (4 modes + terminal live)
-  └── dashboard.html ← Dashboard analytics (10 graphiques Chart.js)
+  index.html         Page de contrôle
+  dashboard.html     Dashboard analytics
 src/
-  ├── config.js
-  ├── utils.js
-  ├── analytics.js
-  ├── data-service.js
-  ├── excel-service.js
-  └── pipeline.js
+  config.js          Configuration et constantes
+  utils.js           Utilitaires partagés
+  analytics.js       Calculs d'analyse
+  data-service.js    Lecture, écriture et enrichissement des données
+  excel-service.js   Génération Excel
+  pipeline.js        Orchestration des modes
 ```
 
----
+## Limites connues
 
-## 📦 Dépendances
-
-```bash
-npm install express ws
-```
-
-`package.json` doit contenir : `axios`, `dotenv`, `exceljs`, `express`, `ws`.
-
----
-
-## ⚠️ Limitations
-
-- **Rate limit Riot** : géré automatiquement via le header `Retry-After`.
-- **Clé dev Riot** : expire toutes les 24h.
-- **Timeline API** : si indisponible, `csDiff` / `goldDiff` / `fatalGanksReceived` seront `null`.
-- **Serveur** : configuré pour EUW. Modifie `REGION` et `REGION_PLATFORM` dans `src/config.js` pour un autre serveur.
-- **Concurrence** : un seul mode peut tourner à la fois (verrou côté serveur + désactivation UI).
-
-
-
-
-AJOUTER PROGRESSION
+- La clé Riot doit être valide au moment de l'exécution.
+- Le projet est configuré pour EUW par défaut. Pour changer de serveur, modifier `REGION` et `REGION_PLATFORM` dans [src/config.js](src/config.js).
+- Si la timeline Riot est indisponible, certaines valeurs comme `csDiff` ou `goldDiff` peuvent rester nulles.
+- Un seul mode peut tourner à la fois : le serveur applique un verrou pour éviter les exécutions concurrentes.
 STOP EN COURS
