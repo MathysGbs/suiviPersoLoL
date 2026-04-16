@@ -117,4 +117,11 @@ src/
 - Le projet est configuré pour EUW par défaut. Pour changer de serveur, modifier `REGION` et `REGION_PLATFORM` dans [src/config.js](src/config.js).
 - Si la timeline Riot est indisponible, certaines valeurs comme `csDiff` ou `goldDiff` peuvent rester nulles.
 - Un seul mode peut tourner à la fois : le serveur applique un verrou pour éviter les exécutions concurrentes.
-STOP EN COURS
+
+
+
+Prévision de rang avec wr et mmr
+mettre les LP en plus du rang
+préciser les mutlikills dans le dashboard
+
+
