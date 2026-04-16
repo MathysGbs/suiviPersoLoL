@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>LoL Tracker — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Outfit:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f1eb;
+  --bg2:#ffffff;
+  --bg3:#ede9e0;
+  --navy:#0f1729;
+  --navy2:#1e2d4a;
+  --gold:#c89b3c;
+  --gold2:#f0c060;
+  --blue:#2563eb;
+  --teal:#0d9488;
+  --win:#059669; --win-bg:#d1fae5; --win-text:#065f46;
+  --loss:#e11d48; --loss-bg:#ffe4e6; --loss-text:#9f1239;
+  --warn:#d97706; --warn-bg:#fef3c7; --warn-text:#92400e;
+  --text:#1a1f2e; --text2:#4a5568; --text3:#9aa5b4;
+  --border:#e5e0d5; --border2:#d4cfc4;
+  --shadow:0 2px 12px rgba(15,23,41,.08);
+  --shadow-lg:0 8px 32px rgba(15,23,41,.14);
+  --r:8px; --rl:14px;
+  --font-h:'Syne',sans-serif;
+  --font-b:'Outfit',sans-serif;
+  --font-m:'DM Mono',monospace;
+}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:15px}
+
+/* ── Topnav ── */
+.topnav{background:var(--navy);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:62px;position:sticky;top:0;z-index:50;box-shadow:0 2px 16px rgba(0,0,0,.25)}
+.nav-logo{display:flex;align-items:center;gap:12px}
+.nav-logo-badge{background:linear-gradient(135deg,var(--gold),var(--gold2));width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 0 16px rgba(200,155,60,.4)}
+.nav-logo h1{font-family:var(--font-h);font-size:18px;color:#fff;letter-spacing:.04em}
+.nav-logo span{font-family:var(--font-m);font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.12em;text-transform:uppercase;display:block;margin-top:1px}
+.nav-tabs{display:flex;gap:4px}
+.nav-tab{font-family:var(--font-m);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:7px 16px;border-radius:6px;border:none;cursor:pointer;transition:all .2s;background:transparent;color:rgba(255,255,255,.45)}
+.nav-tab:hover{color:rgba(255,255,255,.8);background:rgba(255,255,255,.08)}
+.nav-tab.active{background:var(--gold);color:var(--navy);font-weight:600}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-back{font-family:var(--font-m);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:6px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);text-decoration:none;transition:all .2s}
+.nav-back:hover{border-color:rgba(255,255,255,.5);color:#fff}
+.btn-refresh{font-family:var(--font-m);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:7px 14px;border-radius:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);cursor:pointer;transition:all .2s}
+.btn-refresh:hover{background:rgba(255,255,255,.18);color:#fff}
+.btn-refresh:disabled{opacity:.35;cursor:not-allowed}
+.last-upd{font-family:var(--font-m);font-size:10px;color:rgba(255,255,255,.3);letter-spacing:.06em}
+
+/* ── Tabs content ── */
+.tab-content{display:none}.tab-content.active{display:block}
+
+/* ── Loading ── */
+.overlay{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-family:var(--font-m);font-size:13px;color:var(--text3);letter-spacing:.08em}
+.spinner{width:38px;height:38px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.overlay.hidden{display:none}
+
+/* ── Wrap ── */
+.wrap{max-width:1340px;margin:0 auto;padding:28px 28px 80px}
+
+/* ── KPI strip ── */
+.kpi-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:28px}
+.kpi{background:var(--bg2);border-radius:var(--rl);padding:18px 20px;box-shadow:var(--shadow);border:1px solid var(--border);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.kpi-accent{position:absolute;top:0;left:0;width:4px;height:100%;border-radius:14px 0 0 14px;background:var(--kc,var(--gold))}
+.kpi-label{font-family:var(--font-m);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);margin-bottom:6px}
+.kpi-val{font-family:var(--font-h);font-size:26px;font-weight:700;line-height:1;color:var(--text)}
+.kpi-sub{font-family:var(--font-m);font-size:10px;color:var(--text3);margin-top:5px}
+.kpi.green .kpi-val{color:var(--win)}
+.kpi.red   .kpi-val{color:var(--loss)}
+
+/* ── Section header ── */
+.sh{display:flex;align-items:center;gap:12px;margin:32px 0 14px}
+.sh h2{font-family:var(--font-h);font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--navy2)}
+.sh::after{content:'';flex:1;height:1px;background:var(--border)}
+.sh-tag{font-family:var(--font-m);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:4px;background:var(--navy);color:var(--gold);font-weight:500}
+
+/* ── Chart cards ── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid31{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+.grid13{display:grid;grid-template-columns:1fr 2fr;gap:16px}
+.card{background:var(--bg2);border-radius:var(--rl);padding:22px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.card-title{font-family:var(--font-m);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.card-title b{color:var(--text2);font-family:var(--font-m);font-size:10px;font-weight:400}
+.chart-box{position:relative;min-height:0}
+.chart-box canvas{width:100%!important}
+
+/* ── Games tab ── */
+.games-toolbar{background:var(--bg2);border-radius:var(--rl);padding:16px 20px;box-shadow:var(--shadow);border:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.search-input{font-family:var(--font-b);font-size:13px;padding:8px 14px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);outline:none;transition:border .2s;min-width:180px}
+.search-input:focus{border-color:var(--blue)}
+.filter-pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{font-family:var(--font-m);font-size:11px;letter-spacing:.06em;padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .2s}
+.pill:hover{border-color:var(--navy);color:var(--navy)}
+.pill.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.pill.win-pill.active{background:var(--win);border-color:var(--win);color:#fff}
+.pill.loss-pill.active{background:var(--loss);border-color:var(--loss);color:#fff}
+.sort-select{font-family:var(--font-m);font-size:11px;padding:6px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--text2);outline:none;cursor:pointer;letter-spacing:.04em;margin-left:auto}
+.games-count{font-family:var(--font-m);font-size:11px;color:var(--text3);white-space:nowrap}
+
+.games-table{background:var(--bg2);border-radius:var(--rl);box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden}
+.gt-head{display:grid;grid-template-columns:90px 36px 110px 60px 72px 90px 70px 70px 60px 80px 50px;gap:0;padding:10px 16px;background:var(--navy);font-family:var(--font-m);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.gt-body{max-height:calc(100vh - 240px);overflow-y:auto}
+.gt-body::-webkit-scrollbar{width:6px}.gt-body::-webkit-scrollbar-track{background:transparent}.gt-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.gt-row{display:grid;grid-template-columns:90px 36px 110px 60px 72px 90px 70px 70px 60px 80px 50px;gap:0;padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;align-items:center;font-size:13px}
+.gt-row:last-child{border-bottom:none}
+.gt-row:hover{background:var(--bg3)}
+.gt-row.win-row{border-left:3px solid var(--win)}
+.gt-row.loss-row{border-left:3px solid var(--loss)}
+.result-badge{display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-m);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;width:28px;height:22px;border-radius:5px}
+.result-badge.v{background:var(--win-bg);color:var(--win-text)}
+.result-badge.d{background:var(--loss-bg);color:var(--loss-text)}
+.champ-name{font-weight:600;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.role-tag{font-family:var(--font-m);font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:4px;background:var(--bg3);color:var(--text2);display:inline-block}
+.kda-cell{font-family:var(--font-m);font-weight:500}
+.kda-cell.good{color:var(--win)}.kda-cell.bad{color:var(--loss)}
+.mono-cell{font-family:var(--font-m);font-size:12px;color:var(--text2)}
+.rank-cell{font-family:var(--font-m);font-size:10px;color:var(--text3)}
+.no-data-row{padding:40px;text-align:center;font-family:var(--font-m);font-size:12px;color:var(--text3);letter-spacing:.08em}
+
+/* ── Detail Panel ── */
+.detail-overlay{position:fixed;inset:0;background:rgba(15,23,41,.45);z-index:100;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(3px)}
+.detail-overlay.open{opacity:1;pointer-events:all}
+.detail-panel{position:fixed;top:0;right:0;width:520px;max-width:95vw;height:100vh;background:var(--bg);box-shadow:-8px 0 48px rgba(15,23,41,.2);z-index:101;transform:translateX(100%);transition:transform .3s cubic-bezier(.16,1,.3,1);overflow-y:auto;display:flex;flex-direction:column}
+.detail-panel.open{transform:translateX(0)}
+.detail-panel::-webkit-scrollbar{width:6px}.detail-panel::-webkit-scrollbar-track{background:transparent}.detail-panel::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+.dp-header{padding:0;position:sticky;top:0;z-index:10;flex-shrink:0}
+.dp-banner{padding:24px 24px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.dp-banner.win-banner{background:linear-gradient(135deg,#064e3b,#065f46)}
+.dp-banner.loss-banner{background:linear-gradient(135deg,#4c0519,#9f1239)}
+.dp-close{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;flex-shrink:0}
+.dp-close:hover{background:rgba(255,255,255,.25)}
+.dp-match-title{flex:1}
+.dp-champ{font-family:var(--font-h);font-size:28px;font-weight:800;color:#fff;line-height:1}
+.dp-meta{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap}
+.dp-result-big{font-family:var(--font-m);font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:5px;font-weight:500}
+.dp-result-big.win{background:rgba(255,255,255,.2);color:#6ee7b7}
+.dp-result-big.loss{background:rgba(255,255,255,.2);color:#fca5a5}
+.dp-meta-item{font-family:var(--font-m);font-size:10px;color:rgba(255,255,255,.55);letter-spacing:.06em}
+.dp-meta-sep{color:rgba(255,255,255,.2)}
+
+.dp-body{padding:20px 24px;flex:1;display:flex;flex-direction:column;gap:20px}
+
+/* KDA big display */
+.kda-big{display:flex;align-items:center;justify-content:center;gap:0;background:var(--bg2);border-radius:var(--rl);padding:20px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.kda-seg{flex:1;text-align:center}
+.kda-seg .kn{font-family:var(--font-h);font-size:36px;font-weight:800;line-height:1}
+.kda-seg .kl{font-family:var(--font-m);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);margin-top:4px}
+.kda-kills .kn{color:var(--win)}
+.kda-deaths .kn{color:var(--loss)}
+.kda-assists .kn{color:var(--blue)}
+.kda-divider{width:1px;height:48px;background:var(--border);flex-shrink:0;margin:0 8px}
+.kda-ratio{text-align:center;padding:0 16px}
+.kda-ratio .kn{font-family:var(--font-h);font-size:28px;font-weight:800;color:var(--navy)}
+.kda-ratio .kl{font-family:var(--font-m);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);margin-top:4px}
+
+/* Stat sections */
+.dp-section{display:flex;flex-direction:column;gap:8px}
+.dp-section-title{font-family:var(--font-m);font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:var(--text3);padding-bottom:6px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.dp-section-title::before{content:'';display:inline-block;width:3px;height:12px;border-radius:2px;background:var(--scolor,var(--gold))}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-grid.cols3{grid-template-columns:1fr 1fr 1fr}
+.stat-box{background:var(--bg2);border-radius:10px;padding:12px 14px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.stat-box .sv{font-family:var(--font-h);font-size:20px;font-weight:700;color:var(--navy);line-height:1}
+.stat-box .sl{font-family:var(--font-m);font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);margin-top:3px}
+.stat-box.highlight-win{background:var(--win-bg);border-color:#a7f3d0}
+.stat-box.highlight-win .sv{color:var(--win-text)}
+.stat-box.highlight-loss{background:var(--loss-bg);border-color:#fecdd3}
+.stat-box.highlight-loss .sv{color:var(--loss-text)}
+.stat-box.highlight-warn{background:var(--warn-bg);border-color:#fde68a}
+.stat-box.highlight-warn .sv{color:var(--warn-text)}
+
+/* Badge row */
+.badge-row{display:flex;gap:8px;flex-wrap:wrap}
+.badge{font-family:var(--font-m);font-size:11px;letter-spacing:.06em;padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg2);color:var(--text2)}
+.badge.active-badge{background:var(--navy);border-color:var(--navy);color:#fff}
+.badge.gold-badge{background:linear-gradient(135deg,#92400e,var(--warn));border:none;color:#fff}
+.badge.win-badge{background:var(--win-bg);border-color:#a7f3d0;color:var(--win-text)}
+.badge.loss-badge{background:var(--loss-bg);border-color:#fecdd3;color:var(--loss-text)}
+
+/* Ping bars */
+.ping-bars{display:flex;flex-direction:column;gap:6px}
+.ping-bar-row{display:flex;align-items:center;gap:10px}
+.ping-bar-label{font-family:var(--font-m);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);width:90px;flex-shrink:0;text-align:right}
+.ping-bar-track{flex:1;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.ping-bar-fill{height:100%;border-radius:4px;background:var(--blue);transition:width .4s}
+.ping-bar-val{font-family:var(--font-m);font-size:10px;color:var(--text2);width:28px;text-align:right;flex-shrink:0}
+
+/* Rank context */
+.rank-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.rank-box{border-radius:10px;padding:12px;border:1px solid var(--border);text-align:center;background:var(--bg2);box-shadow:var(--shadow)}
+.rank-box .rv{font-family:var(--font-h);font-size:14px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank-box .rl2{font-family:var(--font-m);font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3)}
+
+/* lane diff */
+.diff-box .sv{font-family:var(--font-h);font-size:20px;font-weight:700}
+.diff-pos .sv{color:var(--win)}
+.diff-neg .sv{color:var(--loss)}
+.diff-neu .sv{color:var(--text2)}
+
+/* no-data overlay inside card */
+.chart-nodata{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:140px;gap:6px;font-family:var(--font-m);font-size:11px;color:var(--text3);letter-spacing:.08em}
+
+@media(max-width:960px){
+  .kpi-strip{grid-template-columns:repeat(3,1fr)}
+  .grid2,.grid31,.grid13{grid-template-columns:1fr}
+  .gt-head,.gt-row{grid-template-columns:80px 32px 100px 55px 70px 85px 1fr}
+  .gt-row .rank-cell,.gt-row>:nth-child(8),.gt-row>:nth-child(9){display:none}
+  .detail-panel{width:100vw}
+}
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<div class="overlay" id="overlay">
+  <div class="spinner"></div>
+  <div>Chargement…</div>
+</div>
+
+<!-- Detail overlay -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail()"></div>
+<div class="detail-panel" id="detailPanel">
+  <div class="dp-header" id="dpHeader"></div>
+  <div class="dp-body" id="dpBody"></div>
+</div>
+
+<!-- Nav -->
+<nav class="topnav">
+  <div class="nav-logo">
+    <div class="nav-logo-badge">⚔</div>
+    <div>
+      <h1>LoL Tracker</h1>
+      <span>Ranked Analytics</span>
+    </div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('overview')">Vue d'ensemble</button>
+    <button class="nav-tab" onclick="switchTab('games')">Toutes les parties</button>
+  </div>
+  <div class="nav-right">
+    <span class="last-upd" id="lastUpd">—</span>
+    <a href="/" class="nav-back">← Retour</a>
+    <button class="btn-refresh" id="btnRefresh" onclick="loadData()">↺</button>
+  </div>
+</nav>
+
+<!-- ══ OVERVIEW TAB ══ -->
+<div id="tab-overview" class="tab-content active">
+<div class="wrap">
+
+  <div class="kpi-strip">
+    <div class="kpi" style="--kc:var(--navy)"><div class="kpi-accent"></div><div class="kpi-label">Parties</div><div class="kpi-val" id="kTotal">—</div></div>
+    <div class="kpi" id="kWRCard" style="--kc:var(--win)"><div class="kpi-accent"></div><div class="kpi-label">Win Rate</div><div class="kpi-val" id="kWR">—</div><div class="kpi-sub" id="kWRSub"></div></div>
+    <div class="kpi" style="--kc:var(--blue)"><div class="kpi-accent"></div><div class="kpi-label">KDA Moyen</div><div class="kpi-val" id="kKDA">—</div><div class="kpi-sub" id="kKDASub"></div></div>
+    <div class="kpi" style="--kc:var(--teal)"><div class="kpi-accent"></div><div class="kpi-label">CS / Min</div><div class="kpi-val" id="kCS">—</div></div>
+    <div class="kpi" style="--kc:var(--warn)"><div class="kpi-accent"></div><div class="kpi-label">DPM Moyen</div><div class="kpi-val" id="kDPM">—</div></div>
+    <div class="kpi" style="--kc:var(--gold)"><div class="kpi-accent"></div><div class="kpi-label">Rang actuel</div><div class="kpi-val" id="kRank" style="font-size:16px;margin-top:4px">—</div></div>
+  </div>
+
+  <div class="sh"><h2>Évolution</h2><span class="sh-tag" id="trendTag"></span></div>
+  <div class="card" style="height:280px">
+    <div class="card-title">Win Rate glissant (10 parties) <b id="wrGlobal"></b></div>
+    <div class="chart-box" style="height:220px"><canvas id="cWR"></canvas></div>
+  </div>
+
+  <div class="sh"><h2>Performance</h2></div>
+  <div class="grid2">
+    <div class="card" style="height:260px">
+      <div class="card-title">KDA — 50 dernières parties</div>
+      <div class="chart-box" style="height:210px"><canvas id="cKDA"></canvas></div>
+    </div>
+    <div class="card" style="height:260px">
+      <div class="card-title">Progression du rang <b id="rankPer"></b></div>
+      <div class="chart-box" style="height:210px"><canvas id="cRank"></canvas></div>
+    </div>
+  </div>
+
+  <div class="sh"><h2>Champions & Rôles</h2></div>
+  <div class="grid31">
+    <div class="card" style="height:320px">
+      <div class="card-title">Top Champions — Win Rate & Parties jouées</div>
+      <div class="chart-box" style="height:265px"><canvas id="cChamps"></canvas></div>
+    </div>
+    <div class="card" style="height:320px">
+      <div class="card-title">Rôles</div>
+      <div class="chart-box" style="height:265px;display:flex;align-items:center;justify-content:center"><canvas id="cRoles" style="max-height:240px"></canvas></div>
+    </div>
+  </div>
+
+  <div class="sh"><h2>Comportement</h2></div>
+  <div class="grid2">
+    <div class="card" style="height:280px">
+      <div class="card-title">Fatigue — WR par partie dans la session</div>
+      <div class="chart-box" style="height:225px"><canvas id="cFatigue"></canvas></div>
+    </div>
+    <div class="card" style="height:280px">
+      <div class="card-title">Tilt — après Victoire vs Défaite</div>
+      <div class="chart-box" style="height:225px"><canvas id="cTilt"></canvas></div>
+    </div>
+  </div>
+
+  <div class="sh"><h2>Contexte</h2></div>
+  <div class="grid2">
+    <div class="card" style="height:260px">
+      <div class="card-title">Performance par tranche horaire</div>
+      <div class="chart-box" style="height:210px"><canvas id="cTime"></canvas></div>
+    </div>
+    <div class="card" style="height:260px">
+      <div class="card-title">CS/Min & GPM — 50 dernières parties</div>
+      <div class="chart-box" style="height:210px"><canvas id="cFarm"></canvas></div>
+    </div>
+  </div>
+
+  <div class="sh"><h2>Solo vs Duo</h2></div>
+  <div class="grid13">
+    <div class="card" style="height:240px">
+      <div class="card-title">Répartition</div>
+      <div class="chart-box" style="height:195px;display:flex;align-items:center;justify-content:center"><canvas id="cSD" style="max-height:190px"></canvas></div>
+    </div>
+    <div class="card" style="height:240px">
+      <div class="card-title">Win Rate par contexte</div>
+      <div class="chart-box" style="height:195px"><canvas id="cDuo"></canvas></div>
+    </div>
+  </div>
+
+</div><!-- /.wrap -->
+</div><!-- /#tab-overview -->
+
+<!-- ══ GAMES TAB ══ -->
+<div id="tab-games" class="tab-content">
+<div class="wrap">
+
+  <div class="games-toolbar">
+    <input class="search-input" id="searchChamp" type="text" placeholder="🔍 Champion…" oninput="applyFilters()"/>
+    <div class="filter-pills">
+      <button class="pill active" data-res="all"     onclick="setRes(this,'all')">Toutes</button>
+      <button class="pill win-pill"  data-res="win"  onclick="setRes(this,'win')">Victoires</button>
+      <button class="pill loss-pill" data-res="loss" onclick="setRes(this,'loss')">Défaites</button>
+    </div>
+    <div class="filter-pills" id="rolePills">
+      <button class="pill active" data-role="all" onclick="setRole(this,'all')">Tous les rôles</button>
+      <button class="pill" data-role="TOP"     onclick="setRole(this,'TOP')">Top</button>
+      <button class="pill" data-role="JUNGLE"  onclick="setRole(this,'JUNGLE')">Jungle</button>
+      <button class="pill" data-role="MIDDLE"  onclick="setRole(this,'MIDDLE')">Mid</button>
+      <button class="pill" data-role="BOTTOM"  onclick="setRole(this,'BOTTOM')">Bot</button>
+      <button class="pill" data-role="UTILITY" onclick="setRole(this,'UTILITY')">Support</button>
+    </div>
+    <select class="sort-select" onchange="setSort(this.value)">
+      <option value="date-desc">Date ↓</option>
+      <option value="date-asc">Date ↑</option>
+      <option value="kda-desc">KDA ↓</option>
+      <option value="kda-asc">KDA ↑</option>
+      <option value="cs-desc">CS/Min ↓</option>
+      <option value="dpm-desc">DPM ↓</option>
+    </select>
+    <span class="games-count" id="gamesCount"></span>
+  </div>
+
+  <div class="games-table">
+    <div class="gt-head">
+      <div>Date</div><div></div><div>Champion</div><div>Rôle</div>
+      <div>KDA</div><div>K / D / A</div><div>CS/Min</div>
+      <div>DPM</div><div>Vision</div><div>Rang</div><div></div>
+    </div>
+    <div class="gt-body" id="gtBody"></div>
+  </div>
+
+</div>
+</div><!-- /#tab-games -->
+
+<script>
+// ─── Chart defaults ─────────────────────────────────────
+Chart.defaults.color = '#9aa5b4';
+Chart.defaults.borderColor = '#e5e0d5';
+Chart.defaults.font.family = "'DM Mono', monospace";
+Chart.defaults.font.size = 11;
+Chart.defaults.plugins.legend.display = false;
+Chart.defaults.plugins.tooltip.backgroundColor = '#0f1729';
+Chart.defaults.plugins.tooltip.borderColor = '#1e2d4a';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
+Chart.defaults.plugins.tooltip.titleColor = '#ffffff';
+Chart.defaults.plugins.tooltip.bodyColor = '#94a3b8';
+Chart.defaults.plugins.tooltip.padding = 10;
+Chart.defaults.plugins.tooltip.cornerRadius = 8;
+Chart.defaults.animation.duration = 400;
+
+const C = {
+  navy:'#0f1729', gold:'#c89b3c', gold2:'#f0c060',
+  blue:'#2563eb', teal:'#0d9488',
+  win:'#059669', winBg:'rgba(5,150,105,.15)',
+  loss:'#e11d48', lossBg:'rgba(225,29,72,.15)',
+  warn:'#d97706', warnBg:'rgba(217,119,6,.12)',
+  grid:'rgba(229,224,213,.8)',
+};
+const ROLE_LABEL = {TOP:'TOP',JUNGLE:'JGL',MIDDLE:'MID',BOTTOM:'BOT',UTILITY:'SUP'};
+
+const avg  = (arr,k) => arr.length ? arr.reduce((s,x)=>s+(parseFloat(x[k])||0),0)/arr.length : 0;
+const wPct = arr => arr.length ? arr.filter(g=>g.win==='Victoire').length/arr.length : 0;
+const safeN = (v,d=0) => { const n=parseFloat(v); return isNaN(n)?d:n; };
+function scoreToLabel(s){
+  if(s<0) return 'Non classé';
+  if(s>=30) return 'Challenger';
+  if(s>=29) return 'GrandMaster';
+  if(s>=28) return 'Master';
+  const T=['Iron','Bronze','Silver','Gold','Plat','Emerald','Diamond'];
+  const D=['IV','III','II','I'];
+  return T[Math.floor(s/4)]+' '+D[s%4];
+}
+function rl(r){ return ROLE_LABEL[r]||r||'?'; }
+
+const charts={};
+function dc(id){ if(charts[id]){charts[id].destroy();delete charts[id];} }
+function axD(extra={}){
+  return { grid:{color:C.grid,drawBorder:false}, ticks:{color:'#9aa5b4',...(extra.ticks||{})}, border:{color:C.grid}, ...extra };
+}
+
+// ─── State ───────────────────────────────────────────────
+let allData=[], filteredData=[];
+let fRes='all', fRole='all', fChamp='', sortKey='date', sortDir='desc';
+
+// ─── Load ────────────────────────────────────────────────
+async function loadData(){
+  document.getElementById('overlay').classList.remove('hidden');
+  document.getElementById('btnRefresh').disabled=true;
+  try{
+    const res = await fetch('/api/data');
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    allData = await res.json();
+    allData.sort((a,b)=>new Date(a.rawDate)-new Date(b.rawDate));
+    renderAll(allData);
+  } catch(e){
+    document.getElementById('overlay').innerHTML=
+      `<div style="font-size:32px">⚠️</div>
+       <div style="color:#e11d48;font-family:'DM Mono',monospace">${e.message}</div>
+       <div style="color:#9aa5b4;font-size:11px;font-family:'DM Mono',monospace;margin-top:4px">Lance <code>node server.js</code> puis récupère des parties.</div>`;
+    return;
+  }
+  document.getElementById('overlay').classList.add('hidden');
+  document.getElementById('btnRefresh').disabled=false;
+}
+
+function renderAll(data){
+  if(!data.length){
+    document.getElementById('overlay').innerHTML=
+      `<div style="font-size:32px">⚔</div>
+       <div style="font-family:'DM Mono',monospace">Aucune donnée — lance d'abord <code style="color:var(--gold)">node lol.js fetch</code></div>`;
+    document.getElementById('overlay').classList.remove('hidden');
+    return;
+  }
+  const last=data[data.length-1];
+  document.getElementById('lastUpd').textContent=
+    new Date(last.rawDate).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});
+  renderKPIs(data);
+  renderCharts(data);
+  applyFilters();
+}
+
+// ─── KPIs ────────────────────────────────────────────────
+function renderKPIs(data){
+  const wr=wPct(data), kda=avg(data,'kda');
+  const last=[...data].reverse()[0];
+  document.getElementById('kTotal').textContent=data.length;
+  document.getElementById('kWR').textContent=(wr*100).toFixed(1)+'%';
+  document.getElementById('kKDA').textContent=kda.toFixed(2);
+  document.getElementById('kCS').textContent=avg(data,'csPerMin').toFixed(1);
+  document.getElementById('kDPM').textContent=Math.round(avg(data,'dpm'));
+  document.getElementById('kRank').textContent=last?.myRank||'—';
+  const wr10=wPct(data.slice(-10));
+  document.getElementById('kWRSub').textContent=(wr10*100).toFixed(0)+'% (10 dernières)';
+  document.getElementById('kWRCard').className='kpi '+(wr>=0.5?'green':'red');
+  const k=avg(data,'kills'),d=avg(data,'deaths'),a=avg(data,'assists');
+  document.getElementById('kKDASub').textContent=k.toFixed(1)+'/'+d.toFixed(1)+'/'+a.toFixed(1);
+  const trend=wr10>wr+0.02?'↑ En progression':wr10<wr-0.02?'↓ En régression':'→ Stable';
+  document.getElementById('trendTag').textContent=trend;
+  document.getElementById('wrGlobal').textContent='WR global '+((wr*100).toFixed(1))+'%';
+}
+
+// ─── All charts ──────────────────────────────────────────
+function renderCharts(data){
+  chartWR(data); chartKDA(data); chartRank(data); chartChamps(data);
+  chartRoles(data); chartFatigue(data); chartTilt(data); chartTime(data);
+  chartFarm(data); chartSD(data); chartDuo(data);
+}
+
+function chartWR(data){
+  dc('wr');
+  const W=10, labels=[], rolling=[], glob=[];
+  const gwr=wPct(data)*100;
+  for(let i=W-1;i<data.length;i++){
+    rolling.push(parseFloat((wPct(data.slice(i-W+1,i+1))*100).toFixed(1)));
+    glob.push(parseFloat(gwr.toFixed(1)));
+    labels.push(new Date(data[i].rawDate).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}));
+  }
+  const ctx=document.getElementById('cWR').getContext('2d');
+  const grd=ctx.createLinearGradient(0,0,0,180);
+  grd.addColorStop(0,'rgba(37,99,235,.25)'); grd.addColorStop(1,'rgba(37,99,235,0)');
+  charts.wr=new Chart(ctx,{type:'line',data:{labels,datasets:[
+    {label:'WR glissant',data:rolling,borderColor:C.blue,backgroundColor:grd,borderWidth:2.5,pointRadius:2,pointHoverRadius:5,fill:true,tension:.4},
+    {label:'WR global',data:glob,borderColor:'rgba(154,165,180,.5)',borderDash:[5,4],borderWidth:1.5,pointRadius:0,fill:false},
+  ]},options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{...axD(),ticks:{...axD().ticks,maxTicksLimit:14,maxRotation:0}},y:{...axD(),min:0,max:100,ticks:{callback:v=>v+'%'}}},
+    plugins:{legend:{display:true,position:'top',labels:{color:'#9aa5b4',boxWidth:10,font:{size:10}}},
+    tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.raw}%`}}},
+  }});
+}
+
+function chartKDA(data){
+  dc('kda');
+  const sl=data.slice(-50);
+  charts.kda=new Chart(document.getElementById('cKDA'),{type:'bar',
+  data:{labels:sl.map((_,i)=>i+1),datasets:[{label:'KDA',
+    data:sl.map(m=>safeN(m.kda)),
+    backgroundColor:sl.map(m=>m.win==='Victoire'?C.winBg:C.lossBg),
+    borderColor:sl.map(m=>m.win==='Victoire'?C.win:C.loss),
+    borderWidth:1,borderRadius:3}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{...axD(),ticks:{display:false}},y:{...axD()}},
+    plugins:{tooltip:{callbacks:{label:ctx=>` KDA ${ctx.raw.toFixed(2)} — ${sl[ctx.dataIndex]?.champion}`}}},
+  }});
+}
+
+function chartRank(data){
+  dc('rank');
+  const rk=data.filter(m=>m.myRankScore!=null&&m.myRankScore>=0);
+  if(!rk.length){noData('cRank');return;}
+  document.getElementById('rankPer').textContent=rk.length+' parties classées';
+  const ctx=document.getElementById('cRank').getContext('2d');
+  const grd=ctx.createLinearGradient(0,0,0,180);
+  grd.addColorStop(0,'rgba(200,155,60,.25)'); grd.addColorStop(1,'rgba(200,155,60,0)');
+  charts.rank=new Chart(ctx,{type:'line',
+  data:{labels:rk.map(m=>new Date(m.rawDate).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'})),
+    datasets:[{label:'Rang',data:rk.map(m=>safeN(m.myRankScore)),
+      borderColor:C.gold,backgroundColor:grd,borderWidth:2.5,pointRadius:2,fill:true,tension:.3}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{...axD(),ticks:{...axD().ticks,maxTicksLimit:10,maxRotation:0}},
+      y:{...axD(),ticks:{callback:v=>scoreToLabel(Math.round(v))}}},
+    plugins:{tooltip:{callbacks:{label:ctx=>' '+scoreToLabel(Math.round(ctx.raw))}}},
+  }});
+}
+
+function chartChamps(data){
+  dc('champs');
+  const mp={};
+  data.forEach(m=>{if(!mp[m.champion])mp[m.champion]=[];mp[m.champion].push(m);});
+  const list=Object.entries(mp)
+    .map(([n,g])=>({n,g:g.length,wr:wPct(g),kda:avg(g,'kda')}))
+    .filter(c=>c.g>=2).sort((a,b)=>b.g-a.g).slice(0,10);
+  const wrs=list.map(c=>parseFloat((c.wr*100).toFixed(1)));
+  const colors=wrs.map(w=>w>=55?C.win:w<=45?C.loss:C.warn);
+  charts.champs=new Chart(document.getElementById('cChamps'),{type:'bar',
+  data:{labels:list.map(c=>c.n),datasets:[
+    {label:'Win Rate %',data:wrs,backgroundColor:colors.map(c=>c+'22'),borderColor:colors,borderWidth:1.5,borderRadius:5,yAxisID:'y'},
+    {label:'Parties',data:list.map(c=>c.g),type:'line',borderColor:'rgba(37,99,235,.5)',backgroundColor:'transparent',borderWidth:1.5,pointRadius:3,pointBackgroundColor:C.blue,tension:.3,yAxisID:'y2'},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
+    scales:{x:{...axD(),min:0,max:100,ticks:{callback:v=>v+'%'},position:'top'},y:{...axD(),ticks:{color:'#1a1f2e',font:{weight:'600'}}},y2:{display:false}},
+    plugins:{legend:{display:true,position:'top',labels:{color:'#9aa5b4',boxWidth:10,font:{size:10}}},
+    tooltip:{callbacks:{label:ctx=>ctx.dataset.label==='Win Rate %'?` WR: ${ctx.raw}%`:` Parties: ${ctx.raw}`}}},
+  }});
+}
+
+function chartRoles(data){
+  dc('roles');
+  const mp={};
+  data.forEach(m=>{const r=rl(m.role);mp[r]=(mp[r]||0)+1;});
+  const labels=Object.keys(mp), vals=Object.values(mp);
+  const rCol={TOP:C.navy,JGL:C.teal,MID:C.blue,BOT:C.win,SUP:C.warn,'?':'#9aa5b4'};
+  const colors=labels.map(l=>rCol[l]||'#9aa5b4');
+  charts.roles=new Chart(document.getElementById('cRoles'),{type:'doughnut',
+  data:{labels,datasets:[{data:vals,backgroundColor:colors.map(c=>c+'cc'),borderColor:colors,borderWidth:2,hoverOffset:8}]},
+  options:{responsive:true,maintainAspectRatio:true,cutout:'60%',
+    plugins:{legend:{display:true,position:'right',labels:{color:'#4a5568',boxWidth:10,font:{size:11}}},
+    tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw} (${((ctx.raw/data.length)*100).toFixed(0)}%)`}}},
+  }});
+}
+
+function chartFatigue(data){
+  dc('fatigue');
+  const b={1:[],2:[],3:[],4:[]};
+  data.forEach(m=>{const g=Math.min(safeN(m.gameInSession,1),4);b[g].push(m);});
+  const wrs=[1,2,3,4].map(i=>b[i].length?parseFloat((wPct(b[i])*100).toFixed(1)):null);
+  const cnts=[1,2,3,4].map(i=>b[i].length);
+  const gw=parseFloat((wPct(data)*100).toFixed(1));
+  const colors=wrs.map(w=>w===null?'#e5e0d5':w>=55?C.win:w<=45?C.loss:C.warn);
+  charts.fatigue=new Chart(document.getElementById('cFatigue'),{type:'bar',
+  data:{labels:['Partie 1','Partie 2','Partie 3','Partie 4+'],datasets:[
+    {label:'Win Rate',data:wrs,backgroundColor:colors.map(c=>c+'22'),borderColor:colors,borderWidth:2,borderRadius:8},
+    {label:'WR global',data:Array(4).fill(gw),type:'line',borderColor:'rgba(154,165,180,.6)',borderDash:[5,4],borderWidth:1.5,pointRadius:0,fill:false},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{...axD()},y:{...axD(),min:0,max:100,ticks:{callback:v=>v+'%'}}},
+    plugins:{legend:{display:true,position:'top',labels:{color:'#9aa5b4',boxWidth:10,font:{size:10}}},
+    tooltip:{callbacks:{label:ctx=>ctx.dataset.label==='Win Rate'?` WR: ${ctx.raw}% (${cnts[ctx.dataIndex]} parties)`:` WR global: ${ctx.raw}%`}}},
+  }});
+}
+
+function chartTilt(data){
+  dc('tilt');
+  const aw=[],al=[];
+  for(let i=1;i<data.length;i++)(data[i-1].win==='Victoire'?aw:al).push(data[i]);
+  charts.tilt=new Chart(document.getElementById('cTilt'),{type:'bar',
+  data:{labels:['Win Rate','KDA','CS/Min','DPM ÷100'],datasets:[
+    {label:'Après Victoire',data:[+(wPct(aw)*100).toFixed(1),+avg(aw,'kda').toFixed(2),+avg(aw,'csPerMin').toFixed(1),+(avg(aw,'dpm')/100).toFixed(1)],backgroundColor:C.winBg,borderColor:C.win,borderWidth:1.5,borderRadius:6},
+    {label:'Après Défaite', data:[+(wPct(al)*100).toFixed(1),+avg(al,'kda').toFixed(2),+avg(al,'csPerMin').toFixed(1),+(avg(al,'dpm')/100).toFixed(1)],backgroundColor:C.lossBg,borderColor:C.loss,borderWidth:1.5,borderRadius:6},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{...axD()},y:{...axD()}},
+    plugins:{legend:{display:true,position:'top',labels:{color:'#9aa5b4',boxWidth:10,font:{size:10}}}},
+  }});
+}
+
+function chartTime(data){
+  dc('time');
+  const sl={'Nuit (0–6h)':[],'Matin (6–12h)':[],'Après-midi (12–18h)':[],'Soir (18–24h)':[]};
+  data.forEach(m=>{const h=new Date(m.rawDate).getHours();
+    if(h<6)sl['Nuit (0–6h)'].push(m);
+    else if(h<12)sl['Matin (6–12h)'].push(m);
+    else if(h<18)sl['Après-midi (12–18h)'].push(m);
+    else sl['Soir (18–24h)'].push(m);
+  });
+  const labels=Object.keys(sl),wrs=labels.map(k=>sl[k].length?+(wPct(sl[k])*100).toFixed(1):0);
+  const cnts=labels.map(k=>sl[k].length);
+  const colors=wrs.map(w=>w>=55?C.win:w<=45?C.loss:C.warn);
+  charts.time=new Chart(document.getElementById('cTime'),{type:'bar',
+  data:{labels,datasets:[{label:'Win Rate',data:wrs,backgroundColor:colors.map(c=>c+'22'),borderColor:colors,borderWidth:2,borderRadius:8}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{...axD(),ticks:{...axD().ticks,maxRotation:10}},y:{...axD(),min:0,max:100,ticks:{callback:v=>v+'%'}}},
+    plugins:{tooltip:{callbacks:{label:ctx=>` WR: ${ctx.raw}% — ${cnts[ctx.dataIndex]} parties`}}},
+  }});
+}
+
+function chartFarm(data){
+  dc('farm');
+  const sl=data.slice(-50);
+  charts.farm=new Chart(document.getElementById('cFarm'),{type:'line',
+  data:{labels:sl.map((_,i)=>i+1),datasets:[
+    {label:'CS/Min',data:sl.map(m=>safeN(m.csPerMin)),borderColor:C.teal,borderWidth:1.5,pointRadius:1.5,tension:.35,yAxisID:'y'},
+    {label:'GPM÷100',data:sl.map(m=>safeN(m.gpm)/100),borderColor:C.warn,borderWidth:1.5,pointRadius:1.5,tension:.35,yAxisID:'y2'},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{...axD(),ticks:{display:false}},y:{...axD({position:'left'}),ticks:{color:C.teal,callback:v=>v.toFixed(1)}},y2:{...axD({position:'right'}),grid:{display:false},ticks:{color:C.warn,callback:v=>(v*100).toFixed(0)+'g'}}},
+    plugins:{legend:{display:true,position:'top',labels:{color:'#9aa5b4',boxWidth:10,font:{size:10}}},
+    tooltip:{callbacks:{label:ctx=>ctx.dataset.label==='CS/Min'?` CS/Min: ${ctx.raw.toFixed(1)}`:` GPM: ${(ctx.raw*100).toFixed(0)}`}}},
+  }});
+}
+
+function chartSD(data){
+  dc('sd');
+  const s=data.filter(m=>m.type==='Solo').length, d=data.filter(m=>m.type==='Duo').length;
+  charts.sd=new Chart(document.getElementById('cSD'),{type:'doughnut',
+  data:{labels:['Solo','Duo'],datasets:[{data:[s,d],backgroundColor:[C.navy+'cc',C.blue+'cc'],borderColor:[C.navy,C.blue],borderWidth:2,hoverOffset:6}]},
+  options:{responsive:true,maintainAspectRatio:true,cutout:'65%',
+    plugins:{legend:{display:true,position:'bottom',labels:{color:'#4a5568',boxWidth:10,font:{size:11}}},
+    tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw} (${((ctx.raw/data.length)*100).toFixed(0)}%)`}}},
+  }});
+}
+
+function chartDuo(data){
+  dc('duo');
+  const ctxs=[
+    {l:'Solo',g:data.filter(m=>m.type==='Solo')},
+    {l:'Duo total',g:data.filter(m=>m.type==='Duo')},
+    {l:'Duo+Yuumi',g:data.filter(m=>m.withYuumi==='Oui')},
+    {l:'Duo sans Yuumi',g:data.filter(m=>m.type==='Duo'&&m.withYuumi!=='Oui')},
+    {l:'Yuumi alliée',g:data.filter(m=>m.yuumiAlliee==='Oui')},
+  ].filter(c=>c.g.length>0);
+  const wrs=ctxs.map(c=>+(wPct(c.g)*100).toFixed(1));
+  const cnts=ctxs.map(c=>c.g.length);
+  const colors=wrs.map(w=>w>=55?C.win:w<=45?C.loss:C.warn);
+  charts.duo=new Chart(document.getElementById('cDuo'),{type:'bar',
+  data:{labels:ctxs.map(c=>c.l),datasets:[{label:'Win Rate',data:wrs,backgroundColor:colors.map(c=>c+'22'),borderColor:colors,borderWidth:2,borderRadius:6}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{...axD(),ticks:{...axD().ticks,maxRotation:15}},y:{...axD(),min:0,max:100,ticks:{callback:v=>v+'%'}}},
+    plugins:{tooltip:{callbacks:{label:ctx=>` WR: ${ctx.raw}% — ${cnts[ctx.dataIndex]} parties`}}},
+  }});
+}
+
+function noData(id){
+  const c=document.getElementById(id);
+  c.parentElement.innerHTML='<div class="chart-nodata"><span style="font-size:24px">📭</span><div>Pas assez de données</div></div>';
+}
+
+// ─── Games tab ───────────────────────────────────────────
+function setRes(el,v){ fRes=v; document.querySelectorAll('[data-res]').forEach(b=>{b.className='pill'+(b.dataset.res==='win'?' win-pill':b.dataset.res==='loss'?' loss-pill':'')+(b.dataset.res===v?' active':'');}); applyFilters(); }
+function setRole(el,v){ fRole=v; document.querySelectorAll('[data-role]').forEach(b=>{b.className='pill'+(b.dataset.role===v?' active':'');}); applyFilters(); }
+function setSort(v){ const [k,d]=v.split('-'); sortKey=k; sortDir=d; applyFilters(); }
+
+function applyFilters(){
+  fChamp=document.getElementById('searchChamp')?.value.toLowerCase().trim()||'';
+  let d=[...allData];
+  if(fRes==='win') d=d.filter(m=>m.win==='Victoire');
+  if(fRes==='loss') d=d.filter(m=>m.win!=='Victoire');
+  if(fRole!=='all') d=d.filter(m=>m.role===fRole);
+  if(fChamp) d=d.filter(m=>(m.champion||'').toLowerCase().includes(fChamp));
+  d.sort((a,b)=>{
+    const dir=sortDir==='desc'?-1:1;
+    if(sortKey==='date') return dir*(new Date(a.rawDate)-new Date(b.rawDate));
+    if(sortKey==='kda')  return dir*(safeN(a.kda)-safeN(b.kda));
+    if(sortKey==='cs')   return dir*(safeN(a.csPerMin)-safeN(b.csPerMin));
+    if(sortKey==='dpm')  return dir*(safeN(a.dpm)-safeN(b.dpm));
+    return 0;
+  });
+  filteredData=d;
+  document.getElementById('gamesCount').textContent=d.length+' partie'+(d.length>1?'s':'');
+  renderGamesList(d);
+}
+
+function renderGamesList(data){
+  const body=document.getElementById('gtBody');
+  body.innerHTML='';
+  if(!data.length){
+    body.innerHTML='<div class="no-data-row">Aucune partie trouvée</div>';
+    return;
+  }
+  data.forEach((m,idx)=>{
+    const isWin=m.win==='Victoire';
+    const kda=safeN(m.kda);
+    const kdaClass=kda>=4?'good':kda<1.5?'bad':'';
+    const date=new Date(m.rawDate).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit'});
+    const row=document.createElement('div');
+    row.className='gt-row '+(isWin?'win-row':'loss-row');
+    row.innerHTML=`
+      <span class="mono-cell">${date}</span>
+      <span><span class="result-badge ${isWin?'v':'d'}">${isWin?'V':'D'}</span></span>
+      <span class="champ-name">${m.champion||'—'}</span>
+      <span><span class="role-tag">${rl(m.role)}</span></span>
+      <span class="kda-cell ${kdaClass}">${kda.toFixed(2)}</span>
+      <span class="mono-cell">${m.kills||0}/${m.deaths||0}/${m.assists||0}</span>
+      <span class="mono-cell">${safeN(m.csPerMin).toFixed(1)}</span>
+      <span class="mono-cell">${Math.round(safeN(m.dpm))}</span>
+      <span class="mono-cell">${m.vision||0}</span>
+      <span class="rank-cell">${m.myRank||'—'}</span>
+      <span class="mono-cell" style="color:#9aa5b4;font-size:11px">›</span>
+    `;
+    row.onclick=()=>openDetail(m);
+    body.appendChild(row);
+  });
+}
+
+// ─── Detail Panel ────────────────────────────────────────
+function openDetail(m){
+  const isWin=m.win==='Victoire';
+  const date=new Date(m.rawDate).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
+  const time=new Date(m.rawDate).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+
+  document.getElementById('dpHeader').innerHTML=`
+    <div class="dp-banner ${isWin?'win-banner':'loss-banner'}">
+      <div class="dp-match-title">
+        <div class="dp-champ">${m.champion||'—'}</div>
+        <div class="dp-meta">
+          <span class="dp-result-big ${isWin?'win':'loss'}">${isWin?'Victoire':'Défaite'}</span>
+          <span class="dp-meta-sep">·</span>
+          <span class="dp-meta-item">${rl(m.role)}</span>
+          <span class="dp-meta-sep">·</span>
+          <span class="dp-meta-item">${date} à ${time}</span>
+          <span class="dp-meta-sep">·</span>
+          <span class="dp-meta-item">${m.gameDuration||'—'}</span>
+          <span class="dp-meta-sep">·</span>
+          <span class="dp-meta-item">${m.type||'—'}</span>
+        </div>
+      </div>
+      <button class="dp-close" onclick="closeDetail()">✕</button>
+    </div>
+  `;
+
+  const kda=safeN(m.kda);
+  const pingTypes=[
+    {l:'All-In',v:safeN(m.allInPings)},{l:'Basic',v:safeN(m.basicPings)},
+    {l:'Cmd',v:safeN(m.commandPings)},{l:'Danger',v:safeN(m.dangerPings)},
+    {l:'MIA',v:safeN(m.enemyMissingPings)},{l:'Hold',v:safeN(m.holdPings)},
+    {l:'Vision?',v:safeN(m.needVisionPings)},{l:'OTW',v:safeN(m.onMyWayPings)},
+    {l:'Push',v:safeN(m.pushPings)},{l:'Retreat',v:safeN(m.retreatPings)},
+    {l:'ClearVis',v:safeN(m.visionClearedPings)},
+  ].filter(p=>p.v>0).sort((a,b)=>b.v-a.v);
+  const maxPing=pingTypes.length?Math.max(...pingTypes.map(p=>p.v)):1;
+
+  const csDiff10=m.csDiff10, gDiff10=m.goldDiff10, csDiff15=m.csDiff15, gDiff15=m.goldDiff15;
+  function diffClass(v){ return v===null||v===undefined?'diff-neu':v>0?'diff-pos':v<0?'diff-neg':'diff-neu'; }
+  function diffFmt(v,unit=''){ if(v===null||v===undefined)return'—'; return (v>0?'+':'')+v+unit; }
+
+  document.getElementById('dpBody').innerHTML=`
+    <!-- KDA -->
+    <div class="kda-big">
+      <div class="kda-seg kda-kills"><div class="kn">${m.kills||0}</div><div class="kl">Kills</div></div>
+      <div class="kda-divider"></div>
+      <div class="kda-seg kda-deaths"><div class="kn">${m.deaths||0}</div><div class="kl">Deaths</div></div>
+      <div class="kda-divider"></div>
+      <div class="kda-seg kda-assists"><div class="kn">${m.assists||0}</div><div class="kl">Assists</div></div>
+      <div class="kda-divider"></div>
+      <div class="kda-ratio"><div class="kn">${kda.toFixed(2)}</div><div class="kl">KDA</div></div>
+    </div>
+
+    <!-- Combat -->
+    <div class="dp-section">
+      <div class="dp-section-title" style="--scolor:#e11d48">Combat & Dégâts</div>
+      <div class="stat-grid cols3">
+        <div class="stat-box"><div class="sv">${Math.round(safeN(m.dpm))}</div><div class="sl">DPM</div></div>
+        <div class="stat-box"><div class="sv">${safeN(m.dmgShare).toFixed(1)}%</div><div class="sl">% Dégâts équipe</div></div>
+        <div class="stat-box"><div class="sv">${safeN(m.kp).toFixed(1)}%</div><div class="sl">KP</div></div>
+        <div class="stat-box ${safeN(m.pctDeadTime)>20?'highlight-loss':''}"><div class="sv">${safeN(m.pctDeadTime).toFixed(1)}%</div><div class="sl">Temps mort</div></div>
+        <div class="stat-box"><div class="sv">${safeN(m.dpg).toFixed(3)}</div><div class="sl">DMG/Gold</div></div>
+        <div class="stat-box"><div class="sv">${safeN(m.dmgRatio).toFixed(2)}</div><div class="sl">Ratio DMG</div></div>
+      </div>
+    </div>
+
+    <!-- Farm -->
+    <div class="dp-section">
+      <div class="dp-section-title" style="--scolor:#0d9488">Farm & Économie</div>
+      <div class="stat-grid cols3">
+        <div class="stat-box ${safeN(m.csPerMin)>=9?'highlight-win':safeN(m.csPerMin)<7?'highlight-loss':''}"><div class="sv">${safeN(m.csPerMin).toFixed(1)}</div><div class="sl">CS/Min</div></div>
+        <div class="stat-box"><div class="sv">${Math.round(safeN(m.gpm))}</div><div class="sl">GPM</div></div>
+        <div class="stat-box"><div class="sv">${Math.round(safeN(m.objDpm))}</div><div class="sl">Obj/Min</div></div>
+      </div>
+    </div>
+
+    <!-- Vision -->
+    <div class="dp-section">
+      <div class="dp-section-title" style="--scolor:#2563eb">Vision</div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="sv">${m.vision||0}</div><div class="sl">Vision Score</div></div>
+        <div class="stat-box"><div class="sv">${m.controlWards||0}</div><div class="sl">Control Wards</div></div>
+        <div class="stat-box"><div class="sv">${m.wardsPlaced||0}</div><div class="sl">Wards placées</div></div>
+        <div class="stat-box"><div class="sv">${m.wardsKilled||0}</div><div class="sl">Wards détruites</div></div>
+      </div>
+    </div>
+
+    <!-- Lane diff -->
+    ${(csDiff10!==null&&csDiff10!==undefined)||m.fatalGanksReceived!=null?`
+    <div class="dp-section">
+      <div class="dp-section-title" style="--scolor:#d97706">Phase de Lane</div>
+      <div class="stat-grid cols3">
+        <div class="stat-box diff-box ${diffClass(csDiff10)}"><div class="sv">${diffFmt(csDiff10)}</div><div class="sl">CSD @10min</div></div>
+        <div class="stat-box diff-box ${diffClass(gDiff10)}"><div class="sv">${diffFmt(gDiff10,'g')}</div><div class="sl">GD @10min</div></div>
+        <div class="stat-box"><div class="sv">${m.firstCoreItemMin!=null?m.firstCoreItemMin+'min':'—'}</div><div class="sl">1er item core</div></div>
+        <div class="stat-box diff-box ${diffClass(csDiff15)}"><div class="sv">${diffFmt(csDiff15)}</div><div class="sl">CSD @15min</div></div>
+        <div class="stat-box diff-box ${diffClass(gDiff15)}"><div class="sv">${diffFmt(gDiff15,'g')}</div><div class="sl">GD @15min</div></div>
+        <div class="stat-box ${safeN(m.fatalGanksReceived)>=2?'highlight-loss':safeN(m.fatalGanksReceived)===0?'highlight-win':''}">
+          <div class="sv">${m.fatalGanksReceived!=null?m.fatalGanksReceived:'—'}</div><div class="sl">Ganks mortels subis</div>
+        </div>
+      </div>
+    </div>`:''}
+
+    <!-- Pings -->
+    ${pingTypes.length?`
+    <div class="dp-section">
+      <div class="dp-section-title" style="--scolor:#7c3aed">Pings <span style="font-weight:400;color:var(--text3)">Total: ${safeN(m.totalPings)} · Négatifs: ${safeN(m.negativePings)}</span></div>
+      <div class="ping-bars">
+        ${pingTypes.map(p=>`
+          <div class="ping-bar-row">
+            <div class="ping-bar-label">${p.l}</div>
+            <div class="ping-bar-track"><div class="ping-bar-fill" style="width:${Math.round(p.v/maxPing*100)}%;background:${p.l==='Danger'||p.l==='Retreat'||p.l==='MIA'?'#e11d48':'#2563eb'}"></div></div>
+            <div class="ping-bar-val">${p.v}</div>
+          </div>`).join('')}
+      </div>
+    </div>`:''}
+
+    <!-- Rank context -->
+    ${m.myRank?`
+    <div class="dp-section">
+      <div class="dp-section-title" style="--scolor:var(--gold)">Contexte Rang</div>
+      <div class="rank-row">
+        <div class="rank-box"><div class="rv">${m.myRank||'—'}</div><div class="rl2">Mon rang</div></div>
+        <div class="rank-box"><div class="rv">${m.avgAllyRank||'—'}</div><div class="rl2">Alliés (moy.)</div></div>
+        <div class="rank-box"><div class="rv">${m.avgEnemyRank||'—'}</div><div class="rl2">Ennemis (moy.)</div></div>
+      </div>
+      ${m.rankDiff!=null?`<div style="font-family:'DM Mono',monospace;font-size:11px;color:${m.rankDiff>1?'var(--win)':m.rankDiff<-1?'var(--loss)':'var(--text3)'};text-align:center;margin-top:4px">
+        Diff rang : ${m.rankDiff>0?'+':''}${safeN(m.rankDiff).toFixed(2)} ${m.rankDiff>1?'(Environnement favorable)':m.rankDiff<-1?'(Environnement difficile)':'(Équilibré)'}
+      </div>`:''}
+    </div>`:''}
+
+    <!-- Badges -->
+    <div class="dp-section">
+      <div class="dp-section-title" style="--scolor:var(--text3)">Contexte & Bonus</div>
+      <div class="badge-row">
+        ${m.firstBlood==='Oui'?'<span class="badge gold-badge">🩸 First Blood</span>':''}
+        ${m.bestMultiKill&&m.bestMultiKill!=='-'?`<span class="badge active-badge">💥 ${m.bestMultiKill} Kill</span>`:''}
+        ${m.withYuumi==='Oui'?'<span class="badge win-badge">🐱 Duo Yuumi</span>':''}
+        ${m.yuumiAlliee==='Oui'&&m.withYuumi!=='Oui'?'<span class="badge">🐱 Yuumi alliée</span>':''}
+        ${m.enemyADC?`<span class="badge">vs ${m.enemyADC}</span>`:''}
+        <span class="badge ${isWin?'win-badge':'loss-badge'}">Session P${m.gameInSession||'?'}</span>
+        <span class="badge">Session #${m.sessionId||'?'}</span>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('detailPanel').classList.add('open');
+  document.getElementById('detailOverlay').classList.add('open');
+}
+
+function closeDetail(){
+  document.getElementById('detailPanel').classList.remove('open');
+  document.getElementById('detailOverlay').classList.remove('open');
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail();});
+
+// ─── Tabs ────────────────────────────────────────────────
+function switchTab(name){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t=>{ if(t.textContent.toLowerCase().includes(name==='overview'?'ensemble':'parties')) t.classList.add('active'); });
+  if(name==='games') applyFilters();
+}
+
+// ─── Init ────────────────────────────────────────────────
+loadData();
+</script>
+</body>
+</html>

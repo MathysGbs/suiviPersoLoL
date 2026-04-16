@@ -95,6 +95,16 @@ app.get('/api/status', (_req, res) => {
     res.json({ isRunning, stats: getStats() });
 });
 
+app.get('/api/data', (_req, res) => {
+    try {
+        if (!fs.existsSync(JSON_FILENAME)) return res.json([]);
+        const data = JSON.parse(fs.readFileSync(JSON_FILENAME, 'utf8'));
+        res.json(data);
+    } catch (err) {
+        res.status(500).json({ error: 'Impossible de lire les données : ' + err.message });
+    }
+});
+
 app.post('/api/run/all',     runMode(runAll,         'all'));
 app.post('/api/run/fetch',   runMode(runFetchOnly,   'fetch'));
 app.post('/api/run/migrate', runMode(runMigrateOnly, 'migrate'));

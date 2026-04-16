@@ -20,98 +20,76 @@ Utilisable en **interface web** (`server.js`) ou en **ligne de commande** (`lol.
 npm install
 ```
 
-> La commande installe automatiquement toutes les dépendances déclarées dans `package.json`, y compris `express` et `ws` pour l'interface web.
-
 ---
 
 ## 🔑 Configuration — fichier `.env`
 
-Crée un fichier `.env` à la racine du projet (même niveau que `lol.js`) :
+Crée un fichier `.env` à la racine du projet :
 
 ```env
 RIOT_API_KEY=RGAPI-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 > **Obtenir une clé API Riot :**
-> Rendez-toi sur [developer.riotgames.com](https://developer.riotgames.com), connecte-toi et génère une clé de développement.
-> ⚠️ Les clés de développement expirent toutes les **24h** — tu devras la renouveler avant chaque session.
-> Pour un usage permanent, fais une demande de clé de production sur le même portail.
+> [developer.riotgames.com](https://developer.riotgames.com) → connecte-toi → génère une clé de développement.
+> ⚠️ Les clés de développement expirent toutes les **24h**.
 
 ---
 
-## 👤 Paramètres joueurs
-
-Les noms et tags des deux comptes sont définis dans `src/config.js` :
+## 👤 Paramètres joueurs (`src/config.js`)
 
 ```js
-const MY_NAME  = 'xxxxx';       // Ton Riot ID
-const MY_TAG   = 'EUW';         // Ton tag
-
-const DUO_NAME = 'xxx'; // Le Riot ID de ton duo
-const DUO_TAG  = 'EUW';         // Le tag de ton duo
+const MY_NAME  = 'xxxxx';
+const MY_TAG   = 'EUW';
+const DUO_NAME = 'xxxx';
+const DUO_TAG  = 'EUW';
 ```
-
-Modifie ces valeurs si tu changes de compte.
 
 ---
 
 ## 🖥️ Interface Web (recommandé)
 
-Lance le serveur web :
-
 ```bash
 node server.js
+# → http://localhost:3000
 ```
 
-Puis ouvre [http://localhost:3000](http://localhost:3000) dans ton navigateur.
+### Page principale `/`
+- 4 boutons pour déclencher chaque mode
+- Terminal live (logs en temps réel via WebSocket)
+- Stats : total parties, date de la dernière
+- Indicateur d'état et verrou anti-concurrence
 
-L'interface propose :
-- **4 boutons** pour déclencher chaque mode en un clic
-- **Terminal en temps réel** — les logs s'affichent au fur et à mesure via WebSocket
-- **Stats** — nombre de parties enregistrées et date de la dernière
-- **Indicateur d'état** — idle / en cours / succès / erreur
-- Les boutons se **désactivent automatiquement** pendant qu'un mode tourne pour éviter les conflits
+### Dashboard `/dashboard.html`
+Visualisation complète des données avec **10 graphiques** :
+
+| Graphique | Description |
+|---|---|
+| Win Rate glissant | Courbe du WR sur fenêtre de 10 parties + WR global |
+| KDA par partie | Barres colorées victoire/défaite sur les 50 dernières |
+| Progression du rang | Évolution du rank score dans le temps |
+| Top Champions | Win rate + nombre de parties par champion (horizontal) |
+| Distribution des rôles | Donut par rôle joué |
+| Fatigue cognitive | Win rate par position dans la session (P1 → P4+) |
+| Indicateur de Tilt | Comparaison WR/KDA/CS/DPM après victoire vs défaite |
+| Performance horaire | Win rate par tranche (Nuit / Matin / Après-midi / Soir) |
+| CS/Min & GPM | Double axe, évolution sur 50 parties |
+| Solo vs Duo | Donut + win rate par contexte Yuumi |
+
+Et un tableau des **50 dernières parties** avec : champion, rôle, KDA, K/D/A, CS/min, DPM, vision, rang.
 
 ---
 
 ## 💻 Ligne de commande
 
-`lol.js` reste entièrement fonctionnel en CLI si tu préfères sans navigateur.
-
-### `all` — Flux complet *(par défaut)*
+`lol.js` reste entièrement fonctionnel sans navigateur.
 
 ```bash
-node lol.js
-# ou explicitement :
-node lol.js all
+node lol.js          # Flux complet (fetch + migrate + excel)
+node lol.js fetch    # Récupère les nouvelles parties uniquement
+node lol.js migrate  # Complète les entrées incomplètes
+node lol.js excel    # Régénère l'Excel (sans appel API)
 ```
-
-Enchaîne dans l'ordre : fetch → migrate → excel.
-**Durée estimée :** 10–20 min pour 200 parties (délais API Riot inclus).
-
-### `fetch` — Récupération des parties uniquement
-
-```bash
-node lol.js fetch
-```
-
-Contacte l'API Riot, met à jour `historique_matches.json`. Ne touche pas à l'Excel.
-
-### `migrate` — Migration des entrées incomplètes
-
-```bash
-node lol.js migrate
-```
-
-Complète les anciennes entrées avec les champs manquants (rangs, pings, lane diff, ganks…).
-
-### `excel` — Reconstruction Excel uniquement
-
-```bash
-node lol.js excel
-```
-
-Relit le JSON et régénère l'Excel. Aucun appel API — instantané.
 
 ---
 
@@ -119,90 +97,60 @@ Relit le JSON et régénère l'Excel. Aucun appel API — instantané.
 
 | Fichier | Description |
 |---|---|
-| `historique_matches.json` | Base de données locale de toutes tes parties |
-| `Suivi_Comportemental_Challenger.xlsx` | Tableau de bord Excel final |
+| `historique_matches.json` | Base de données locale |
+| `Suivi_Comportemental_Challenger.xlsx` | Tableau de bord Excel (4 feuilles) |
 
 ---
 
 ## 📊 Contenu du fichier Excel
 
-Le fichier contient **4 feuilles** :
+**4 feuilles :** Données Brutes · Par Champion · Solo vs Duo · Tendances Comportementales
 
-### 1. Données Brutes
-Toutes les parties avec mise en forme conditionnelle par groupes colorés :
+Les Données Brutes incluent 8 groupes colorés : Identité, Combat (KDA/DMG/KP), Farm, Vision, Pings, Ganks/Lane diff, Rang, Divers.
 
-| Groupe | Colonnes |
-|---|---|
-| 🔵 Identité | Date, Heure, Session, Position/Session, Durée, Champion, Rôle, Type, Résultat |
-| 🟣 Combat | KDA, K/D/A, % Mort, KP, % DMG, DMG/Gold, Ratio DMG |
-| 🟢 Farm | CS/Min, GPM, DPM, Obj/Min |
-| 🩵 Vision | Vision Score, Wards posées/détruites, Wards de contrôle |
-| 🌑 Pings | Total, Négatifs, et tous les types détaillés (Danger, MIA, Retreat…) |
-| 🟤 Ganks | Ganks mortels subis (early), CSD/GD à 10 et 15 min, Premier objet core |
-| 🔴 Rang | Ton rang, rang moyen alliés, rang moyen ennemis, différence |
-| ⚫ Divers | Multi-kill, First Blood, Yuumi duo/alliée, ADC adverse |
-
-### 2. Par Champion
-Statistiques agrégées par champion, triées par nombre de parties jouées.
-
-### 3. Solo vs Duo
-Comparaison de toutes les métriques entre tes parties solo, duo, avec/sans Yuumi.
-
-### 4. Tendances Comportementales
-- Vue d'ensemble globale, série actuelle, tendance récente
-- **Fatigue cognitive** : performance par partie dans la session (P1 → P4+)
-- Performance par tranche horaire (Nuit / Matin / Après-midi / Soir)
-- **Indicateur de tilt** : win rate après victoire vs après défaite
-- Analyse des pings selon le résultat, impact des ganks, records personnels
+Les Tendances incluent : vue d'ensemble, fatigue cognitive, performance horaire, indicateur de tilt, analyse des pings, impact des ganks, records personnels.
 
 ---
 
-## 🏗️ Architecture du projet
+## 🏗️ Architecture
 
 ```
-lol.js               ← Point d'entrée CLI (inchangé)
-server.js            ← Point d'entrée interface web (Express + WebSocket)
+lol.js               ← CLI (inchangé)
+server.js            ← Serveur web Express + WebSocket + route /api/data
 public/
-  └── index.html     ← Interface web (HTML/CSS/JS vanilla)
+  ├── index.html     ← Page de contrôle (4 modes + terminal live)
+  └── dashboard.html ← Dashboard analytics (10 graphiques Chart.js)
 src/
-  ├── config.js      ← Constantes, couleurs, fonctions de rang
-  ├── utils.js       ← Fonctions utilitaires pures
-  ├── analytics.js   ← Calcul des analyses comportementales
-  ├── data-service.js  ← Appels API Riot, lecture/écriture JSON
-  ├── excel-service.js ← Construction du fichier Excel
-  └── pipeline.js    ← Orchestration des modes
+  ├── config.js
+  ├── utils.js
+  ├── analytics.js
+  ├── data-service.js
+  ├── excel-service.js
+  └── pipeline.js
 ```
 
 ---
 
-## 📦 Dépendances à ajouter
-
-Si `express` et `ws` ne sont pas encore dans ton `package.json` :
+## 📦 Dépendances
 
 ```bash
 npm install express ws
 ```
 
-Vérifie que `package.json` contient bien :
-
-```json
-{
-  "dependencies": {
-    "axios":   "...",
-    "dotenv":  "...",
-    "exceljs": "...",
-    "express": "^4.18.0",
-    "ws":      "^8.0.0"
-  }
-}
-```
+`package.json` doit contenir : `axios`, `dotenv`, `exceljs`, `express`, `ws`.
 
 ---
 
-## ⚠️ Limitations connues
+## ⚠️ Limitations
 
-- **Rate limit Riot** : géré automatiquement — le programme attend le délai indiqué par l'API (header `Retry-After`) avant de réessayer.
-- **Clé dev Riot** : expire toutes les 24h, renouvelle-la avant chaque session.
-- **Timeline API** : si indisponible pour un match, les champs `csDiff`, `goldDiff` et `fatalGanksReceived` seront `null` — non bloquant.
-- **Serveur** : configuré pour **EUW**. Pour un autre serveur, modifie `REGION` et `REGION_PLATFORM` dans `src/config.js`.
-- **Concurrence** : l'interface web empêche le lancement simultané de deux modes.
+- **Rate limit Riot** : géré automatiquement via le header `Retry-After`.
+- **Clé dev Riot** : expire toutes les 24h.
+- **Timeline API** : si indisponible, `csDiff` / `goldDiff` / `fatalGanksReceived` seront `null`.
+- **Serveur** : configuré pour EUW. Modifie `REGION` et `REGION_PLATFORM` dans `src/config.js` pour un autre serveur.
+- **Concurrence** : un seul mode peut tourner à la fois (verrou côté serveur + désactivation UI).
+
+
+
+
+AJOUTER PROGRESSION
+STOP EN COURS

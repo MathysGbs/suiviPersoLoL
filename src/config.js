@@ -11,7 +11,7 @@ const DUO_TAG = 'EUW';
 
 const EXCEL_FILENAME = 'Suivi_Comportemental_Challenger.xlsx';
 const JSON_FILENAME = 'historique_matches.json';
-const MATCHES_TO_FETCH = 200;
+const MATCHES_TO_FETCH = 150;
 const QUEUE_FILTER = 420;
 const API_DELAY_MS = 1500;
 

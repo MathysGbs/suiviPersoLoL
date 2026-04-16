@@ -117,6 +117,24 @@ header {
     gap: 12px;
 }
 
+.btn-dash {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: var(--radius);
+    background: rgba(79,70,229,0.15);
+    border: 1px solid var(--border-hot);
+    color: var(--accent2);
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.btn-dash:hover {
+    background: rgba(79,70,229,0.3);
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+
 /* ── Status pill ────────────────────────────────────── */
 .status-pill {
     display: flex;
@@ -499,6 +517,7 @@ header {
       </div>
     </div>
     <div class="header-right">
+      <a href="/dashboard.html" class="btn-dash">📊 Dashboard</a>
       <div class="status-pill idle" id="statusPill">
         <span class="dot"></span>
         <span id="statusText">Prêt</span>

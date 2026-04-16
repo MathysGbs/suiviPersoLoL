@@ -82,21 +82,23 @@ async function getMatchTimeline(matchId) {
     return r.data;
 }
 
-async function fetchRankForSummoner(summonerId) {
-    if (rankCache[summonerId] !== undefined) return rankCache[summonerId];
+// Utilise le PUUID (endpoint moderne) — summonerId déprécié dans Match v5
+async function fetchRankForPuuid(puuid) {
+    if (!puuid) return { tier: null, division: null, score: -1, label: 'Non classé' };
+    if (rankCache[puuid] !== undefined) return rankCache[puuid];
 
     try {
         const r = await axios.get(
-            `https://${REGION_PLATFORM}.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerId}`,
+            `https://${REGION_PLATFORM}.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid}`,
             { headers: { 'X-Riot-Token': RIOT_API_KEY } },
         );
 
         const soloQ = r.data.find((e) => e.queueType === 'RANKED_SOLO_5x5');
         if (!soloQ) {
-            rankCache[summonerId] = { tier: null, division: null, score: -1, label: 'Non classé' };
+            rankCache[puuid] = { tier: null, division: null, score: -1, label: 'Non classé' };
         } else {
             const score = rankToScore(soloQ.tier, soloQ.rank);
-            rankCache[summonerId] = {
+            rankCache[puuid] = {
                 tier: soloQ.tier,
                 division: soloQ.rank,
                 score,
@@ -110,12 +112,12 @@ async function fetchRankForSummoner(summonerId) {
                 : 10000;
             console.log(`\n      [!] Limite API (Rangs) atteinte. Attente de ${retryAfter / 1000}s...`);
             await sleep(retryAfter + 500);
-            return fetchRankForSummoner(summonerId);
+            return fetchRankForPuuid(puuid);
         }
-        rankCache[summonerId] = { tier: null, division: null, score: -1, label: 'Non classé' };
+        rankCache[puuid] = { tier: null, division: null, score: -1, label: 'Non classé' };
     }
 
-    return rankCache[summonerId];
+    return rankCache[puuid];
 }
 
 async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
@@ -246,27 +248,27 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
         fatalGanksReceived = null;
     }
 
-    const allySummonerIds = myTeam.filter((p) => p.puuid !== myPuuid).map((p) => p.summonerId).filter(Boolean);
-    const enemySummonerIds = enemies.map((p) => p.summonerId).filter(Boolean);
+    const allyPuuids  = myTeam.filter((p) => p.puuid !== myPuuid).map((p) => p.puuid).filter(Boolean);
+    const enemyPuuids = enemies.map((p) => p.puuid).filter(Boolean);
 
     console.log('   -> Récupération rangs alliés...');
     const allyRanks = [];
-    for (const sid of allySummonerIds) {
+    for (const puuid of allyPuuids) {
         await sleep(350);
-        const rk = await fetchRankForSummoner(sid);
+        const rk = await fetchRankForPuuid(puuid);
         if (rk.score >= 0) allyRanks.push(rk.score);
     }
 
-    const myRankEntry = await fetchRankForSummoner(me.summonerId);
+    const myRankEntry = await fetchRankForPuuid(myPuuid);
     const avgAllyScore = allyRanks.length
         ? parseFloat((allyRanks.reduce((s, v) => s + v, 0) / allyRanks.length).toFixed(2))
         : -1;
 
     console.log('   -> Récupération rangs ennemis...');
     const enemyRanks = [];
-    for (const sid of enemySummonerIds) {
+    for (const puuid of enemyPuuids) {
         await sleep(350);
-        const rk = await fetchRankForSummoner(sid);
+        const rk = await fetchRankForPuuid(puuid);
         if (rk.score >= 0) enemyRanks.push(rk.score);
     }
 
@@ -448,7 +450,7 @@ async function migrateOldEntries(data, myPuuid, duoPuuid) {
 
             if (entry.myRankScore == null) {
                 await sleep(350);
-                const myRk = await fetchRankForSummoner(me.summonerId);
+                const myRk = await fetchRankForPuuid(myPuuid);
                 entry.myRank = myRk.label;
                 entry.myRankScore = myRk.score;
 
@@ -458,16 +460,16 @@ async function migrateOldEntries(data, myPuuid, duoPuuid) {
                 const enemyScores = [];
 
                 for (const p of allyPlayers) {
-                    if (!p.summonerId) continue;
+                    if (!p.puuid) continue;
                     await sleep(300);
-                    const rk = await fetchRankForSummoner(p.summonerId);
+                    const rk = await fetchRankForPuuid(p.puuid);
                     if (rk.score >= 0) allyScores.push(rk.score);
                 }
 
                 for (const p of enemies) {
-                    if (!p.summonerId) continue;
+                    if (!p.puuid) continue;
                     await sleep(300);
-                    const rk = await fetchRankForSummoner(p.summonerId);
+                    const rk = await fetchRankForPuuid(p.puuid);
                     if (rk.score >= 0) enemyScores.push(rk.score);
                 }
 
