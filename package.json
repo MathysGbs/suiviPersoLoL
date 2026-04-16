@@ -4,6 +4,12 @@
   "description": "",
   "main": "lol.js",
   "scripts": {
+    "start": "node lol.js all",
+    "all": "node lol.js all",
+    "fetch": "node lol.js fetch",
+    "migrate": "node lol.js migrate",
+    "excel": "node lol.js excel",
+    "legacy": "set USE_LEGACY_FLOW=1 && node lol.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
