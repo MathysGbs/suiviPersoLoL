@@ -78,6 +78,22 @@ function colorKDA(cell, kda) {
     }
 }
 
+function colorResponsabilite(cell, resp) {
+    if (resp >= 80) {
+        cell.font = { bold: true, color: { argb: C.winFg }, size: 10 };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.winBg } };
+    } else if (resp <= 20) {
+        cell.font = { bold: true, color: { argb: C.lossFg }, size: 10 };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.lossBg } };
+    } else if (resp >= 60) {
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.good } };
+    } else if (resp <= 40) {
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.bad } };
+    } else {
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.warn } };
+    }
+}
+
 function colorDeaths(cell, d) {
     if (d >= 6) {
         cell.font = { bold: true, color: { argb: C.lossFg }, size: 10 };
@@ -135,9 +151,9 @@ function buildRawDataSheet(sheet, data) {
         },
         {
             bg: C.grpCombat,
-            labels: ['KDA', 'K', 'D', 'A', '% Mort', 'KP %', '% DMG', 'DMG/Gold', 'Ratio DMG'],
-            keys: ['kda', 'kills', 'deaths', 'assists', 'pctDeadTime', 'kp', 'dmgShare', 'dpg', 'dmgRatio'],
-            widths: [7, 5, 5, 5, 8, 8, 8, 10, 10],
+            labels: ['KDA', 'K', 'D', 'A', '% Mort', 'KP %', '% DMG', 'DMG/Gold', 'Ratio DMG', 'Resp.'],
+            keys: ['kda', 'kills', 'deaths', 'assists', 'pctDeadTime', 'kp', 'dmgShare', 'dpg', 'dmgRatio', 'responsabilite'],
+            widths: [7, 5, 5, 5, 8, 8, 8, 10, 10, 8],
         },
         {
             bg: C.grpFarm,
@@ -206,6 +222,7 @@ function buildRawDataSheet(sheet, data) {
         if (typeof m.deaths === 'number') colorDeaths(row.getCell('deaths'), m.deaths);
         if (typeof m.csPerMin === 'number') colorCS(row.getCell('csPerMin'), m.csPerMin);
         if (typeof m.pctDeadTime === 'number') colorDeadTime(row.getCell('pctDeadTime'), m.pctDeadTime);
+        if (typeof m.responsabilite === 'number') colorResponsabilite(row.getCell('responsabilite'), m.responsabilite);
 
         if (typeof m.dmgShare === 'number') row.getCell('dmgShare').numFmt = '0.0';
         if (typeof m.kp === 'number') row.getCell('kp').numFmt = '0.0';
@@ -485,6 +502,7 @@ function buildTendancesSheet(sheet, data, a) {
         ['% DMG Equipe moyen', `${a.overall.avgDmgShare.toFixed(1)} %`, false],
         ['KP % moyen', `${a.overall.avgKP.toFixed(1)} %`, false],
         ['Vision Score moyen', a.overall.avgVision.toFixed(1), false],
+        ['Responsabilité moyenne', a.overall.avgResp != null ? a.overall.avgResp.toFixed(1) : 'N/A', false],
     ].forEach(([label, value, isPct], i) => { kv(r, label, value, i, isPct); r++; });
     r++;
 

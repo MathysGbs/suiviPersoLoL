@@ -65,7 +65,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .wrap{max-width:1340px;margin:0 auto;padding:28px 28px 80px}
 
 /* ── KPI strip ── */
-.kpi-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:28px}
+  .kpi-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin-bottom:28px}
 .kpi{background:var(--bg2);border-radius:var(--rl);padding:18px 20px;box-shadow:var(--shadow);border:1px solid var(--border);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
 .kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
 .kpi-accent{position:absolute;top:0;left:0;width:4px;height:100%;border-radius:14px 0 0 14px;background:var(--kc,var(--gold))}
@@ -105,10 +105,10 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .games-count{font-family:var(--font-m);font-size:11px;color:var(--text3);white-space:nowrap}
 
 .games-table{background:var(--bg2);border-radius:var(--rl);box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden}
-.gt-head{display:grid;grid-template-columns:90px 36px 110px 60px 72px 90px 70px 70px 60px 80px 50px;gap:0;padding:10px 16px;background:var(--navy);font-family:var(--font-m);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.gt-head{display:grid;grid-template-columns:90px 36px 110px 60px 72px 90px 70px 70px 60px 80px 40px 50px;gap:0;padding:10px 16px;background:var(--navy);font-family:var(--font-m);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)}
 .gt-body{max-height:calc(100vh - 240px);overflow-y:auto}
 .gt-body::-webkit-scrollbar{width:6px}.gt-body::-webkit-scrollbar-track{background:transparent}.gt-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-.gt-row{display:grid;grid-template-columns:90px 36px 110px 60px 72px 90px 70px 70px 60px 80px 50px;gap:0;padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;align-items:center;font-size:13px}
+.gt-row{display:grid;grid-template-columns:90px 36px 110px 60px 72px 90px 70px 70px 60px 80px 40px 50px;gap:0;padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;align-items:center;font-size:13px}   
 .gt-row:last-child{border-bottom:none}
 .gt-row:hover{background:var(--bg3)}
 .gt-row.win-row{border-left:3px solid var(--win)}
@@ -116,6 +116,12 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .result-badge{display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-m);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;width:28px;height:22px;border-radius:5px}
 .result-badge.v{background:var(--win-bg);color:var(--win-text)}
 .result-badge.d{background:var(--loss-bg);color:var(--loss-text)}
+.resp-cell{border-radius:4px;padding:3px 6px;font-family:var(--font-m);font-size:11px;font-weight:600;text-align:center;display:inline-block;min-width:32px;color:#fff}
+.resp-vbad{background:var(--loss);color:#fff}
+.resp-bad{background:rgba(239, 68, 68, 0.6);color:#fff}
+.resp-mid{background:#f59e0b;color:#fff}
+.resp-good{background:#10b981;color:#fff}
+.resp-vgood{background:var(--win);color:#fff}
 .champ-name{font-weight:600;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .role-tag{font-family:var(--font-m);font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:4px;background:var(--bg3);color:var(--text2);display:inline-block}
 .kda-cell{font-family:var(--font-m);font-weight:500}
@@ -212,7 +218,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
   .kpi-strip{grid-template-columns:repeat(3,1fr)}
   .grid2,.grid31,.grid13{grid-template-columns:1fr}
   .gt-head,.gt-row{grid-template-columns:80px 32px 100px 55px 70px 85px 1fr}
-  .gt-row .rank-cell,.gt-row>:nth-child(8),.gt-row>:nth-child(9){display:none}
+  .gt-head .rank-cell,.gt-head>.resp-cell,.gt-head>:nth-child(8),.gt-head>:nth-child(9),.gt-head>:nth-child(10),.gt-head>:nth-child(11),.gt-row .rank-cell,.gt-row .resp-cell,.gt-row>:nth-child(8),.gt-row>:nth-child(9),.gt-row>:nth-child(10),.gt-row>:nth-child(11){display:none}
   .detail-panel{width:100vw}
 }
 </style>
@@ -262,6 +268,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
     <div class="kpi" style="--kc:var(--blue)"><div class="kpi-accent"></div><div class="kpi-label">KDA Moyen</div><div class="kpi-val" id="kKDA">—</div><div class="kpi-sub" id="kKDASub"></div></div>
     <div class="kpi" style="--kc:var(--teal)"><div class="kpi-accent"></div><div class="kpi-label">CS / Min</div><div class="kpi-val" id="kCS">—</div></div>
     <div class="kpi" style="--kc:var(--warn)"><div class="kpi-accent"></div><div class="kpi-label">DPM Moyen</div><div class="kpi-val" id="kDPM">—</div></div>
+    <div class="kpi" style="--kc:#a78bfa"><div class="kpi-accent"></div><div class="kpi-label">Resp. Moyenne</div><div class="kpi-val" id="kResp">—</div></div>
     <div class="kpi" style="--kc:var(--gold)"><div class="kpi-accent"></div><div class="kpi-label">Rang actuel</div><div class="kpi-val" id="kRank" style="font-size:16px;margin-top:4px">—</div></div>
   </div>
 
@@ -295,7 +302,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
     </div>
   </div>
 
-  <div class="sh"><h2>Comportement</h2></div>
+  <div class="sh"><h2>Comportement & Impact</h2></div>
   <div class="grid2">
     <div class="card" style="height:280px">
       <div class="card-title">Fatigue — WR par partie dans la session</div>
@@ -304,6 +311,16 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
     <div class="card" style="height:280px">
       <div class="card-title">Tilt — après Victoire vs Défaite</div>
       <div class="chart-box" style="height:225px"><canvas id="cTilt"></canvas></div>
+    </div>
+  </div>
+  <div class="grid2" style="margin-top:20px">
+    <div class="card" style="height:280px">
+      <div class="card-title">Impact — WR selon Responsabilité (Int à Carry)</div>
+      <div class="chart-box" style="height:225px"><canvas id="cRespWr"></canvas></div>
+    </div>
+    <div class="card" style="height:280px">
+      <div class="card-title">Tilt factor — WR après Mvse/Bne Performance</div>
+      <div class="chart-box" style="height:225px"><canvas id="cTiltResp"></canvas></div>
     </div>
   </div>
 
@@ -368,7 +385,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
     <div class="gt-head">
       <div>Date</div><div></div><div>Champion</div><div>Rôle</div>
       <div>KDA</div><div>K / D / A</div><div>CS/Min</div>
-      <div>DPM</div><div>Vision</div><div>Rang</div><div></div>
+      <div>DPM</div><div>Vision</div><div>Rang</div><div title="Responsabilité (Int->Carry)">Resp.</div><div></div>
     </div>
     <div class="gt-body" id="gtBody"></div>
   </div>
@@ -472,6 +489,14 @@ function renderKPIs(data){
   document.getElementById('kKDA').textContent=kda.toFixed(2);
   document.getElementById('kCS').textContent=avg(data,'csPerMin').toFixed(1);
   document.getElementById('kDPM').textContent=Math.round(avg(data,'dpm'));
+  
+  const avgResp = avg(data,'responsabilite');
+  document.getElementById('kResp').textContent=isNaN(avgResp) ? '—' : avgResp.toFixed(1);
+  const respEl = document.getElementById('kResp').parentElement;
+  if (!isNaN(avgResp)) {
+    respEl.style.setProperty('--kc', avgResp >= 60 ? 'var(--win)' : avgResp >= 40 ? '#f59e0b' : 'var(--loss)');
+  }
+  
   document.getElementById('kRank').textContent=last?.myRank||'—';
   const wr10=wPct(data.slice(-10));
   document.getElementById('kWRSub').textContent=(wr10*100).toFixed(0)+'% (10 dernières)';
@@ -486,7 +511,7 @@ function renderKPIs(data){
 // ─── All charts ──────────────────────────────────────────
 function renderCharts(data){
   chartWR(data); chartKDA(data); chartRank(data); chartChamps(data);
-  chartRoles(data); chartFatigue(data); chartTilt(data); chartTime(data);
+  chartRoles(data); chartFatigue(data); chartTilt(data); chartRespWr(data); chartTiltResp(data); chartTime(data);
   chartFarm(data); chartSD(data); chartDuo(data);
 }
 
@@ -617,6 +642,59 @@ function chartTilt(data){
   }});
 }
 
+function chartRespWr(data){
+  dc('respWr');
+  const b = {'Int (<20)':[], 'Bas (20-40)':[], 'Neutre (40-60)':[], 'Bon (60-80)':[], 'Carry (>80)':[]};
+  data.forEach(m => {
+    if (m.responsabilite == null) return;
+    if (m.responsabilite < 20) b['Int (<20)'].push(m);
+    else if (m.responsabilite < 40) b['Bas (20-40)'].push(m);
+    else if (m.responsabilite < 60) b['Neutre (40-60)'].push(m);
+    else if (m.responsabilite < 80) b['Bon (60-80)'].push(m);
+    else b['Carry (>80)'].push(m);
+  });
+  const labels = Object.keys(b);
+  const wrs = labels.map(k => b[k].length ? +(wPct(b[k])*100).toFixed(1) : null);
+  const cnts = labels.map(k => b[k].length);
+  const gw = +(wPct(data)*100).toFixed(1);
+  const colors = wrs.map(w => w === null ? '#e5e0d5' : w >= 55 ? C.win : w <= 45 ? C.loss : C.warn);
+  
+  charts.respWr = new Chart(document.getElementById('cRespWr'),{type:'bar',
+  data:{labels,datasets:[
+    {label:'Win Rate', data:wrs, backgroundColor:colors.map(c=>c+'22'), borderColor:colors, borderWidth:2, borderRadius:8},
+    {label:'WR global', data:Array(5).fill(gw), type:'line', borderColor:'rgba(154,165,180,.6)', borderDash:[5,4], borderWidth:1.5, pointRadius:0, fill:false},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{...axD()},y:{...axD(),min:0,max:100,ticks:{callback:v=>v+'%'}}},
+    plugins:{legend:{display:true,position:'top',labels:{color:'#9aa5b4',boxWidth:10,font:{size:10}}},
+      tooltip:{callbacks:{label:ctx=>ctx.dataset.label==='Win Rate'?` WR: ${ctx.raw}% (${cnts[ctx.dataIndex]} parties)`:` WR global: ${ctx.raw}%`}}
+    }
+  }});
+}
+
+function chartTiltResp(data){
+  dc('tiltResp');
+  const afterBad=[], afterMid=[], afterGood=[];
+  for(let i=1; i<data.length; i++){
+    const prev = data[i-1];
+    if (prev.responsabilite == null) continue;
+    if (prev.responsabilite < 40) afterBad.push(data[i]);
+    else if (prev.responsabilite < 60) afterMid.push(data[i]);
+    else afterGood.push(data[i]);
+  }
+  
+  charts.tiltResp=new Chart(document.getElementById('cTiltResp'),{type:'bar',
+  data:{labels:['Win Rate','KDA','CS/Min','DPM ÷100'],datasets:[
+    {label:'Après Perf <= 40',data:[+(wPct(afterBad)*100).toFixed(1),+avg(afterBad,'kda').toFixed(2),+avg(afterBad,'csPerMin').toFixed(1),+(avg(afterBad,'dpm')/100).toFixed(1)],backgroundColor:C.lossBg,borderColor:C.loss,borderWidth:1.5,borderRadius:6},
+    {label:'Après Perf Avg',data:[+(wPct(afterMid)*100).toFixed(1),+avg(afterMid,'kda').toFixed(2),+avg(afterMid,'csPerMin').toFixed(1),+(avg(afterMid,'dpm')/100).toFixed(1)],backgroundColor:C.warn+'22',borderColor:C.warn,borderWidth:1.5,borderRadius:6},
+    {label:'Après Perf >= 60',data:[+(wPct(afterGood)*100).toFixed(1),+avg(afterGood,'kda').toFixed(2),+avg(afterGood,'csPerMin').toFixed(1),+(avg(afterGood,'dpm')/100).toFixed(1)],backgroundColor:C.winBg,borderColor:C.win,borderWidth:1.5,borderRadius:6},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{...axD()},y:{...axD()}},
+    plugins:{legend:{display:true,position:'top',labels:{color:'#9aa5b4',boxWidth:10,font:{size:10}}}}
+  }});
+}
+
 function chartTime(data){
   dc('time');
   const sl={'Nuit (0–6h)':[],'Matin (6–12h)':[],'Après-midi (12–18h)':[],'Soir (18–24h)':[]};
@@ -713,6 +791,24 @@ function applyFilters(){
   renderGamesList(d);
 }
 
+function getRespClass(resp) {
+  if (resp === undefined || resp === null) return '';
+  if (resp >= 80) return 'resp-vgood';
+  if (resp >= 60) return 'resp-good';
+  if (resp >= 40) return 'resp-mid';
+  if (resp >= 20) return 'resp-bad';
+  return 'resp-vbad';
+}
+
+function getRespTooltip(resp) {
+  if (resp === undefined || resp === null) return 'Donnée manquante';
+  if (resp >= 80) return 'Impact extrêmement positif (Solo Win)';
+  if (resp >= 60) return 'Impact positif (A grandement aidé)';
+  if (resp >= 40) return 'Impact neutre (Dans la moyenne)';
+  if (resp >= 20) return 'Impact négatif';
+  return 'Impact très négatif (Int)';
+}
+
 function renderGamesList(data){
   const body=document.getElementById('gtBody');
   body.innerHTML='';
@@ -738,6 +834,7 @@ function renderGamesList(data){
       <span class="mono-cell">${Math.round(safeN(m.dpm))}</span>
       <span class="mono-cell">${m.vision||0}</span>
       <span class="rank-cell">${m.myRank||'—'}</span>
+      <span class="resp-cell ${getRespClass(m.responsabilite)}" title="${getRespTooltip(m.responsabilite)}">${m.responsabilite!==undefined?m.responsabilite:'—'}</span>
       <span class="mono-cell" style="color:#9aa5b4;font-size:11px">›</span>
     `;
     row.onclick=()=>openDetail(m);

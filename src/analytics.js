@@ -94,6 +94,7 @@ function computeAnalytics(data) {
             avgDmgShare: avgOf(data, 'dmgShare'),
             avgKP: avgOf(data, 'kp'),
             avgVision: avgOf(data, 'vision'),
+            avgResp: avgOf(data, 'responsabilite'),
         },
     };
 }

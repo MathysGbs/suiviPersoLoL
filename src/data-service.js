@@ -280,6 +280,38 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
         ? parseFloat((avgAllyScore - avgEnemyScore).toFixed(2))
         : null;
 
+    const pctDeadTime = parseFloat((((me.totalTimeSpentDead || 0) / match.info.gameDuration) * 100).toFixed(1));
+    const kda = parseFloat(((me.kills + me.assists) / Math.max(1, me.deaths)).toFixed(2));
+    
+    // Calcul de la Responsabilité
+    let resp = 50;
+    
+    // Impact KDA
+    if (kda < 1.0) resp -= 20;
+    else if (kda < 2.0) resp -= 10;
+    else if (kda >= 3.0 && kda < 4.0) resp += 10;
+    else if (kda >= 4.0) resp += 20;
+
+    // Impact KP
+    if (kp < 30) resp -= 15;
+    else if (kp < 40) resp -= 5;
+    else if (kp >= 50 && kp < 60) resp += 10;
+    else if (kp >= 60) resp += 15;
+
+    // Impact DMG %
+    if (dmgShare < 15) resp -= 15;
+    else if (dmgShare < 20) resp -= 5;
+    else if (dmgShare >= 20 && dmgShare < 25) resp += 5;
+    else if (dmgShare >= 25 && dmgShare < 30) resp += 10;
+    else if (dmgShare >= 30) resp += 15;
+
+    // Impact Temps mort
+    if (pctDeadTime > 15) resp -= 15;
+    else if (pctDeadTime > 10) resp -= 10;
+    else if (pctDeadTime < 5) resp += 10;
+    
+    const responsabilite = Math.max(0, Math.min(100, Math.round(resp)));
+
     return {
         matchId,
         rawDate: gameDate.toISOString(),
@@ -293,7 +325,7 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
         role,
         type: isDuo ? 'Duo' : 'Solo',
         win: me.win ? 'Victoire' : 'Defaite',
-        kda: parseFloat(((me.kills + me.assists) / Math.max(1, me.deaths)).toFixed(2)),
+        kda,
         kills: me.kills,
         deaths: me.deaths,
         assists: me.assists,
@@ -307,7 +339,7 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
         wardsPlaced: me.wardsPlaced || 0,
         wardsKilled: me.wardsKilled || 0,
         controlWards: me.visionWardsBoughtInGame || 0,
-        pctDeadTime: parseFloat((((me.totalTimeSpentDead || 0) / match.info.gameDuration) * 100).toFixed(1)),
+        pctDeadTime,
         bestMultiKill: bestMultiKill(me),
         pentaKills: me.pentaKills || 0,
         quadraKills: me.quadraKills || 0,
@@ -352,6 +384,7 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
         avgEnemyRank: scoreToLabel(Math.round(avgEnemyScore)),
         avgEnemyRankScore: avgEnemyScore,
         rankDiff,
+        responsabilite,
     };
 }
 
