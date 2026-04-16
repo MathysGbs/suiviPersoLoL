@@ -6,10 +6,18 @@ const {
     migrateOldEntries,
     recalculateTimeline,
 } = require('./data-service');
-const { QUEUE_FILTER } = require('./config');
+const { QUEUE_FILTER, MATCHES_TO_FETCH } = require('./config');
 const { rebuildExcel } = require('./excel-service');
 
-async function runFetchOnly() {
+function normalizeMatchesToFetch(value) {
+    const parsed = Number.parseInt(value, 10);
+    if (!Number.isFinite(parsed) || parsed <= 0) return MATCHES_TO_FETCH;
+    return parsed;
+}
+
+async function runFetchOnly(options = {}) {
+    const matchesToFetch = normalizeMatchesToFetch(options.matchesToFetch);
+
     console.log('1. Lecture de la base locale...');
     let data = loadData();
     console.log(`   -> ${data.length} partie(s) en memoire.`);
@@ -19,8 +27,8 @@ async function runFetchOnly() {
     console.log(`   -> Joueur : ${player.gameName}#${player.tagLine}`);
     console.log(`   -> Duo    : ${duo.gameName}#${duo.tagLine}`);
 
-    console.log(`3. Recuperation des IDs (queue: ${QUEUE_FILTER || 'toutes'})...`);
-    const { newIds, newMatches, ok, ko, stopped } = await fetchNewMatches(data, player.puuid, duo.puuid);
+    console.log(`3. Recuperation des IDs (queue: ${QUEUE_FILTER || 'toutes'}, games: ${matchesToFetch})...`);
+    const { newIds, newMatches, ok, ko, stopped } = await fetchNewMatches(data, player.puuid, duo.puuid, { matchesToFetch });
 
     if (newIds.length === 0) {
         console.log('\n-> Aucune nouvelle partie detectee.');
@@ -74,8 +82,8 @@ async function runExcelOnly() {
     console.log('\n[SUCCES] Fichier Excel reconstruit.');
 }
 
-async function runAll() {
-    const fetchResult = await runFetchOnly();
+async function runAll(options = {}) {
+    const fetchResult = await runFetchOnly(options);
 
     console.log('\n5. Migration des anciennes entrées (si besoin)...');
     const migrated = await migrateOldEntries(fetchResult.data, fetchResult.player.puuid, fetchResult.duo.puuid);

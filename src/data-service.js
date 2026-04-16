@@ -51,13 +51,20 @@ async function resolvePlayers() {
     return { player, duo };
 }
 
-async function getMatchIds(puuid) {
+function normalizeMatchLimit(value) {
+    const parsed = Number.parseInt(value, 10);
+    if (!Number.isFinite(parsed) || parsed <= 0) return MATCHES_TO_FETCH;
+    return parsed;
+}
+
+async function getMatchIds(puuid, matchesToFetch = MATCHES_TO_FETCH) {
+    const targetCount = normalizeMatchLimit(matchesToFetch);
     let allIds = [];
     let start = 0;
     const limit = 100;
 
-    while (allIds.length < MATCHES_TO_FETCH) {
-        const count = Math.min(limit, MATCHES_TO_FETCH - allIds.length);
+    while (allIds.length < targetCount) {
+        const count = Math.min(limit, targetCount - allIds.length);
         let url = `https://${REGION}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=${start}&count=${count}`;
         if (QUEUE_FILTER) url += `&queue=${QUEUE_FILTER}`;
 
@@ -68,7 +75,7 @@ async function getMatchIds(puuid) {
         allIds = allIds.concat(ids);
         start += count;
 
-        if (allIds.length < MATCHES_TO_FETCH) await sleep(API_DELAY_MS);
+        if (allIds.length < targetCount) await sleep(API_DELAY_MS);
     }
 
     return allIds;
@@ -616,9 +623,9 @@ function requestStop() {
     programmaticStopRequested = true;
 }
 
-async function fetchNewMatches(data, playerPuuid, duoPuuid) {
+async function fetchNewMatches(data, playerPuuid, duoPuuid, options = {}) {
     programmaticStopRequested = false; // Reset au lancement
-    const allIds = await getMatchIds(playerPuuid);
+    const allIds = await getMatchIds(playerPuuid, options.matchesToFetch);
     const savedIds = new Set(data.map((m) => m.matchId));
     const newIds = allIds.filter((id) => !savedIds.has(id));
 

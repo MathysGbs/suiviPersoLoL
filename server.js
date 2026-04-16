@@ -8,7 +8,7 @@ const path      = require('path');
 
 const { runAll, runFetchOnly, runMigrateOnly, runExcelOnly } = require('./src/pipeline');
 const { requestStop } = require('./src/data-service');
-const { JSON_FILENAME } = require('./src/config');
+const { JSON_FILENAME, MATCHES_TO_FETCH } = require('./src/config');
 
 // ── Serveur HTTP + WebSocket ───────────────────────────────
 const app    = express();
@@ -96,7 +96,8 @@ function runMode(modeFn, modeName) {
         res.json({ ok: true });
 
         try {
-            await modeFn();
+            const matchesToFetch = req.body?.matchesToFetch;
+            await modeFn({ matchesToFetch });
             broadcast('done', { mode: modeName, stats: getStats() });
         } catch (err) {
             broadcast('error', {
@@ -111,7 +112,7 @@ function runMode(modeFn, modeName) {
 
 // ── Routes API ─────────────────────────────────────────────
 app.get('/api/status', (_req, res) => {
-    res.json({ isRunning, stats: getStats() });
+    res.json({ isRunning, stats: getStats(), defaults: { matchesToFetch: MATCHES_TO_FETCH } });
 });
 
 app.get('/api/data', (_req, res) => {

@@ -91,6 +91,8 @@ node lol.js migrate  # Complète les entrées incomplètes
 node lol.js excel    # Régénère l'Excel (sans appel API)
 ```
 
+Quand tu lances `fetch` ou `all` dans un terminal interactif, le script te demande si tu veux modifier le nombre de games avant de lancer la récupération.
+
 ---
 
 ## 📂 Fichiers générés

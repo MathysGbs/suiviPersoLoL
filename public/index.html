@@ -519,6 +519,121 @@ header {
 .ws-indicator.connected { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
 .ws-indicator.disconnected { background: #ef4444; }
 
+/* ── Modal ────────────────────────────────────────────── */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.72);
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    padding: 20px;
+}
+
+.modal-backdrop.open {
+    display: flex;
+}
+
+.modal-card {
+    width: min(100%, 460px);
+    background: linear-gradient(180deg, rgba(19,19,42,0.98), rgba(13,13,26,0.98));
+    border: 1px solid var(--border-hot);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(129,140,248,0.12);
+    padding: 22px;
+}
+
+.modal-card h2 {
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.modal-card p {
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.modal-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.modal-field label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.modal-field input {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    color: #fff;
+    padding: 12px 14px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    outline: none;
+}
+
+.modal-field input:focus {
+    border-color: var(--accent2);
+    box-shadow: 0 0 0 3px rgba(129,140,248,0.15);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.modal-btn {
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    color: var(--text-dim);
+}
+
+.modal-btn.primary {
+    border-color: var(--border-hot);
+    color: var(--accent2);
+    background: rgba(79,70,229,0.14);
+}
+
+.modal-btn.primary:hover {
+    background: rgba(79,70,229,0.24);
+}
+
+.modal-btn.secondary:hover {
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.modal-note {
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
 </style>
 </head>
 <body>
@@ -651,10 +766,28 @@ header {
 
 </div>
 
+<div class="modal-backdrop" id="gamesModal" role="dialog" aria-modal="true" aria-labelledby="gamesModalTitle">
+    <div class="modal-card">
+        <h2 id="gamesModalTitle">Modifier le nombre de games ?</h2>
+        <p>Tu peux garder la valeur par défaut ou en définir une nouvelle avant de lancer la récupération des données.</p>
+        <div class="modal-field">
+            <label for="gamesInput">Nombre de games</label>
+            <input id="gamesInput" type="number" min="1" step="1" />
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn secondary" type="button" id="gamesKeepBtn">Conserver</button>
+            <button class="modal-btn primary" type="button" id="gamesChangeBtn">Modifier et lancer</button>
+        </div>
+        <div class="modal-note">Si tu ne changes rien, la valeur par défaut sera utilisée.</div>
+    </div>
+</div>
+
 <script>
 // ── WebSocket ────────────────────────────────────────────
 let ws;
 let isRunning = false;
+let defaultMatchesToFetch = 200;
+let pendingFetchResolver = null;
 
 function connectWS() {
     const proto = location.protocol === 'https:' ? 'wss' : 'ws';
@@ -725,6 +858,17 @@ function handleMessage(msg) {
     }
 }
 
+function setDefaultMatchesToFetch(value) {
+    const parsed = Number.parseInt(value, 10);
+    if (Number.isFinite(parsed) && parsed > 0) {
+        defaultMatchesToFetch = parsed;
+        const input = document.getElementById('gamesInput');
+        if (input && !input.value) {
+            input.value = String(parsed);
+        }
+    }
+}
+
 async function requestStop() {
     try {
         const res = await fetch('/api/stop', { method: 'POST' });
@@ -765,6 +909,31 @@ function setCardsDisabled(disabled) {
 // ── Progress bar ─────────────────────────────────────────
 function setProgressBar(active) {
     document.getElementById('progressBar').className = 'progress-bar' + (active ? ' active' : '');
+}
+
+function openGamesModal() {
+    const modal = document.getElementById('gamesModal');
+    const input = document.getElementById('gamesInput');
+    input.value = String(defaultMatchesToFetch);
+    modal.classList.add('open');
+    input.focus();
+    input.select();
+
+    return new Promise((resolve) => {
+        pendingFetchResolver = resolve;
+    });
+}
+
+function closeGamesModal() {
+    document.getElementById('gamesModal').classList.remove('open');
+}
+
+function resolveGamesModal(value) {
+    if (pendingFetchResolver) {
+        pendingFetchResolver(value);
+        pendingFetchResolver = null;
+    }
+    closeGamesModal();
 }
 
 // ── Terminal ─────────────────────────────────────────────
@@ -821,7 +990,19 @@ function checkExcelFile() {
 async function triggerMode(mode) {
     if (isRunning) return;
     try {
-        const res = await fetch(`/api/run/${mode}`, { method: 'POST' });
+        let body;
+        if (mode === 'fetch' || mode === 'all') {
+            const choice = await openGamesModal();
+            if (choice !== null) {
+                body = JSON.stringify({ matchesToFetch: choice });
+            }
+        }
+
+        const res = await fetch(`/api/run/${mode}`, {
+            method: 'POST',
+            headers: body ? { 'Content-Type': 'application/json' } : undefined,
+            body,
+        });
         if (!res.ok) {
             const err = await res.json();
             appendLog(err.error || 'Erreur inconnue', 'error');
@@ -831,6 +1012,28 @@ async function triggerMode(mode) {
     }
 }
 
+document.getElementById('gamesKeepBtn').addEventListener('click', () => {
+    resolveGamesModal(null);
+});
+
+document.getElementById('gamesChangeBtn').addEventListener('click', () => {
+    const input = document.getElementById('gamesInput');
+    const value = Number.parseInt(input.value, 10);
+    if (!Number.isFinite(value) || value <= 0) {
+        appendLog('Le nombre de games doit être un entier positif.', 'error');
+        input.focus();
+        return;
+    }
+    setDefaultMatchesToFetch(value);
+    resolveGamesModal(value);
+});
+
+document.getElementById('gamesModal').addEventListener('click', (event) => {
+    if (event.target.id === 'gamesModal') {
+        resolveGamesModal(null);
+    }
+});
+
 // ── Init ─────────────────────────────────────────────────
 connectWS();
 checkExcelFile();
@@ -838,6 +1041,9 @@ checkExcelFile();
 fetch('/api/status')
     .then(r => r.json())
     .then(data => {
+        if (data.defaults?.matchesToFetch) {
+            setDefaultMatchesToFetch(data.defaults.matchesToFetch);
+        }
         if (data.isRunning) {
             setStatus('running', 'En cours…');
             setCardsDisabled(true);
