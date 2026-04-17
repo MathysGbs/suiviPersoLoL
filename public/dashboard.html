@@ -893,7 +893,12 @@ function chartRoles(data){
 function chartFatigue(data){
   dc('fatigue');
   const b={1:[],2:[],3:[],4:[]};
-  data.forEach(m=>{const g=Math.min(safeN(m.gameInSession,1),4);b[g].push(m);});
+  data.forEach(m=>{
+    const gameInSession = safeN(m.gameInSession, 0);
+    if (gameInSession <= 0) return; // Remakes are not counted in session indexing.
+    const g = Math.min(gameInSession, 4);
+    b[g].push(m);
+  });
   const wrs=[1,2,3,4].map(i=>b[i].length?parseFloat((wPct(b[i])*100).toFixed(1)):null);
   const cnts=[1,2,3,4].map(i=>b[i].length);
   const gw=parseFloat((wPct(data)*100).toFixed(1));
@@ -1324,7 +1329,7 @@ function openDetail(m){
         ${m.withYuumi==='Oui'?'<span class="badge win-badge">🐱 Duo Yuumi</span>':''}
         ${m.yuumiAlliee==='Oui'&&m.withYuumi!=='Oui'?'<span class="badge">🐱 Yuumi alliée</span>':''}
         ${m.enemyADC?`<span class="badge">vs ${m.enemyADC}</span>`:''}
-        <span class="badge ${isWin?'win-badge':'loss-badge'}">Session P${m.gameInSession||'?'}</span>
+        <span class="badge ${isWin?'win-badge':'loss-badge'}">${safeN(m.gameInSession,0)>0?`Session P${m.gameInSession}`:'Session remake'}</span>
         <span class="badge">Session #${m.sessionId||'?'}</span>
       </div>
     </div>

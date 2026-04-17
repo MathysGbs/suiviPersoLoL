@@ -32,7 +32,9 @@ Les valeurs importantes par défaut sont aussi définies dans ce fichier :
 - `REGION_PLATFORM = euw1`
 - `QUEUE_FILTER = 420` pour les parties ranked solo/duo
 - `MATCHES_TO_FETCH = 200`
+- `MAX_MATCHES_TO_FETCH = 500` pour éviter les fetch trop lourds
 - `API_DELAY_MS = 1500`
+- `HTTP_TIMEOUT_MS = 15000` pour éviter les appels API bloquants
 
 ## Lancement
 

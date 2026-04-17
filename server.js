@@ -8,7 +8,7 @@ const path      = require('path');
 
 const { runAll, runFetchOnly, runMigrateOnly, runExcelOnly } = require('./src/pipeline');
 const { requestStop } = require('./src/data-service');
-const { JSON_FILENAME, MATCHES_TO_FETCH } = require('./src/config');
+const { JSON_FILENAME, MATCHES_TO_FETCH, MAX_MATCHES_TO_FETCH } = require('./src/config');
 
 // ── Serveur HTTP + WebSocket ───────────────────────────────
 const app    = express();
@@ -26,8 +26,21 @@ let currentMatchesToFetch = MATCHES_TO_FETCH;
 function normalizeMatchesToFetch(value) {
     const parsed = Number.parseInt(value, 10);
     if (!Number.isFinite(parsed) || parsed <= 0) return null;
-    return parsed;
+    return Math.min(parsed, MAX_MATCHES_TO_FETCH);
 }
+
+function getHistoryMatchesToFetch() {
+    try {
+        if (!fs.existsSync(JSON_FILENAME)) return MATCHES_TO_FETCH;
+        const data = JSON.parse(fs.readFileSync(JSON_FILENAME, 'utf8'));
+        const historyCount = Array.isArray(data) ? data.length : 0;
+        return historyCount > 0 ? historyCount : MATCHES_TO_FETCH;
+    } catch {
+        return MATCHES_TO_FETCH;
+    }
+}
+
+currentMatchesToFetch = getHistoryMatchesToFetch();
 
 // ── Broadcast vers tous les clients WS connectés ──────────
 function broadcast(type, data = {}) {
@@ -79,7 +92,8 @@ function patchConsole() {
 function getStats() {
     try {
         if (!fs.existsSync(JSON_FILENAME)) return { total: 0, lastUpdated: null };
-        const data = JSON.parse(fs.readFileSync(JSON_FILENAME, 'utf8'));
+        const parsed = JSON.parse(fs.readFileSync(JSON_FILENAME, 'utf8'));
+        const data = Array.isArray(parsed) ? parsed : [];
         const sorted = [...data].sort((a, b) => new Date(b.rawDate) - new Date(a.rawDate));
         return {
             total:       data.length,
@@ -95,6 +109,10 @@ function runMode(modeFn, modeName) {
     return async (req, res) => {
         if (isRunning) {
             return res.status(409).json({ error: 'Un mode est déjà en cours d\'exécution.' });
+        }
+
+        if (req.body?.matchesToFetch !== undefined && normalizeMatchesToFetch(req.body.matchesToFetch) === null) {
+            return res.status(400).json({ error: 'matchesToFetch doit être un entier positif.' });
         }
 
         const requestedMatchesToFetch = normalizeMatchesToFetch(req.body?.matchesToFetch);
@@ -127,19 +145,26 @@ function runMode(modeFn, modeName) {
 
 // ── Routes API ─────────────────────────────────────────────
 app.get('/api/status', (_req, res) => {
+    const historyMatchesToFetch = getHistoryMatchesToFetch();
+    if (!isRunning) {
+        currentMatchesToFetch = historyMatchesToFetch;
+    }
+
     res.json({
         isRunning,
         runningMode,
         stats: getStats(),
-        defaults: { matchesToFetch: MATCHES_TO_FETCH },
+        defaults: { matchesToFetch: historyMatchesToFetch },
         current: { matchesToFetch: currentMatchesToFetch },
+        limits: { maxMatchesToFetch: MAX_MATCHES_TO_FETCH },
     });
 });
 
 app.get('/api/data', (_req, res) => {
     try {
         if (!fs.existsSync(JSON_FILENAME)) return res.json([]);
-        const data = JSON.parse(fs.readFileSync(JSON_FILENAME, 'utf8'));
+        const parsed = JSON.parse(fs.readFileSync(JSON_FILENAME, 'utf8'));
+        const data = Array.isArray(parsed) ? parsed : [];
         res.json(data);
     } catch (err) {
         res.status(500).json({ error: 'Impossible de lire les données : ' + err.message });

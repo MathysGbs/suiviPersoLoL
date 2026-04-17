@@ -11,8 +11,10 @@ const {
     DUO_TAG,
     JSON_FILENAME,
     MATCHES_TO_FETCH,
+    MAX_MATCHES_TO_FETCH,
     QUEUE_FILTER,
     API_DELAY_MS,
+    HTTP_TIMEOUT_MS,
     rankToScore,
     scoreToLabel,
 } = require('./config');
@@ -26,6 +28,7 @@ const {
 
 const rankCache = {};
 let itemCatalogCache = null;
+axios.defaults.timeout = HTTP_TIMEOUT_MS;
 
 async function getItemCatalog() {
     if (itemCatalogCache) return itemCatalogCache;
@@ -146,7 +149,13 @@ function computeResponsabiliteScore(metrics) {
 
 function loadData() {
     if (!fs.existsSync(JSON_FILENAME)) return [];
-    return JSON.parse(fs.readFileSync(JSON_FILENAME, 'utf8'));
+    try {
+        const parsed = JSON.parse(fs.readFileSync(JSON_FILENAME, 'utf8'));
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+        console.error(`[WARN] JSON local invalide (${JSON_FILENAME}) : ${e.message}`);
+        return [];
+    }
 }
 
 function saveData(data) {
@@ -172,7 +181,7 @@ async function resolvePlayers() {
 function normalizeMatchLimit(value) {
     const parsed = Number.parseInt(value, 10);
     if (!Number.isFinite(parsed) || parsed <= 0) return MATCHES_TO_FETCH;
-    return parsed;
+    return Math.min(parsed, MAX_MATCHES_TO_FETCH);
 }
 
 async function getMatchIds(puuid, matchesToFetch = MATCHES_TO_FETCH) {
@@ -792,27 +801,29 @@ async function fetchNewMatches(data, playerPuuid, duoPuuid, options = {}) {
     };
     process.on('SIGINT', onSigint);
 
-    for (let i = 0; i < newIds.length; i++) {
-        if (stopRequested || programmaticStopRequested) {
-            console.log('\n[!] Arret du fetch. Sauvegarde des donnees recuperees en cours...');
-            break;
-        }
+    try {
+        for (let i = 0; i < newIds.length; i++) {
+            if (stopRequested || programmaticStopRequested) {
+                console.log('\n[!] Arret du fetch. Sauvegarde des donnees recuperees en cours...');
+                break;
+            }
 
-        const progressPercent = Math.round(((i + 1) / newIds.length) * 100);
-        process.stdout.write(`   [${i + 1}/${newIds.length} - ${progressPercent}%] ${newIds[i]}... `);
-        try {
-            const m = await extractMatchMetrics(newIds[i], playerPuuid, duoPuuid);
-            newMatches.push(m);
-            ok++;
-            console.log(`OK  ${m.champion} (${m.role}) — ${m.win}`);
-        } catch (e) {
-            ko++;
-            console.log(`KO  ${e.message}`);
+            const progressPercent = Math.round(((i + 1) / newIds.length) * 100);
+            process.stdout.write(`   [${i + 1}/${newIds.length} - ${progressPercent}%] ${newIds[i]}... `);
+            try {
+                const m = await extractMatchMetrics(newIds[i], playerPuuid, duoPuuid);
+                newMatches.push(m);
+                ok++;
+                console.log(`OK  ${m.champion} (${m.role}) — ${m.win}`);
+            } catch (e) {
+                ko++;
+                console.log(`KO  ${e.message}`);
+            }
+            await sleep(API_DELAY_MS);
         }
-        await sleep(API_DELAY_MS);
+    } finally {
+        process.removeListener('SIGINT', onSigint);
     }
-
-    process.removeListener('SIGINT', onSigint);
 
     return { newIds, newMatches, ok, ko, stopped: stopRequested || programmaticStopRequested };
 }

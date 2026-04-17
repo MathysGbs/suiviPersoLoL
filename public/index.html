@@ -772,7 +772,7 @@ header {
         <p>Tu peux garder la valeur par défaut ou en définir une nouvelle avant de lancer la récupération des données.</p>
         <div class="modal-field">
             <label for="gamesInput">Nombre de games</label>
-            <input id="gamesInput" type="number" min="1" step="1" />
+            <input id="gamesInput" type="number" min="1" max="500" step="1" />
         </div>
         <div class="modal-actions">
             <button class="modal-btn secondary" type="button" id="gamesKeepBtn">Conserver</button>
@@ -788,6 +788,7 @@ let ws;
 let isRunning = false;
 let defaultMatchesToFetch = 200;
 let currentMatchesToFetch = 200;
+let maxMatchesToFetch = 500;
 let pendingFetchResolver = null;
 const MATCHES_STORAGE_KEY = 'lolTracker.matchesToFetch';
 
@@ -1054,6 +1055,11 @@ document.getElementById('gamesChangeBtn').addEventListener('click', () => {
         input.focus();
         return;
     }
+    if (value > maxMatchesToFetch) {
+        appendLog(`Le nombre de games ne peut pas depasser ${maxMatchesToFetch}.`, 'error');
+        input.focus();
+        return;
+    }
     setDefaultMatchesToFetch(value);
     currentMatchesToFetch = value;
     resolveGamesModal(value);
@@ -1072,6 +1078,13 @@ checkExcelFile();
 fetch('/api/status')
     .then(r => r.json())
     .then(data => {
+        if (data.limits?.maxMatchesToFetch) {
+            maxMatchesToFetch = data.limits.maxMatchesToFetch;
+            const input = document.getElementById('gamesInput');
+            if (input) {
+                input.max = String(maxMatchesToFetch);
+            }
+        }
         if (data.current?.matchesToFetch) {
             setDefaultMatchesToFetch(data.current.matchesToFetch);
             currentMatchesToFetch = data.current.matchesToFetch;

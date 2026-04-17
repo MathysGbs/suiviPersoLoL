@@ -753,7 +753,11 @@ async function rebuildExcel(data) {
         }
     }
 
-    await wb.xlsx.writeFile(EXCEL_FILENAME);
+    try {
+        await wb.xlsx.writeFile(EXCEL_FILENAME);
+    } catch (e) {
+        throw new Error(`Echec sauvegarde Excel (${EXCEL_FILENAME}) : ${e.message}`);
+    }
     console.log(`  -> Fichier sauvegarde : ${EXCEL_FILENAME}`);
 }
 

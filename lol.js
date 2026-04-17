@@ -4,7 +4,8 @@ const readline = require('node:readline/promises');
 const { stdin, stdout } = require('node:process');
 
 const { runAll, runFetchOnly, runMigrateOnly, runExcelOnly } = require('./src/pipeline');
-const { MATCHES_TO_FETCH } = require('./src/config');
+const { loadData } = require('./src/data-service');
+const { MATCHES_TO_FETCH, MAX_MATCHES_TO_FETCH } = require('./src/config');
 
 const mode = (process.argv[2] || 'all').toLowerCase();
 
@@ -35,9 +36,23 @@ async function askMatchesToFetch(defaultValue) {
             return defaultValue;
         }
 
+        if (parsed > MAX_MATCHES_TO_FETCH) {
+            console.log(`Valeur trop élevée, utilisation de ${MAX_MATCHES_TO_FETCH}.`);
+            return MAX_MATCHES_TO_FETCH;
+        }
+
         return parsed;
     } finally {
         rl.close();
+    }
+}
+
+function getDefaultMatchesToFetch() {
+    try {
+        const historyCount = loadData().length;
+        return historyCount > 0 ? historyCount : MATCHES_TO_FETCH;
+    } catch {
+        return MATCHES_TO_FETCH;
     }
 }
 
@@ -51,7 +66,7 @@ async function main() {
 
     const options = {};
     if (mode === 'fetch' || mode === 'all') {
-        options.matchesToFetch = await askMatchesToFetch(MATCHES_TO_FETCH);
+        options.matchesToFetch = await askMatchesToFetch(getDefaultMatchesToFetch());
     }
 
     await runner(options);

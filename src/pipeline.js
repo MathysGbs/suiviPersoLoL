@@ -6,13 +6,13 @@ const {
     migrateOldEntries,
     recalculateTimeline,
 } = require('./data-service');
-const { QUEUE_FILTER, MATCHES_TO_FETCH } = require('./config');
+const { QUEUE_FILTER, MATCHES_TO_FETCH, MAX_MATCHES_TO_FETCH } = require('./config');
 const { rebuildExcel } = require('./excel-service');
 
 function normalizeMatchesToFetch(value) {
     const parsed = Number.parseInt(value, 10);
     if (!Number.isFinite(parsed) || parsed <= 0) return MATCHES_TO_FETCH;
-    return parsed;
+    return Math.min(parsed, MAX_MATCHES_TO_FETCH);
 }
 
 async function runFetchOnly(options = {}) {

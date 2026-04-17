@@ -12,8 +12,10 @@ const DUO_TAG = 'EUW';
 const EXCEL_FILENAME = 'Suivi_Comportemental_Challenger.xlsx';
 const JSON_FILENAME = 'historique_matches.json';
 const MATCHES_TO_FETCH = 200;
+const MAX_MATCHES_TO_FETCH = 500;
 const QUEUE_FILTER = 420;
 const API_DELAY_MS = 1500;
+const HTTP_TIMEOUT_MS = 15000;
 
 const C = {
     hRaw: 'FF0F172A',
@@ -111,8 +113,10 @@ module.exports = {
     EXCEL_FILENAME,
     JSON_FILENAME,
     MATCHES_TO_FETCH,
+    MAX_MATCHES_TO_FETCH,
     QUEUE_FILTER,
     API_DELAY_MS,
+    HTTP_TIMEOUT_MS,
     C,
     rankToScore,
     scoreToLabel,

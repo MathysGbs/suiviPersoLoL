@@ -31,22 +31,35 @@ function bestMultiKill(me) {
     return '-';
 }
 
+function isRemakeMatch(entry) {
+    const durationSec = safeN(entry?.gameDurationSec, 0);
+    return Boolean(entry?.isRemake) || (durationSec > 0 && durationSec <= 300);
+}
+
 function recalculateTimeline(data) {
     data.sort((a, b) => new Date(a.rawDate) - new Date(b.rawDate));
     let currentSessionId = 1;
-    let gameInSession = 1;
+    let gameInSession = 0;
 
     for (let i = 0; i < data.length; i++) {
         if (i > 0) {
             const diffH = (new Date(data[i].rawDate) - new Date(data[i - 1].rawDate)) / 3_600_000;
-            if (diffH < 2) gameInSession++;
+            if (diffH < 2) {
+                // Same session: remakes should not increase the game index.
+            }
             else {
                 currentSessionId++;
-                gameInSession = 1;
+                gameInSession = 0;
             }
         }
+
+        const isRemake = isRemakeMatch(data[i]);
+        if (!isRemake) {
+            gameInSession++;
+        }
+
         data[i].sessionId = currentSessionId;
-        data[i].gameInSession = gameInSession;
+        data[i].gameInSession = isRemake ? 0 : gameInSession;
     }
 
     return data;
