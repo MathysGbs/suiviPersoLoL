@@ -117,34 +117,38 @@ function normalizeTo100(value, min, max) {
 function computeResponsabiliteScore(metrics) {
     if (metrics.isRemake) return null;
 
-    const kdaScore = normalizeTo100(metrics.kda, 0.8, 5.2);
-    const kpScore = normalizeTo100(metrics.kp, 20, 75);
-    const dmgShareScore = normalizeTo100(metrics.dmgShare, 10, 35);
-    const deadTimeScore = 100 - normalizeTo100(metrics.pctDeadTime, 2, 20);
+    const kda = Number.isFinite(metrics.kda) ? metrics.kda : 0;
+    const kp = Number.isFinite(metrics.kp) ? metrics.kp : 0;
+    const dmgShare = Number.isFinite(metrics.dmgShare) ? metrics.dmgShare : 0;
+    const pctDeadTime = Number.isFinite(metrics.pctDeadTime) ? metrics.pctDeadTime : 0;
 
-    const gpmRatio = metrics.teamAvgGpm > 0 ? (metrics.gpm / metrics.teamAvgGpm) : 1;
-    const gpmScore = normalizeTo100(gpmRatio, 0.75, 1.30);
+    let resp = 50;
 
-    const pingEngaged = metrics.helpfulPings + metrics.negativePings;
-    const pingQualityScore = pingEngaged > 0 ? (metrics.helpfulPings / pingEngaged) * 100 : 50;
-    const pingVolumeScore = normalizeTo100(metrics.totalPings, 3, 24);
-    const pingScore = clamp((pingQualityScore * 0.7) + (pingVolumeScore * 0.3), 0, 100);
+    // Impact KDA
+    if (kda < 1.0) resp -= 20;
+    else if (kda < 2.0) resp -= 10;
+    else if (kda >= 3.0 && kda < 4.0) resp += 10;
+    else if (kda >= 4.0) resp += 20;
 
-    let multiKillScore = 0;
-    if (metrics.pentaKills > 0) multiKillScore = 100;
-    else if (metrics.quadraKills > 0) multiKillScore = 90;
-    else if (metrics.tripleKills > 0) multiKillScore = 70;
-    else if (metrics.doubleKills > 0) multiKillScore = 50;
+    // Impact KP
+    if (kp < 30) resp -= 15;
+    else if (kp < 40) resp -= 5;
+    else if (kp >= 50 && kp < 60) resp += 10;
+    else if (kp >= 60) resp += 15;
 
-    const rawScore = (kdaScore * 0.20)
-        + (kpScore * 0.15)
-        + (dmgShareScore * 0.15)
-        + (deadTimeScore * 0.15)
-        + (gpmScore * 0.15)
-        + (pingScore * 0.10)
-        + (multiKillScore * 0.10);
+    // Impact DMG %
+    if (dmgShare < 15) resp -= 15;
+    else if (dmgShare < 20) resp -= 5;
+    else if (dmgShare >= 20 && dmgShare < 25) resp += 5;
+    else if (dmgShare >= 25 && dmgShare < 30) resp += 10;
+    else if (dmgShare >= 30) resp += 15;
 
-    return Math.round(clamp(rawScore, 0, 100));
+    // Impact Temps mort
+    if (pctDeadTime > 15) resp -= 15;
+    else if (pctDeadTime > 10) resp -= 10;
+    else if (pctDeadTime < 5) resp += 10;
+
+    return clamp(Math.round(resp), 0, 100);
 }
 
 function loadData() {
@@ -218,7 +222,13 @@ async function getMatchTimeline(matchId) {
 
 // Utilise le PUUID (endpoint moderne) — summonerId déprécié dans Match v5
 async function fetchRankForPuuid(puuid) {
-    if (!puuid) return { tier: null, division: null, score: -1, label: 'Non classé' };
+    if (!puuid) return {
+        tier: null,
+        division: null,
+        lp: null,
+        score: -1,
+        label: 'Non classé',
+    };
     if (rankCache[puuid] !== undefined) return rankCache[puuid];
 
     try {
@@ -229,12 +239,19 @@ async function fetchRankForPuuid(puuid) {
 
         const soloQ = r.data.find((e) => e.queueType === 'RANKED_SOLO_5x5');
         if (!soloQ) {
-            rankCache[puuid] = { tier: null, division: null, score: -1, label: 'Non classé' };
+            rankCache[puuid] = {
+                tier: null,
+                division: null,
+                lp: null,
+                score: -1,
+                label: 'Non classé',
+            };
         } else {
             const score = rankToScore(soloQ.tier, soloQ.rank);
             rankCache[puuid] = {
                 tier: soloQ.tier,
                 division: soloQ.rank,
+                lp: Number.isFinite(soloQ.leaguePoints) ? soloQ.leaguePoints : null,
                 score,
                 label: scoreToLabel(score),
             };
@@ -248,7 +265,13 @@ async function fetchRankForPuuid(puuid) {
             await sleep(retryAfter + 500);
             return fetchRankForPuuid(puuid);
         }
-        rankCache[puuid] = { tier: null, division: null, score: -1, label: 'Non classé' };
+        rankCache[puuid] = {
+            tier: null,
+            division: null,
+            lp: null,
+            score: -1,
+            label: 'Non classé',
+        };
     }
 
     return rankCache[puuid];
@@ -505,6 +528,7 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
 
         myRank: myRankEntry.label,
         myRankScore: myRankEntry.score,
+        myRankLp: myRankEntry.lp,
         avgAllyRank: scoreToLabel(Math.round(avgAllyScore)),
         avgAllyRankScore: avgAllyScore,
         avgEnemyRank: scoreToLabel(Math.round(avgEnemyScore)),
@@ -524,6 +548,7 @@ function needsMigration(m) {
         || m.role == null
         || m.totalPings == null
         || m.myRankScore == null
+        || m.myRankLp === undefined
         || m.fatalGanksReceived === undefined
         || m.csDiff10 === undefined
         || m.dpg === undefined
@@ -644,38 +669,42 @@ async function migrateOldEntries(data, myPuuid, duoPuuid) {
                 entry.enemyADC = enemies.find((p) => p.teamPosition === 'BOTTOM')?.championName || null;
             }
 
-            if (entry.myRankScore == null) {
+            if (entry.myRankScore == null || entry.myRankLp === undefined) {
+                const shouldRefreshTeamRankContext = entry.myRankScore == null;
                 await sleep(350);
                 const myRk = await fetchRankForPuuid(myPuuid);
                 entry.myRank = myRk.label;
                 entry.myRankScore = myRk.score;
+                entry.myRankLp = myRk.lp;
 
-                const enemies = match.info.participants.filter((p) => p.teamId !== me.teamId);
-                const allyPlayers = myTeam.filter((p) => p.puuid !== myPuuid);
-                const allyScores = [];
-                const enemyScores = [];
+                if (shouldRefreshTeamRankContext) {
+                    const enemies = match.info.participants.filter((p) => p.teamId !== me.teamId);
+                    const allyPlayers = myTeam.filter((p) => p.puuid !== myPuuid);
+                    const allyScores = [];
+                    const enemyScores = [];
 
-                for (const p of allyPlayers) {
-                    if (!p.puuid) continue;
-                    await sleep(300);
-                    const rk = await fetchRankForPuuid(p.puuid);
-                    if (rk.score >= 0) allyScores.push(rk.score);
+                    for (const p of allyPlayers) {
+                        if (!p.puuid) continue;
+                        await sleep(300);
+                        const rk = await fetchRankForPuuid(p.puuid);
+                        if (rk.score >= 0) allyScores.push(rk.score);
+                    }
+
+                    for (const p of enemies) {
+                        if (!p.puuid) continue;
+                        await sleep(300);
+                        const rk = await fetchRankForPuuid(p.puuid);
+                        if (rk.score >= 0) enemyScores.push(rk.score);
+                    }
+
+                    const avgA = allyScores.length ? allyScores.reduce((s, v) => s + v, 0) / allyScores.length : -1;
+                    const avgE = enemyScores.length ? enemyScores.reduce((s, v) => s + v, 0) / enemyScores.length : -1;
+                    entry.avgAllyRank = scoreToLabel(Math.round(avgA));
+                    entry.avgAllyRankScore = avgA >= 0 ? parseFloat(avgA.toFixed(2)) : -1;
+                    entry.avgEnemyRank = scoreToLabel(Math.round(avgE));
+                    entry.avgEnemyRankScore = avgE >= 0 ? parseFloat(avgE.toFixed(2)) : -1;
+                    entry.rankDiff = (avgA >= 0 && avgE >= 0) ? parseFloat((avgA - avgE).toFixed(2)) : null;
                 }
-
-                for (const p of enemies) {
-                    if (!p.puuid) continue;
-                    await sleep(300);
-                    const rk = await fetchRankForPuuid(p.puuid);
-                    if (rk.score >= 0) enemyScores.push(rk.score);
-                }
-
-                const avgA = allyScores.length ? allyScores.reduce((s, v) => s + v, 0) / allyScores.length : -1;
-                const avgE = enemyScores.length ? enemyScores.reduce((s, v) => s + v, 0) / enemyScores.length : -1;
-                entry.avgAllyRank = scoreToLabel(Math.round(avgA));
-                entry.avgAllyRankScore = avgA >= 0 ? parseFloat(avgA.toFixed(2)) : -1;
-                entry.avgEnemyRank = scoreToLabel(Math.round(avgE));
-                entry.avgEnemyRankScore = avgE >= 0 ? parseFloat(avgE.toFixed(2)) : -1;
-                entry.rankDiff = (avgA >= 0 && avgE >= 0) ? parseFloat((avgA - avgE).toFixed(2)) : null;
             }
 
             if (needsTimelineMigration(entry)) {

@@ -68,7 +68,8 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.4,
         "rankDiff": 1.35,
-        "responsabilite": 53
+        "responsabilite": 55,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7725967924",
@@ -139,7 +140,8 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.8,
         "rankDiff": -2.05,
-        "responsabilite": 13
+        "responsabilite": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7725998315",
@@ -210,7 +212,8 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.8,
         "rankDiff": 0.7,
-        "responsabilite": 16
+        "responsabilite": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7726063776",
@@ -281,7 +284,8 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24,
         "rankDiff": -1.5,
-        "responsabilite": null
+        "responsabilite": null,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7726080839",
@@ -352,7 +356,8 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24.4,
         "rankDiff": -2.4,
-        "responsabilite": 38
+        "responsabilite": 15,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7726292168",
@@ -423,7 +428,8 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": 3.7,
-        "responsabilite": 84
+        "responsabilite": 100,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7727612619",
@@ -494,7 +500,8 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.8,
         "rankDiff": -0.3,
-        "responsabilite": 35
+        "responsabilite": 35,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7727805535",
@@ -565,7 +572,8 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.2,
         "rankDiff": 2.55,
-        "responsabilite": 35
+        "responsabilite": 35,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7727872530",
@@ -636,7 +644,8 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.6,
         "rankDiff": -0.35,
-        "responsabilite": 27
+        "responsabilite": 40,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7727939573",
@@ -707,7 +716,8 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.4,
         "rankDiff": 1.93,
-        "responsabilite": 35
+        "responsabilite": 25,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7727999439",
@@ -778,7 +788,8 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": -1.25,
-        "responsabilite": 17
+        "responsabilite": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7728068053",
@@ -849,7 +860,8 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.6,
         "rankDiff": 1.4,
-        "responsabilite": 31
+        "responsabilite": 25,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7729142428",
@@ -920,7 +932,8 @@
         "avgEnemyRank": "Diamond III",
         "avgEnemyRankScore": 25.4,
         "rankDiff": -3.4,
-        "responsabilite": 52
+        "responsabilite": 45,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7729214513",
@@ -991,7 +1004,8 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": -0.8,
-        "responsabilite": 52
+        "responsabilite": 60,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7729242450",
@@ -1062,7 +1076,8 @@
         "avgEnemyRank": "Diamond III",
         "avgEnemyRankScore": 24.8,
         "rankDiff": -1.8,
-        "responsabilite": null
+        "responsabilite": null,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7729255450",
@@ -1133,7 +1148,8 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": 0.75,
-        "responsabilite": 28
+        "responsabilite": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7729431315",
@@ -1204,7 +1220,8 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.6,
         "rankDiff": -0.85,
-        "responsabilite": 36
+        "responsabilite": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7729501374",
@@ -1275,7 +1292,8 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": 1.7,
-        "responsabilite": 23
+        "responsabilite": 10,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7729584240",
@@ -1346,7 +1364,8 @@
         "avgEnemyRank": "Diamond III",
         "avgEnemyRankScore": 24.6,
         "rankDiff": -0.85,
-        "responsabilite": 20
+        "responsabilite": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7729646210",
@@ -1417,7 +1436,8 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": 0.05,
-        "responsabilite": 25
+        "responsabilite": 35,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7729715328",
@@ -1488,7 +1508,8 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.2,
         "rankDiff": -1.95,
-        "responsabilite": 23
+        "responsabilite": 25,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7730852503",
@@ -1559,7 +1580,8 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": 0.35,
-        "responsabilite": 77
+        "responsabilite": 90,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7730890626",
@@ -1630,7 +1652,8 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": 1.95,
-        "responsabilite": 85
+        "responsabilite": 100,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7730948171",
@@ -1701,7 +1724,8 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": 2.25,
-        "responsabilite": 58
+        "responsabilite": 40,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7731011157",
@@ -1772,7 +1796,8 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": 1.75,
-        "responsabilite": 66
+        "responsabilite": 70,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7731183325",
@@ -1843,7 +1868,8 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": -1,
-        "responsabilite": 84
+        "responsabilite": 95,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7731275577",
@@ -1914,7 +1940,8 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -0.7,
-        "responsabilite": 78
+        "responsabilite": 80,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7731354376",
@@ -1985,7 +2012,8 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -0.6,
-        "responsabilite": 88
+        "responsabilite": 100,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7732011964",
@@ -2056,7 +2084,8 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24.2,
         "rankDiff": -2.7,
-        "responsabilite": 66
+        "responsabilite": 85,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7732056732",
@@ -2127,7 +2156,8 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.6,
         "rankDiff": -1.35,
-        "responsabilite": 64
+        "responsabilite": 65,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7732315837",
@@ -2198,7 +2228,8 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24.2,
         "rankDiff": -3.7,
-        "responsabilite": 42
+        "responsabilite": 40,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7732367762",
@@ -2269,7 +2300,8 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": -1.3,
-        "responsabilite": 43
+        "responsabilite": 45,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7732420762",
@@ -2340,7 +2372,8 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24.2,
         "rankDiff": -0.2,
-        "responsabilite": 31
+        "responsabilite": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7732869884",
@@ -2411,7 +2444,8 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -2.95,
-        "responsabilite": 56
+        "responsabilite": 65,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7732920556",
@@ -2482,7 +2516,8 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": -0.3,
-        "responsabilite": 46
+        "responsabilite": 45,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7732976443",
@@ -2553,7 +2588,8 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": 1.4,
-        "responsabilite": 69
+        "responsabilite": 65,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7733105774",
@@ -2624,7 +2660,8 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": -0.5,
-        "responsabilite": 41
+        "responsabilite": 40,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7733161731",
@@ -2695,7 +2732,8 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": 0.7,
-        "responsabilite": 79
+        "responsabilite": 80,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7733221793",
@@ -2766,7 +2804,8 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": -2,
-        "responsabilite": 73
+        "responsabilite": 80,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7733282469",
@@ -2837,7 +2876,8 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": 0.65,
-        "responsabilite": 36
+        "responsabilite": 35,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7733331593",
@@ -2906,9 +2946,10 @@
         "avgEnemyRank": "Diamond III",
         "avgEnemyRankScore": 25,
         "rankDiff": -4.5,
-        "responsabilite": 45,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 22
+        "helpfulPings": 22,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7733375897",
@@ -2977,9 +3018,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.6,
         "rankDiff": -1.6,
-        "responsabilite": 56,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7733406322",
@@ -3048,9 +3090,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": -2.3,
-        "responsabilite": 48,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 8
+        "helpfulPings": 8,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7733803598",
@@ -3119,9 +3162,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.8,
         "rankDiff": -3.05,
-        "responsabilite": 64,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 14
+        "helpfulPings": 14,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7733935254",
@@ -3190,9 +3234,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": -1,
-        "responsabilite": 57,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7733983283",
@@ -3261,9 +3306,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": -1.5,
-        "responsabilite": 82,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 19
+        "helpfulPings": 19,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7734042978",
@@ -3334,7 +3380,8 @@
         "rankDiff": -2.3,
         "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7734108864",
@@ -3403,9 +3450,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": -1,
-        "responsabilite": 61,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 9
+        "helpfulPings": 9,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7734155605",
@@ -3474,9 +3522,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.6,
         "rankDiff": -3.35,
-        "responsabilite": 26,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7734499187",
@@ -3545,9 +3594,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.6,
         "rankDiff": -2.85,
-        "responsabilite": 83,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 14
+        "helpfulPings": 14,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7734712484",
@@ -3616,9 +3666,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.4,
         "rankDiff": 1.1,
-        "responsabilite": 29,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7734816542",
@@ -3687,9 +3738,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -1.95,
-        "responsabilite": 52,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 18
+        "helpfulPings": 18,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7734896740",
@@ -3758,9 +3810,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.4,
         "rankDiff": -3.4,
-        "responsabilite": 33,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7734987670",
@@ -3829,9 +3882,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": 0.9,
-        "responsabilite": 22,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7736081662",
@@ -3900,9 +3954,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -0.2,
-        "responsabilite": 87,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 29
+        "helpfulPings": 29,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7736136263",
@@ -3971,9 +4026,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": 1.9,
-        "responsabilite": 79,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7736195151",
@@ -4042,9 +4098,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": 2.35,
-        "responsabilite": 73,
+        "responsabilite": 95,
         "isRemake": false,
-        "helpfulPings": 18
+        "helpfulPings": 18,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7736531633",
@@ -4113,9 +4170,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -1.6,
-        "responsabilite": 89,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7736605412",
@@ -4184,9 +4242,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": 0.65,
-        "responsabilite": 82,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 19
+        "helpfulPings": 19,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7737709682",
@@ -4255,9 +4314,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": 1.2,
-        "responsabilite": 51,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7737770545",
@@ -4326,9 +4386,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20,
         "rankDiff": 0,
-        "responsabilite": 43,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 19
+        "helpfulPings": 19,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7737824338",
@@ -4397,9 +4458,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.8,
         "rankDiff": 1.95,
-        "responsabilite": 82,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 15
+        "helpfulPings": 15,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7737896283",
@@ -4468,9 +4530,10 @@
         "avgEnemyRank": "Diamond II",
         "avgEnemyRankScore": 26.2,
         "rankDiff": -1.2,
-        "responsabilite": 82,
+        "responsabilite": 95,
         "isRemake": false,
-        "helpfulPings": 9
+        "helpfulPings": 9,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7738123439",
@@ -4539,9 +4602,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.6,
         "rankDiff": -0.6,
-        "responsabilite": 45,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7738189096",
@@ -4610,9 +4674,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": 1.85,
-        "responsabilite": 91,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 19
+        "helpfulPings": 19,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7738265768",
@@ -4681,9 +4746,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24.2,
         "rankDiff": 0.3,
-        "responsabilite": 83,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 17
+        "helpfulPings": 17,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7738347477",
@@ -4754,7 +4820,8 @@
         "rankDiff": -3.45,
         "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 8
+        "helpfulPings": 8,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7739805375",
@@ -4823,9 +4890,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": 0,
-        "responsabilite": 44,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 19
+        "helpfulPings": 19,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7741108857",
@@ -4894,9 +4962,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24,
         "rankDiff": -1,
-        "responsabilite": 47,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7741142375",
@@ -4965,9 +5034,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.6,
         "rankDiff": 0.15,
-        "responsabilite": 39,
+        "responsabilite": 30,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7741414455",
@@ -5036,9 +5106,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.6,
         "rankDiff": -0.85,
-        "responsabilite": 64,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7741499485",
@@ -5107,9 +5178,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": -0.3,
-        "responsabilite": 83,
+        "responsabilite": 95,
         "isRemake": false,
-        "helpfulPings": 3
+        "helpfulPings": 3,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7741539403",
@@ -5180,7 +5252,8 @@
         "rankDiff": 2.25,
         "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 21
+        "helpfulPings": 21,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7741622990",
@@ -5249,9 +5322,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": 2.15,
-        "responsabilite": 42,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7741716484",
@@ -5320,9 +5394,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": -0.05,
-        "responsabilite": 38,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7742906888",
@@ -5391,9 +5466,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": -2.5,
-        "responsabilite": 76,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7742972688",
@@ -5464,7 +5540,8 @@
         "rankDiff": -0.05,
         "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7743371889",
@@ -5533,9 +5610,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": -2.5,
-        "responsabilite": 51,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 10
+        "helpfulPings": 10,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7743447856",
@@ -5604,9 +5682,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20,
         "rankDiff": 0.75,
-        "responsabilite": 73,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7743506682",
@@ -5675,9 +5754,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": -1.65,
-        "responsabilite": 39,
+        "responsabilite": 30,
         "isRemake": false,
-        "helpfulPings": 26
+        "helpfulPings": 26,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7743566563",
@@ -5746,9 +5826,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": -1.25,
-        "responsabilite": 50,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 11
+        "helpfulPings": 11,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7743618222",
@@ -5817,9 +5898,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18.4,
         "rankDiff": 2.85,
-        "responsabilite": 40,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 17
+        "helpfulPings": 17,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7743681824",
@@ -5888,9 +5970,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": -1.4,
-        "responsabilite": 38,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 10
+        "helpfulPings": 10,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7743749042",
@@ -5959,9 +6042,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 17.6,
         "rankDiff": -1.35,
-        "responsabilite": 51,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 17
+        "helpfulPings": 17,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7743785670",
@@ -6030,9 +6114,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.6,
         "rankDiff": -0.85,
-        "responsabilite": 93,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 31
+        "helpfulPings": 31,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7744288662",
@@ -6101,9 +6186,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.6,
         "rankDiff": 1.9,
-        "responsabilite": 41,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 8
+        "helpfulPings": 8,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7744350183",
@@ -6172,9 +6258,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.4,
         "rankDiff": -1.9,
-        "responsabilite": 52,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 8
+        "helpfulPings": 8,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7744410294",
@@ -6243,9 +6330,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.2,
         "rankDiff": -2.95,
-        "responsabilite": 29,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 9
+        "helpfulPings": 9,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7744789094",
@@ -6314,9 +6402,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18.4,
         "rankDiff": -0.4,
-        "responsabilite": 72,
+        "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 18
+        "helpfulPings": 18,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7745219028",
@@ -6385,9 +6474,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.6,
         "rankDiff": -0.35,
-        "responsabilite": 84,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 36
+        "helpfulPings": 36,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7745317330",
@@ -6456,9 +6546,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": -1.75,
-        "responsabilite": 60,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 23
+        "helpfulPings": 23,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7745408575",
@@ -6527,9 +6618,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": 1.5,
-        "responsabilite": 58,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 15
+        "helpfulPings": 15,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7745498843",
@@ -6598,9 +6690,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": -0.05,
-        "responsabilite": 70,
+        "responsabilite": 95,
         "isRemake": false,
-        "helpfulPings": 11
+        "helpfulPings": 11,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7745555504",
@@ -6669,9 +6762,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": 0.8,
-        "responsabilite": 59,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 29
+        "helpfulPings": 29,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7745595839",
@@ -6740,9 +6834,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -1.95,
-        "responsabilite": 50,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 19
+        "helpfulPings": 19,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7746214929",
@@ -6811,9 +6906,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": 0.25,
-        "responsabilite": 50,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 15
+        "helpfulPings": 15,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7746294628",
@@ -6882,9 +6978,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": 0.6,
-        "responsabilite": 72,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 22
+        "helpfulPings": 22,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7746350053",
@@ -6953,9 +7050,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": -0.5,
-        "responsabilite": 65,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 14
+        "helpfulPings": 14,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7746419138",
@@ -7024,9 +7122,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.2,
         "rankDiff": -0.95,
-        "responsabilite": 86,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7746490462",
@@ -7095,9 +7194,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": -1.75,
-        "responsabilite": 46,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7746608691",
@@ -7166,9 +7266,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": -0.15,
-        "responsabilite": 66,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 9
+        "helpfulPings": 9,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7746706547",
@@ -7237,9 +7338,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": 1.5,
-        "responsabilite": 88,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 16
+        "helpfulPings": 16,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7746775785",
@@ -7310,7 +7412,8 @@
         "rankDiff": -3.35,
         "responsabilite": null,
         "isRemake": true,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7746794966",
@@ -7379,9 +7482,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": 0.45,
-        "responsabilite": 86,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7748494595",
@@ -7450,9 +7554,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24,
         "rankDiff": -0.5,
-        "responsabilite": 60,
+        "responsabilite": 85,
         "isRemake": false,
-        "helpfulPings": 3
+        "helpfulPings": 3,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7748539885",
@@ -7521,9 +7626,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": -1.25,
-        "responsabilite": 49,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 35
+        "helpfulPings": 35,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7748644817",
@@ -7592,9 +7698,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.4,
         "rankDiff": 0.85,
-        "responsabilite": 91,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 19
+        "helpfulPings": 19,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7748862773",
@@ -7663,9 +7770,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20,
         "rankDiff": 1.5,
-        "responsabilite": 61,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7748960005",
@@ -7734,9 +7842,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": 1.25,
-        "responsabilite": 86,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 21
+        "helpfulPings": 21,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7749037822",
@@ -7805,9 +7914,10 @@
         "avgEnemyRank": "Diamond III",
         "avgEnemyRankScore": 25.4,
         "rankDiff": -2.15,
-        "responsabilite": 95,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 43
+        "helpfulPings": 43,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7750395810",
@@ -7876,9 +7986,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.8,
         "rankDiff": 1.2,
-        "responsabilite": 69,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 21
+        "helpfulPings": 21,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7750622198",
@@ -7947,9 +8058,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24.4,
         "rankDiff": -1.65,
-        "responsabilite": 49,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 10
+        "helpfulPings": 10,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7750727056",
@@ -8018,9 +8130,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.4,
         "rankDiff": -1.73,
-        "responsabilite": 68,
+        "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 17
+        "helpfulPings": 17,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7752177311",
@@ -8089,9 +8202,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24,
         "rankDiff": -0.25,
-        "responsabilite": 37,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 24
+        "helpfulPings": 24,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7752389469",
@@ -8160,9 +8274,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.4,
         "rankDiff": -0.9,
-        "responsabilite": 49,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 16
+        "helpfulPings": 16,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7752458465",
@@ -8231,9 +8346,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": 1.45,
-        "responsabilite": 85,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 34
+        "helpfulPings": 34,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7753747432",
@@ -8302,9 +8418,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": 1.25,
-        "responsabilite": 79,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 23
+        "helpfulPings": 23,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7754001899",
@@ -8373,9 +8490,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": 2.85,
-        "responsabilite": 94,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 36
+        "helpfulPings": 36,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7755632420",
@@ -8444,9 +8562,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.8,
         "rankDiff": -0.3,
-        "responsabilite": 63,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7755694674",
@@ -8515,9 +8634,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": 1.2,
-        "responsabilite": 75,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 15
+        "helpfulPings": 15,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7755764748",
@@ -8586,9 +8706,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": 1.05,
-        "responsabilite": 64,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7755852481",
@@ -8659,7 +8780,8 @@
         "rankDiff": 0.8,
         "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 14
+        "helpfulPings": 14,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7755925351",
@@ -8728,9 +8850,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": 0.45,
-        "responsabilite": 42,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7755975913",
@@ -8799,9 +8922,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": -0.5,
-        "responsabilite": 61,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 10
+        "helpfulPings": 10,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7756723924",
@@ -8870,9 +8994,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": 0.75,
-        "responsabilite": 60,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 59
+        "helpfulPings": 59,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7756774876",
@@ -8943,7 +9068,8 @@
         "rankDiff": -1.6,
         "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7758769392",
@@ -9012,9 +9138,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24,
         "rankDiff": 0.5,
-        "responsabilite": 93,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 18
+        "helpfulPings": 18,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7760465607",
@@ -9083,9 +9210,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.4,
         "rankDiff": 2.1,
-        "responsabilite": 69,
+        "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 18
+        "helpfulPings": 18,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7760534035",
@@ -9154,9 +9282,10 @@
         "avgEnemyRank": "Diamond III",
         "avgEnemyRankScore": 24.6,
         "rankDiff": 0.4,
-        "responsabilite": 26,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7760752397",
@@ -9225,9 +9354,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.2,
         "rankDiff": 0.8,
-        "responsabilite": 67,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 8
+        "helpfulPings": 8,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7761828874",
@@ -9296,9 +9426,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24.2,
         "rankDiff": 0.05,
-        "responsabilite": 41,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 5
+        "helpfulPings": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7761950380",
@@ -9367,9 +9498,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": -0.05,
-        "responsabilite": 88,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7762004301",
@@ -9438,9 +9570,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": 0.25,
-        "responsabilite": 52,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 5
+        "helpfulPings": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7762054243",
@@ -9509,9 +9642,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24,
         "rankDiff": -1,
-        "responsabilite": 34,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7762103869",
@@ -9580,9 +9714,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": -0.05,
-        "responsabilite": 54,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 2
+        "helpfulPings": 2,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7762846187",
@@ -9651,9 +9786,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.6,
         "rankDiff": 0.9,
-        "responsabilite": 32,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7762894793",
@@ -9722,9 +9858,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24.2,
         "rankDiff": -1.95,
-        "responsabilite": 58,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 14
+        "helpfulPings": 14,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7763041768",
@@ -9793,9 +9930,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24.4,
         "rankDiff": -1.9,
-        "responsabilite": 42,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 2
+        "helpfulPings": 2,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7763097967",
@@ -9864,9 +10002,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": -0.4,
-        "responsabilite": 73,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 3
+        "helpfulPings": 3,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7763176682",
@@ -9935,9 +10074,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.6,
         "rankDiff": 0.65,
-        "responsabilite": 77,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 32
+        "helpfulPings": 32,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7763943175",
@@ -10006,9 +10146,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.6,
         "rankDiff": -0.35,
-        "responsabilite": 70,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 10
+        "helpfulPings": 10,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7764006232",
@@ -10077,9 +10218,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": 0.45,
-        "responsabilite": 31,
+        "responsabilite": 10,
         "isRemake": false,
-        "helpfulPings": 5
+        "helpfulPings": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7764271076",
@@ -10148,9 +10290,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24,
         "rankDiff": -1,
-        "responsabilite": 26,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7764345715",
@@ -10219,9 +10362,10 @@
         "avgEnemyRank": "Diamond III",
         "avgEnemyRankScore": 24.6,
         "rankDiff": -0.6,
-        "responsabilite": 17,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7764417608",
@@ -10290,9 +10434,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": 0.95,
-        "responsabilite": 80,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 16
+        "helpfulPings": 16,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7765603811",
@@ -10361,9 +10506,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.8,
         "rankDiff": 0.53,
-        "responsabilite": 16,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7765649019",
@@ -10432,9 +10578,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -1.2,
-        "responsabilite": 64,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7765694927",
@@ -10503,9 +10650,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24,
         "rankDiff": -0.5,
-        "responsabilite": 19,
+        "responsabilite": 15,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7765753112",
@@ -10574,9 +10722,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.4,
         "rankDiff": -1.4,
-        "responsabilite": 26,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7765885119",
@@ -10645,9 +10794,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": 1.05,
-        "responsabilite": 22,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7765969795",
@@ -10716,9 +10866,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 23.6,
         "rankDiff": -0.6,
-        "responsabilite": 46,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7766040587",
@@ -10787,9 +10938,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": 1.3,
-        "responsabilite": 28,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 14
+        "helpfulPings": 14,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7766102209",
@@ -10858,9 +11010,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.6,
         "rankDiff": -1.85,
-        "responsabilite": 26,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7766146634",
@@ -10929,9 +11082,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.6,
         "rankDiff": 0.4,
-        "responsabilite": 33,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7766208983",
@@ -11000,9 +11154,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.4,
         "rankDiff": -1.15,
-        "responsabilite": 18,
+        "responsabilite": 15,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7766278512",
@@ -11071,9 +11226,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24.2,
         "rankDiff": -2.95,
-        "responsabilite": 45,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 16
+        "helpfulPings": 16,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7766338934",
@@ -11142,9 +11298,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": -0.55,
-        "responsabilite": 53,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7766373601",
@@ -11215,7 +11372,8 @@
         "rankDiff": -0.3,
         "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7766400350",
@@ -11284,9 +11442,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24.2,
         "rankDiff": -3.95,
-        "responsabilite": 81,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7767067785",
@@ -11355,9 +11514,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": 0.55,
-        "responsabilite": 28,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7767114674",
@@ -11426,9 +11586,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": 1.4,
-        "responsabilite": 59,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7767342935",
@@ -11497,9 +11658,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": -2,
-        "responsabilite": 37,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 18
+        "helpfulPings": 18,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7767401859",
@@ -11568,9 +11730,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18.2,
         "rankDiff": -0.95,
-        "responsabilite": 35,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 15
+        "helpfulPings": 15,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7767451715",
@@ -11639,9 +11802,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -2.45,
-        "responsabilite": 49,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7767629512",
@@ -11710,9 +11874,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.6,
         "rankDiff": -2.1,
-        "responsabilite": 44,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 2
+        "helpfulPings": 2,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7767901976",
@@ -11783,7 +11948,8 @@
         "rankDiff": -0.93,
         "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7767970143",
@@ -11852,9 +12018,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -1.45,
-        "responsabilite": 26,
+        "responsabilite": 5,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7768042624",
@@ -11923,9 +12090,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": 1.65,
-        "responsabilite": 28,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7768092420",
@@ -11994,9 +12162,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": 0.05,
-        "responsabilite": 21,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7768147570",
@@ -12065,9 +12234,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": 0.8,
-        "responsabilite": 69,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7768167207",
@@ -12136,9 +12306,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": -1.05,
-        "responsabilite": 76,
+        "responsabilite": 85,
         "isRemake": false,
-        "helpfulPings": 15
+        "helpfulPings": 15,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7768217506",
@@ -12207,9 +12378,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": 1.6,
-        "responsabilite": 55,
+        "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 10
+        "helpfulPings": 10,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7768751813",
@@ -12278,9 +12450,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20,
         "rankDiff": 1,
-        "responsabilite": 72,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7768782174",
@@ -12349,9 +12522,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": 1.7,
-        "responsabilite": 86,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 36
+        "helpfulPings": 36,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7768853759",
@@ -12422,7 +12596,8 @@
         "rankDiff": -0.1,
         "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 9
+        "helpfulPings": 9,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7768919109",
@@ -12491,9 +12666,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": -0.05,
-        "responsabilite": 84,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 21
+        "helpfulPings": 21,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7769318897",
@@ -12562,9 +12738,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.6,
         "rankDiff": 0.15,
-        "responsabilite": 88,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 26
+        "helpfulPings": 26,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7771292118",
@@ -12633,9 +12810,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -1.1,
-        "responsabilite": 92,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 44
+        "helpfulPings": 44,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7771376645",
@@ -12704,9 +12882,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20,
         "rankDiff": 0.5,
-        "responsabilite": 79,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 49
+        "helpfulPings": 49,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7772571345",
@@ -12775,9 +12954,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": -1.5,
-        "responsabilite": 80,
+        "responsabilite": 95,
         "isRemake": false,
-        "helpfulPings": 9
+        "helpfulPings": 9,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7772639742",
@@ -12846,9 +13026,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": -1,
-        "responsabilite": 41,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 19
+        "helpfulPings": 19,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7772791953",
@@ -12917,9 +13098,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -1.2,
-        "responsabilite": 26,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 45
+        "helpfulPings": 45,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7772872334",
@@ -12988,9 +13170,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": 0.35,
-        "responsabilite": 67,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 14
+        "helpfulPings": 14,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7772942431",
@@ -13059,9 +13242,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.8,
         "rankDiff": -0.3,
-        "responsabilite": 93,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 29
+        "helpfulPings": 29,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7773015299",
@@ -13130,9 +13314,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.6,
         "rankDiff": 0.65,
-        "responsabilite": 71,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 17
+        "helpfulPings": 17,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7774091113",
@@ -13201,9 +13386,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.6,
         "rankDiff": -3.85,
-        "responsabilite": 24,
+        "responsabilite": 10,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7774126335",
@@ -13272,9 +13458,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -0.7,
-        "responsabilite": 41,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 22
+        "helpfulPings": 22,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7774197488",
@@ -13343,9 +13530,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24.4,
         "rankDiff": -2.65,
-        "responsabilite": 92,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 26
+        "helpfulPings": 26,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7774264581",
@@ -13414,9 +13602,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": 2.05,
-        "responsabilite": 86,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7774433685",
@@ -13485,9 +13674,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": 0.5,
-        "responsabilite": 13,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7774524503",
@@ -13556,9 +13746,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": -0.75,
-        "responsabilite": 33,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7774594935",
@@ -13627,9 +13818,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -0.7,
-        "responsabilite": 6,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7774655814",
@@ -13698,9 +13890,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": 1.55,
-        "responsabilite": 33,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7775821493",
@@ -13769,9 +13962,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -0.7,
-        "responsabilite": 68,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7775861103",
@@ -13840,9 +14034,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": 1.7,
-        "responsabilite": 5,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7775907053",
@@ -13911,9 +14106,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": -1.25,
-        "responsabilite": 17,
+        "responsabilite": 5,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7775965960",
@@ -13984,7 +14180,8 @@
         "rankDiff": -0.7,
         "responsabilite": null,
         "isRemake": true,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7775985071",
@@ -14053,9 +14250,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.2,
         "rankDiff": -1.2,
-        "responsabilite": 71,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7776127781",
@@ -14124,9 +14322,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": 0.7,
-        "responsabilite": 10,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7776196909",
@@ -14195,9 +14394,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.5,
         "rankDiff": 0,
-        "responsabilite": 16,
+        "responsabilite": 5,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7776272646",
@@ -14266,9 +14466,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": -1.1,
-        "responsabilite": 32,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7776318149",
@@ -14339,7 +14540,8 @@
         "rankDiff": -0.65,
         "responsabilite": null,
         "isRemake": true,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7776338081",
@@ -14408,9 +14610,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -0.45,
-        "responsabilite": 32,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7777394704",
@@ -14479,9 +14682,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": 1.2,
-        "responsabilite": 39,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7777647721",
@@ -14552,7 +14756,8 @@
         "rankDiff": -1.25,
         "responsabilite": null,
         "isRemake": true,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7777824746",
@@ -14621,9 +14826,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": -0.3,
-        "responsabilite": 32,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7777897176",
@@ -14692,9 +14898,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": 1.35,
-        "responsabilite": 35,
+        "responsabilite": 30,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7777982492",
@@ -14763,9 +14970,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20,
         "rankDiff": 0.5,
-        "responsabilite": 50,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 2
+        "helpfulPings": 2,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7778045781",
@@ -14834,9 +15042,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": 1.35,
-        "responsabilite": 38,
+        "responsabilite": 30,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7778117928",
@@ -14905,9 +15114,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": 1.65,
-        "responsabilite": 28,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7779624023",
@@ -14976,9 +15186,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": -1.55,
-        "responsabilite": 41,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7779706432",
@@ -15047,9 +15258,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": -0.05,
-        "responsabilite": 48,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7779767294",
@@ -15118,9 +15330,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": -1.8,
-        "responsabilite": 46,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 16
+        "helpfulPings": 16,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7779854680",
@@ -15189,9 +15402,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.8,
         "rankDiff": 1.7,
-        "responsabilite": 63,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 52
+        "helpfulPings": 52,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7779957599",
@@ -15260,9 +15474,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": 1.7,
-        "responsabilite": 66,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7780026487",
@@ -15331,9 +15546,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": 0.3,
-        "responsabilite": 16,
+        "responsabilite": 5,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7780112790",
@@ -15402,9 +15618,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": -0.6,
-        "responsabilite": 41,
+        "responsabilite": 15,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7780975235",
@@ -15473,9 +15690,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": 0.85,
-        "responsabilite": 30,
+        "responsabilite": 15,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7781074668",
@@ -15544,9 +15762,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -0.7,
-        "responsabilite": 50,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7781150726",
@@ -15615,9 +15834,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": -0.15,
-        "responsabilite": 48,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7781198398",
@@ -15686,9 +15906,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18.4,
         "rankDiff": 1.35,
-        "responsabilite": 60,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 35
+        "helpfulPings": 35,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7781280194",
@@ -15757,9 +15978,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -2.35,
-        "responsabilite": 66,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 40
+        "helpfulPings": 40,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7781355812",
@@ -15828,9 +16050,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": -0.3,
-        "responsabilite": 67,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 38
+        "helpfulPings": 38,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7781550041",
@@ -15899,9 +16122,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.2,
         "rankDiff": 0.8,
-        "responsabilite": 49,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 11
+        "helpfulPings": 11,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7781622997",
@@ -15970,9 +16194,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": 1.2,
-        "responsabilite": 16,
+        "responsabilite": 5,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7782934542",
@@ -16041,9 +16266,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": -0.55,
-        "responsabilite": 73,
+        "responsabilite": 85,
         "isRemake": false,
-        "helpfulPings": 9
+        "helpfulPings": 9,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7782990878",
@@ -16112,9 +16338,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": -1.65,
-        "responsabilite": 90,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 8
+        "helpfulPings": 8,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7783041037",
@@ -16183,9 +16410,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.6,
         "rankDiff": -0.6,
-        "responsabilite": 71,
+        "responsabilite": 85,
         "isRemake": false,
-        "helpfulPings": 8
+        "helpfulPings": 8,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7783222586",
@@ -16254,9 +16482,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": 0.15,
-        "responsabilite": 64,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7783292805",
@@ -16325,9 +16554,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": -0.6,
-        "responsabilite": 49,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7783340246",
@@ -16396,9 +16626,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20,
         "rankDiff": -2.5,
-        "responsabilite": 57,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7783425436",
@@ -16469,7 +16700,8 @@
         "rankDiff": -2.25,
         "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 29
+        "helpfulPings": 29,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7784804917",
@@ -16538,9 +16770,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19,
         "rankDiff": 1.75,
-        "responsabilite": 39,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 5
+        "helpfulPings": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7784964412",
@@ -16609,9 +16842,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -0.6,
-        "responsabilite": 39,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7785085475",
@@ -16680,9 +16914,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.2,
         "rankDiff": -0.2,
-        "responsabilite": 16,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7785157214",
@@ -16751,9 +16986,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18.2,
         "rankDiff": 0.8,
-        "responsabilite": 55,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 5
+        "helpfulPings": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7785202898",
@@ -16822,9 +17058,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.8,
         "rankDiff": 0.45,
-        "responsabilite": 34,
+        "responsabilite": 30,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7786331074",
@@ -16893,9 +17130,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": -0.07,
-        "responsabilite": 30,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 22
+        "helpfulPings": 22,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7786388224",
@@ -16964,9 +17202,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": -0.75,
-        "responsabilite": 60,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 24
+        "helpfulPings": 24,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7786451961",
@@ -17035,9 +17274,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": 0.1,
-        "responsabilite": 73,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 22
+        "helpfulPings": 22,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7786608310",
@@ -17106,9 +17346,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": -0.4,
-        "responsabilite": 25,
+        "responsabilite": 15,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7786661140",
@@ -17177,9 +17418,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -1.95,
-        "responsabilite": 19,
+        "responsabilite": 10,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7786739699",
@@ -17248,9 +17490,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": 0.95,
-        "responsabilite": 23,
+        "responsabilite": 15,
         "isRemake": false,
-        "helpfulPings": 3
+        "helpfulPings": 3,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7786818405",
@@ -17319,9 +17562,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.2,
         "rankDiff": 1.05,
-        "responsabilite": 18,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7787989379",
@@ -17390,9 +17634,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20,
         "rankDiff": 0.75,
-        "responsabilite": 11,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 2
+        "helpfulPings": 2,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7788064720",
@@ -17461,9 +17706,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.6,
         "rankDiff": 3.15,
-        "responsabilite": 76,
+        "responsabilite": 95,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7788090941",
@@ -17532,9 +17778,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": 0.05,
-        "responsabilite": 32,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7788272093",
@@ -17603,9 +17850,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": -0.6,
-        "responsabilite": 37,
+        "responsabilite": 30,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7788347394",
@@ -17674,9 +17922,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -1.85,
-        "responsabilite": 15,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7788408676",
@@ -17747,7 +17996,8 @@
         "rankDiff": -0.45,
         "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 2
+        "helpfulPings": 2,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7788481567",
@@ -17816,9 +18066,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.8,
         "rankDiff": 2.45,
-        "responsabilite": 20,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7789467116",
@@ -17887,9 +18138,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -2.95,
-        "responsabilite": 14,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7789523548",
@@ -17958,9 +18210,10 @@
         "avgEnemyRank": "Platinum III",
         "avgEnemyRankScore": 17.4,
         "rankDiff": 0.85,
-        "responsabilite": 14,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7789582554",
@@ -18029,9 +18282,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": -1.05,
-        "responsabilite": 68,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7789635318",
@@ -18100,9 +18354,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19,
         "rankDiff": 0.25,
-        "responsabilite": 22,
+        "responsabilite": 15,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7789694265",
@@ -18171,9 +18426,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.8,
         "rankDiff": 0.45,
-        "responsabilite": 64,
+        "responsabilite": 85,
         "isRemake": false,
-        "helpfulPings": 26
+        "helpfulPings": 26,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7789825106",
@@ -18242,9 +18498,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.2,
         "rankDiff": 1.55,
-        "responsabilite": 54,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7789892199",
@@ -18313,9 +18570,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.2,
         "rankDiff": 0.55,
-        "responsabilite": 48,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7789974569",
@@ -18384,9 +18642,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.8,
         "rankDiff": -0.55,
-        "responsabilite": 38,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 28
+        "helpfulPings": 28,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7790039400",
@@ -18455,9 +18714,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18.4,
         "rankDiff": 0.1,
-        "responsabilite": 84,
+        "responsabilite": 95,
         "isRemake": false,
-        "helpfulPings": 16
+        "helpfulPings": 16,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7790107354",
@@ -18528,7 +18788,8 @@
         "rankDiff": -1.4,
         "responsabilite": null,
         "isRemake": true,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7790118428",
@@ -18597,9 +18858,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": -1.95,
-        "responsabilite": 67,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 19
+        "helpfulPings": 19,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7790193050",
@@ -18668,9 +18930,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": -0.1,
-        "responsabilite": 90,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 27
+        "helpfulPings": 27,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7790837288",
@@ -18739,9 +19002,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": 0.9,
-        "responsabilite": 64,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 34
+        "helpfulPings": 34,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7790881267",
@@ -18810,9 +19074,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": 0.55,
-        "responsabilite": 62,
+        "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 38
+        "helpfulPings": 38,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7791352872",
@@ -18881,9 +19146,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": -0.25,
-        "responsabilite": 31,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 15
+        "helpfulPings": 15,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7791424129",
@@ -18952,9 +19218,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18,
         "rankDiff": -1.5,
-        "responsabilite": 52,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 28
+        "helpfulPings": 28,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7791502691",
@@ -19023,9 +19290,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": -0.65,
-        "responsabilite": 47,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 41
+        "helpfulPings": 41,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7791954544",
@@ -19094,9 +19362,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -2.1,
-        "responsabilite": 52,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 28
+        "helpfulPings": 28,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7792036207",
@@ -19165,9 +19434,10 @@
         "avgEnemyRank": "Gold I",
         "avgEnemyRankScore": 15.4,
         "rankDiff": 1.6,
-        "responsabilite": 56,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 37
+        "helpfulPings": 37,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7792119569",
@@ -19236,9 +19506,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": 0.65,
-        "responsabilite": 35,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 31
+        "helpfulPings": 31,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7792170584",
@@ -19307,9 +19578,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": -0.4,
-        "responsabilite": 37,
+        "responsabilite": 30,
         "isRemake": false,
-        "helpfulPings": 15
+        "helpfulPings": 15,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7792201208",
@@ -19378,9 +19650,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": -2.15,
-        "responsabilite": 42,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 35
+        "helpfulPings": 35,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7792254370",
@@ -19449,9 +19722,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": -1.65,
-        "responsabilite": 49,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 24
+        "helpfulPings": 24,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7793139180",
@@ -19520,9 +19794,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": -0.5,
-        "responsabilite": 90,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 26
+        "helpfulPings": 26,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7793228625",
@@ -19591,9 +19866,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": 0.25,
-        "responsabilite": 33,
+        "responsabilite": 10,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7793290870",
@@ -19662,9 +19938,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": 1.05,
-        "responsabilite": 49,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 5
+        "helpfulPings": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7793363207",
@@ -19733,9 +20010,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": 0.25,
-        "responsabilite": 75,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7793430640",
@@ -19804,9 +20082,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": -0.05,
-        "responsabilite": 48,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 38
+        "helpfulPings": 38,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7795101717",
@@ -19875,9 +20154,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.6,
         "rankDiff": 0.15,
-        "responsabilite": 58,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 31
+        "helpfulPings": 31,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7795161259",
@@ -19946,9 +20226,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": 3.05,
-        "responsabilite": 36,
+        "responsabilite": 30,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7795210934",
@@ -20017,9 +20298,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": 3.85,
-        "responsabilite": 42,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7795394331",
@@ -20088,9 +20370,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": -2.45,
-        "responsabilite": 45,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7795482499",
@@ -20159,9 +20442,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": 0.3,
-        "responsabilite": 90,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 11
+        "helpfulPings": 11,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7795546566",
@@ -20230,9 +20514,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.2,
         "rankDiff": 0.55,
-        "responsabilite": 59,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 8
+        "helpfulPings": 8,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7795616165",
@@ -20301,9 +20586,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18,
         "rankDiff": 0.75,
-        "responsabilite": 68,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 18
+        "helpfulPings": 18,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7796928540",
@@ -20372,9 +20658,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": -0.8,
-        "responsabilite": 52,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 42
+        "helpfulPings": 42,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7796999448",
@@ -20443,9 +20730,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": 0.2,
-        "responsabilite": 75,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 5
+        "helpfulPings": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7797049538",
@@ -20514,9 +20802,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": 0.1,
-        "responsabilite": 61,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 33
+        "helpfulPings": 33,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7797256481",
@@ -20585,9 +20874,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18,
         "rankDiff": 1.75,
-        "responsabilite": 91,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 23
+        "helpfulPings": 23,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7797335316",
@@ -20656,9 +20946,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.6,
         "rankDiff": 1.65,
-        "responsabilite": 77,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7797408680",
@@ -20727,9 +21018,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18,
         "rankDiff": 0.5,
-        "responsabilite": 57,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7798346810",
@@ -20800,7 +21092,8 @@
         "rankDiff": -0.8,
         "responsabilite": null,
         "isRemake": true,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7798366666",
@@ -20869,9 +21162,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -0.95,
-        "responsabilite": 37,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 23
+        "helpfulPings": 23,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7798405302",
@@ -20940,9 +21234,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -0.2,
-        "responsabilite": 35,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 32
+        "helpfulPings": 32,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7798471847",
@@ -21011,9 +21306,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": 2.35,
-        "responsabilite": 56,
+        "responsabilite": 85,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7798616851",
@@ -21082,9 +21378,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": -0.85,
-        "responsabilite": 59,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7798688208",
@@ -21153,9 +21450,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18,
         "rankDiff": 1,
-        "responsabilite": 79,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7799585178",
@@ -21224,9 +21522,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": 1.8,
-        "responsabilite": 53,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 29
+        "helpfulPings": 29,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7799696703",
@@ -21295,9 +21594,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": -1,
-        "responsabilite": 51,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 35
+        "helpfulPings": 35,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7799756007",
@@ -21366,9 +21666,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": 1.1,
-        "responsabilite": 42,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7799803791",
@@ -21437,9 +21738,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.25,
         "rankDiff": 0.25,
-        "responsabilite": 46,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 9
+        "helpfulPings": 9,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7799846682",
@@ -21508,9 +21810,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": -0.4,
-        "responsabilite": 50,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 34
+        "helpfulPings": 34,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7801994552",
@@ -21579,9 +21882,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18.4,
         "rankDiff": 0.35,
-        "responsabilite": 68,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 23
+        "helpfulPings": 23,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7802046111",
@@ -21650,9 +21954,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18.4,
         "rankDiff": 0.1,
-        "responsabilite": 79,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 3
+        "helpfulPings": 3,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7802077339",
@@ -21721,9 +22026,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": 1.15,
-        "responsabilite": 89,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7802122717",
@@ -21792,9 +22098,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": -0.65,
-        "responsabilite": 38,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 17
+        "helpfulPings": 17,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7802161052",
@@ -21863,9 +22170,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": -1,
-        "responsabilite": 16,
+        "responsabilite": 5,
         "isRemake": false,
-        "helpfulPings": 5
+        "helpfulPings": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7802295744",
@@ -21934,9 +22242,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20,
         "rankDiff": 0.25,
-        "responsabilite": 20,
+        "responsabilite": 5,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7802341547",
@@ -22005,9 +22314,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": -0.8,
-        "responsabilite": 34,
+        "responsabilite": 10,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7802388987",
@@ -22076,9 +22386,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": -2.15,
-        "responsabilite": 47,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 11
+        "helpfulPings": 11,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7802486836",
@@ -22147,9 +22458,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": -1.9,
-        "responsabilite": 45,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7802557633",
@@ -22218,9 +22530,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.6,
         "rankDiff": 0.15,
-        "responsabilite": 28,
+        "responsabilite": 15,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7802611539",
@@ -22289,9 +22602,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": -0.55,
-        "responsabilite": 53,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 22
+        "helpfulPings": 22,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7803051419",
@@ -22360,9 +22674,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": 0.4,
-        "responsabilite": 18,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7803101309",
@@ -22431,9 +22746,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.25,
         "rankDiff": -0.5,
-        "responsabilite": 79,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7803156689",
@@ -22502,9 +22818,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": 1.2,
-        "responsabilite": 61,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 5
+        "helpfulPings": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7803349193",
@@ -22573,9 +22890,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.6,
         "rankDiff": 3.15,
-        "responsabilite": 62,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 5
+        "helpfulPings": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7803419599",
@@ -22644,9 +22962,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": 1.35,
-        "responsabilite": 87,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 8
+        "helpfulPings": 8,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7803557627",
@@ -22715,9 +23034,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": 0.7,
-        "responsabilite": 74,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 24
+        "helpfulPings": 24,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7803610994",
@@ -22786,9 +23106,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19,
         "rankDiff": 1.25,
-        "responsabilite": 68,
+        "responsabilite": 95,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7803650479",
@@ -22857,9 +23178,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": 1.3,
-        "responsabilite": 66,
+        "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 8
+        "helpfulPings": 8,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7803688293",
@@ -22928,9 +23250,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": 0.9,
-        "responsabilite": 41,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7804465921",
@@ -22999,9 +23322,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 18.6,
         "rankDiff": 1.65,
-        "responsabilite": 90,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 34
+        "helpfulPings": 34,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7804537546",
@@ -23070,9 +23394,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": 1.35,
-        "responsabilite": 38,
+        "responsabilite": 30,
         "isRemake": false,
-        "helpfulPings": 2
+        "helpfulPings": 2,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7804654353",
@@ -23141,9 +23466,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": 0.05,
-        "responsabilite": 65,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 30
+        "helpfulPings": 30,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7804725626",
@@ -23214,7 +23540,8 @@
         "rankDiff": 0.5,
         "responsabilite": null,
         "isRemake": true,
-        "helpfulPings": 2
+        "helpfulPings": 2,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7804735907",
@@ -23283,9 +23610,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": 0.85,
-        "responsabilite": 35,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 21
+        "helpfulPings": 21,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7804794367",
@@ -23354,9 +23682,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": 0.7,
-        "responsabilite": 38,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7805563112",
@@ -23425,9 +23754,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": -1.9,
-        "responsabilite": 59,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 17
+        "helpfulPings": 17,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7805595252",
@@ -23496,9 +23826,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": 0.5,
-        "responsabilite": 40,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 44
+        "helpfulPings": 44,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7805731621",
@@ -23567,9 +23898,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.5,
         "rankDiff": -1.75,
-        "responsabilite": 48,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7805780421",
@@ -23638,9 +23970,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": 1.15,
-        "responsabilite": 52,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 16
+        "helpfulPings": 16,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7805826415",
@@ -23709,9 +24042,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": 2.1,
-        "responsabilite": 51,
+        "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7806495766",
@@ -23780,9 +24114,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": -0.6,
-        "responsabilite": 53,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7806536684",
@@ -23851,9 +24186,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": 0.8,
-        "responsabilite": 34,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 23
+        "helpfulPings": 23,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7806576093",
@@ -23922,9 +24258,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": 0.2,
-        "responsabilite": 43,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 19
+        "helpfulPings": 19,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7806687812",
@@ -23993,9 +24330,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": 0.55,
-        "responsabilite": 64,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 17
+        "helpfulPings": 17,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7806729305",
@@ -24064,9 +24402,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": 0.7,
-        "responsabilite": 64,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 30
+        "helpfulPings": 30,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7806780020",
@@ -24135,9 +24474,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20,
         "rankDiff": 1.25,
-        "responsabilite": 29,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 9
+        "helpfulPings": 9,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7806830332",
@@ -24206,9 +24546,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": 0.35,
-        "responsabilite": 33,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7806874233",
@@ -24277,9 +24618,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": -0.2,
-        "responsabilite": 69,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 19
+        "helpfulPings": 19,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7807512934",
@@ -24348,9 +24690,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": -0.65,
-        "responsabilite": 71,
+        "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7807547995",
@@ -24419,9 +24762,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": 1.15,
-        "responsabilite": 47,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 27
+        "helpfulPings": 27,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7807613600",
@@ -24490,9 +24834,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": -0.65,
-        "responsabilite": 82,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 30
+        "helpfulPings": 30,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7807656007",
@@ -24561,9 +24906,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": 0.65,
-        "responsabilite": 23,
+        "responsabilite": 5,
         "isRemake": false,
-        "helpfulPings": 23
+        "helpfulPings": 23,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7807779929",
@@ -24632,9 +24978,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20,
         "rankDiff": -1.25,
-        "responsabilite": 91,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 17
+        "helpfulPings": 17,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7807825829",
@@ -24703,9 +25050,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -0.45,
-        "responsabilite": 79,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 19
+        "helpfulPings": 19,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7807897790",
@@ -24774,9 +25122,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": 1.2,
-        "responsabilite": 61,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7808696773",
@@ -24847,7 +25196,8 @@
         "rankDiff": 1.2,
         "responsabilite": null,
         "isRemake": true,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7808699212",
@@ -24916,9 +25266,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": 0.1,
-        "responsabilite": 72,
+        "responsabilite": 95,
         "isRemake": false,
-        "helpfulPings": 29
+        "helpfulPings": 29,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7808763694",
@@ -24987,9 +25338,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -1.2,
-        "responsabilite": 29,
+        "responsabilite": 10,
         "isRemake": false,
-        "helpfulPings": 11
+        "helpfulPings": 11,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7808806688",
@@ -25058,9 +25410,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": 0.5,
-        "responsabilite": 82,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 24
+        "helpfulPings": 24,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7808942398",
@@ -25129,9 +25482,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": -0.55,
-        "responsabilite": 55,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 21
+        "helpfulPings": 21,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7808995147",
@@ -25200,9 +25554,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": -1,
-        "responsabilite": 16,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 11
+        "helpfulPings": 11,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7809039922",
@@ -25271,9 +25626,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": -0.65,
-        "responsabilite": 64,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7809082737",
@@ -25342,9 +25698,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": 0.95,
-        "responsabilite": 35,
+        "responsabilite": 30,
         "isRemake": false,
-        "helpfulPings": 30
+        "helpfulPings": 30,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7809146840",
@@ -25415,7 +25772,8 @@
         "rankDiff": -0.2,
         "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7809995461",
@@ -25484,9 +25842,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -0.1,
-        "responsabilite": 63,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 24
+        "helpfulPings": 24,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7810022226",
@@ -25555,9 +25914,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": 0.7,
-        "responsabilite": 72,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 25
+        "helpfulPings": 25,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7810125850",
@@ -25626,9 +25986,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": 1.3,
-        "responsabilite": 64,
+        "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 21
+        "helpfulPings": 21,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7810171079",
@@ -25697,9 +26058,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": 0.2,
-        "responsabilite": 67,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7810227362",
@@ -25768,9 +26130,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.6,
         "rankDiff": 0.65,
-        "responsabilite": 60,
+        "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 15
+        "helpfulPings": 15,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7810288481",
@@ -25839,9 +26202,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": 0.8,
-        "responsabilite": 45,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 25
+        "helpfulPings": 25,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7810354683",
@@ -25894,7 +26258,7 @@
         "retreatPings": 0,
         "visionClearedPings": 0,
         "ganksPerformed": 6,
-        "fatalGanksReceived": 21,
+        "fatalGanksReceived": 25,
         "csDiff10": 3,
         "goldDiff10": 1932,
         "csDiff15": 7,
@@ -25910,9 +26274,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": -0.55,
-        "responsabilite": 81,
+        "responsabilite": 95,
         "isRemake": false,
-        "helpfulPings": 18
+        "helpfulPings": 18,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7810387265",
@@ -25983,7 +26348,8 @@
         "rankDiff": -0.05,
         "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 5
+        "helpfulPings": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7810423464",
@@ -26052,9 +26418,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.25,
         "rankDiff": -3,
-        "responsabilite": 54,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7810770118",
@@ -26123,9 +26490,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.4,
         "rankDiff": -2.65,
-        "responsabilite": 68,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 38
+        "helpfulPings": 38,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7811065894",
@@ -26194,9 +26562,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.4,
         "rankDiff": 0.85,
-        "responsabilite": 74,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 22
+        "helpfulPings": 22,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7811100971",
@@ -26265,9 +26634,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23.2,
         "rankDiff": -0.2,
-        "responsabilite": 48,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 36
+        "helpfulPings": 36,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7811147816",
@@ -26336,9 +26706,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": 0,
-        "responsabilite": 39,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7811228708",
@@ -26407,9 +26778,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -0.85,
-        "responsabilite": 36,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 23
+        "helpfulPings": 23,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7811296940",
@@ -26478,9 +26850,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20,
         "rankDiff": -0.75,
-        "responsabilite": 54,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7811343375",
@@ -26549,9 +26922,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19,
         "rankDiff": 1.5,
-        "responsabilite": 56,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 8
+        "helpfulPings": 8,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7811399944",
@@ -26620,9 +26994,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19,
         "rankDiff": 1,
-        "responsabilite": 53,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 27
+        "helpfulPings": 27,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7811465863",
@@ -26693,7 +27068,8 @@
         "rankDiff": 0.35,
         "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7811512052",
@@ -26762,9 +27138,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -2.2,
-        "responsabilite": 63,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 24
+        "helpfulPings": 24,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7812229707",
@@ -26833,9 +27210,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": 1.05,
-        "responsabilite": 46,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 24
+        "helpfulPings": 24,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7812271830",
@@ -26904,9 +27282,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": 1.55,
-        "responsabilite": 77,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 28
+        "helpfulPings": 28,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7812309447",
@@ -26975,9 +27354,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": -0.75,
-        "responsabilite": 48,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7812412113",
@@ -27046,9 +27426,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.25,
         "rankDiff": -3,
-        "responsabilite": 61,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 15
+        "helpfulPings": 15,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7812469704",
@@ -27117,9 +27498,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.8,
         "rankDiff": 1.7,
-        "responsabilite": 84,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 10
+        "helpfulPings": 10,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7812515138",
@@ -27188,9 +27570,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": 0.75,
-        "responsabilite": 46,
+        "responsabilite": 30,
         "isRemake": false,
-        "helpfulPings": 26
+        "helpfulPings": 26,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7813255950",
@@ -27259,9 +27642,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -1.2,
-        "responsabilite": 51,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7813289914",
@@ -27330,9 +27714,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": -0.5,
-        "responsabilite": 62,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 28
+        "helpfulPings": 28,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7813329268",
@@ -27401,9 +27786,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.6,
         "rankDiff": -1.1,
-        "responsabilite": 68,
+        "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 14
+        "helpfulPings": 14,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7813450024",
@@ -27472,9 +27858,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18,
         "rankDiff": 2,
-        "responsabilite": 73,
+        "responsabilite": 70,
         "isRemake": false,
-        "helpfulPings": 19
+        "helpfulPings": 19,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7813501584",
@@ -27543,9 +27930,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": 0.1,
-        "responsabilite": 58,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 16
+        "helpfulPings": 16,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7813543434",
@@ -27614,9 +28002,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": 1.8,
-        "responsabilite": 96,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 31
+        "helpfulPings": 31,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7814164323",
@@ -27685,9 +28074,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -2.2,
-        "responsabilite": 59,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 23
+        "helpfulPings": 23,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7814206695",
@@ -27756,9 +28146,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -0.2,
-        "responsabilite": 41,
+        "responsabilite": 30,
         "isRemake": false,
-        "helpfulPings": 22
+        "helpfulPings": 22,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7814251488",
@@ -27827,9 +28218,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": 0.8,
-        "responsabilite": 86,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7814307672",
@@ -27898,9 +28290,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": -0.15,
-        "responsabilite": 74,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7814424991",
@@ -27969,9 +28362,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": 0.45,
-        "responsabilite": 91,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 33
+        "helpfulPings": 33,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7814481112",
@@ -28040,9 +28434,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": -1.25,
-        "responsabilite": 46,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 25
+        "helpfulPings": 25,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7815171405",
@@ -28111,9 +28506,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.6,
         "rankDiff": 1.65,
-        "responsabilite": 71,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 33
+        "helpfulPings": 33,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7816154815",
@@ -28182,9 +28578,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": -1.15,
-        "responsabilite": 71,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 25
+        "helpfulPings": 25,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7816199556",
@@ -28253,9 +28650,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -1.2,
-        "responsabilite": 43,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7816238069",
@@ -28324,9 +28722,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -1.1,
-        "responsabilite": 39,
+        "responsabilite": 30,
         "isRemake": false,
-        "helpfulPings": 16
+        "helpfulPings": 16,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7816350981",
@@ -28395,9 +28794,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": 1.5,
-        "responsabilite": 51,
+        "responsabilite": 85,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7816446138",
@@ -28466,9 +28866,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.2,
         "rankDiff": -0.2,
-        "responsabilite": 55,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 14
+        "helpfulPings": 14,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7816495978",
@@ -28537,9 +28938,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.6,
         "rankDiff": -0.1,
-        "responsabilite": 29,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7816541415",
@@ -28608,9 +29010,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": -0.15,
-        "responsabilite": 28,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7816600850",
@@ -28681,7 +29084,8 @@
         "rankDiff": -2.15,
         "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7816659947",
@@ -28750,9 +29154,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -2.1,
-        "responsabilite": 50,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7817295937",
@@ -28821,9 +29226,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": -1.65,
-        "responsabilite": 40,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7817336286",
@@ -28894,7 +29300,8 @@
         "rankDiff": 0.45,
         "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 14
+        "helpfulPings": 14,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7817381595",
@@ -28963,9 +29370,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": -1.55,
-        "responsabilite": 62,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 40
+        "helpfulPings": 40,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7817512215",
@@ -29034,9 +29442,10 @@
         "avgEnemyRank": "Platinum II",
         "avgEnemyRankScore": 18.2,
         "rankDiff": -0.7,
-        "responsabilite": 38,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 22
+        "helpfulPings": 22,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7817578568",
@@ -29105,9 +29514,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -1.35,
-        "responsabilite": 34,
+        "responsabilite": 20,
         "isRemake": false,
-        "helpfulPings": 17
+        "helpfulPings": 17,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7817614429",
@@ -29176,9 +29586,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": -0.4,
-        "responsabilite": 12,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7817674904",
@@ -29247,9 +29658,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": 0.2,
-        "responsabilite": 30,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7817730791",
@@ -29318,9 +29730,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": 1.35,
-        "responsabilite": 36,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7817784582",
@@ -29389,9 +29802,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.2,
         "rankDiff": 0.55,
-        "responsabilite": 92,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 16
+        "helpfulPings": 16,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7818039428",
@@ -29460,9 +29874,10 @@
         "avgEnemyRank": "Platinum I",
         "avgEnemyRankScore": 19.4,
         "rankDiff": 2.1,
-        "responsabilite": 80,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7818123966",
@@ -29531,9 +29946,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": 0.2,
-        "responsabilite": 89,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 18
+        "helpfulPings": 18,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7818167518",
@@ -29602,9 +30018,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.6,
         "rankDiff": 2.15,
-        "responsabilite": 91,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 21
+        "helpfulPings": 21,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7818196969",
@@ -29673,9 +30090,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": 0.5,
-        "responsabilite": 47,
+        "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 11
+        "helpfulPings": 11,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7818433182",
@@ -29746,7 +30164,8 @@
         "rankDiff": -1.6,
         "responsabilite": 55,
         "isRemake": false,
-        "helpfulPings": 5
+        "helpfulPings": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7818488493",
@@ -29815,9 +30234,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": 0.55,
-        "responsabilite": 79,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 21
+        "helpfulPings": 21,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7818543461",
@@ -29886,9 +30306,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.6,
         "rankDiff": 1.15,
-        "responsabilite": 93,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 13
+        "helpfulPings": 13,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7818660788",
@@ -29957,9 +30378,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -0.45,
-        "responsabilite": 88,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 36
+        "helpfulPings": 36,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7818726796",
@@ -30028,9 +30450,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -1.7,
-        "responsabilite": 22,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 22
+        "helpfulPings": 22,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7818805689",
@@ -30101,7 +30524,8 @@
         "rankDiff": -1.15,
         "responsabilite": null,
         "isRemake": true,
-        "helpfulPings": 0
+        "helpfulPings": 0,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7818819504",
@@ -30170,9 +30594,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": -1.25,
-        "responsabilite": 73,
+        "responsabilite": 80,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7819340666",
@@ -30241,9 +30666,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -0.95,
-        "responsabilite": 74,
+        "responsabilite": 85,
         "isRemake": false,
-        "helpfulPings": 20
+        "helpfulPings": 20,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7819378617",
@@ -30312,9 +30738,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": 0.85,
-        "responsabilite": 95,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 22
+        "helpfulPings": 22,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7819407399",
@@ -30383,9 +30810,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 23,
         "rankDiff": 0.25,
-        "responsabilite": 59,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 30
+        "helpfulPings": 30,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7819454683",
@@ -30454,9 +30882,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.6,
         "rankDiff": -0.6,
-        "responsabilite": 35,
+        "responsabilite": 25,
         "isRemake": false,
-        "helpfulPings": 7
+        "helpfulPings": 7,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7819508115",
@@ -30525,9 +30954,10 @@
         "avgEnemyRank": "Emerald I",
         "avgEnemyRankScore": 22.8,
         "rankDiff": 0.2,
-        "responsabilite": 45,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7819598010",
@@ -30596,9 +31026,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.6,
         "rankDiff": 0.15,
-        "responsabilite": 38,
+        "responsabilite": 45,
         "isRemake": false,
-        "helpfulPings": 21
+        "helpfulPings": 21,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7819654031",
@@ -30667,9 +31098,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.4,
         "rankDiff": 0.1,
-        "responsabilite": 47,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7819693756",
@@ -30738,9 +31170,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.4,
         "rankDiff": -0.65,
-        "responsabilite": 41,
+        "responsabilite": 40,
         "isRemake": false,
-        "helpfulPings": 10
+        "helpfulPings": 10,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7819752957",
@@ -30809,9 +31242,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -0.35,
-        "responsabilite": 89,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 5
+        "helpfulPings": 5,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7820302318",
@@ -30880,9 +31314,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 20.6,
         "rankDiff": -0.35,
-        "responsabilite": 26,
+        "responsabilite": 5,
         "isRemake": false,
-        "helpfulPings": 17
+        "helpfulPings": 17,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7820358058",
@@ -30951,9 +31386,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": 1.3,
-        "responsabilite": 88,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 4
+        "helpfulPings": 4,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7820389126",
@@ -31022,9 +31458,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -0.2,
-        "responsabilite": 70,
+        "responsabilite": 75,
         "isRemake": false,
-        "helpfulPings": 14
+        "helpfulPings": 14,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7820438938",
@@ -31093,9 +31530,10 @@
         "avgEnemyRank": "Diamond IV",
         "avgEnemyRankScore": 24,
         "rankDiff": 0,
-        "responsabilite": 63,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 23
+        "helpfulPings": 23,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7820544182",
@@ -31164,9 +31602,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21.2,
         "rankDiff": -0.95,
-        "responsabilite": 24,
+        "responsabilite": 0,
         "isRemake": false,
-        "helpfulPings": 10
+        "helpfulPings": 10,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7820578856",
@@ -31235,9 +31674,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22.2,
         "rankDiff": -0.2,
-        "responsabilite": 35,
+        "responsabilite": 5,
         "isRemake": false,
-        "helpfulPings": 15
+        "helpfulPings": 15,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7820629545",
@@ -31306,9 +31746,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": -0.05,
-        "responsabilite": 40,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 6
+        "helpfulPings": 6,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7820674833",
@@ -31377,9 +31818,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": -1.15,
-        "responsabilite": 42,
+        "responsabilite": 35,
         "isRemake": false,
-        "helpfulPings": 1
+        "helpfulPings": 1,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7821403290",
@@ -31448,9 +31890,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": 0.25,
-        "responsabilite": 78,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 11
+        "helpfulPings": 11,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7821558391",
@@ -31519,9 +31962,10 @@
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": 1.75,
-        "responsabilite": 57,
+        "responsabilite": 60,
         "isRemake": false,
-        "helpfulPings": 21
+        "helpfulPings": 21,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7821615024",
@@ -31590,9 +32034,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": 0,
-        "responsabilite": 69,
+        "responsabilite": 65,
         "isRemake": false,
-        "helpfulPings": 34
+        "helpfulPings": 34,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7822447286",
@@ -31654,16 +32099,17 @@
         "dpg": 2.6,
         "dmgRatio": 1.16,
         "firstCoreItemMin": 15,
-        "myRank": "Emerald IV",
-        "myRankScore": 20,
+        "myRank": "Emerald III",
+        "myRankScore": 21,
         "avgAllyRank": "Emerald III",
         "avgAllyRankScore": 21.25,
         "avgEnemyRank": "Emerald III",
         "avgEnemyRankScore": 21,
         "rankDiff": 0.25,
-        "responsabilite": 77,
+        "responsabilite": 90,
         "isRemake": false,
-        "helpfulPings": 30
+        "helpfulPings": 30,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7822502319",
@@ -31732,9 +32178,10 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": -0.55,
-        "responsabilite": 95,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 17
+        "helpfulPings": 17,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7822557407",
@@ -31803,9 +32250,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 19.8,
         "rankDiff": 2.7,
-        "responsabilite": 90,
+        "responsabilite": 100,
         "isRemake": false,
-        "helpfulPings": 15
+        "helpfulPings": 15,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7822744816",
@@ -31874,9 +32322,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": 2.1,
-        "responsabilite": 42,
+        "responsabilite": 50,
         "isRemake": false,
-        "helpfulPings": 3
+        "helpfulPings": 3,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7822778515",
@@ -31945,9 +32394,10 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": 2.1,
-        "responsabilite": 74,
+        "responsabilite": 85,
         "isRemake": false,
-        "helpfulPings": 12
+        "helpfulPings": 12,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7823550616",
@@ -32018,7 +32468,8 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.8,
         "rankDiff": 0.2,
-        "responsabilite": 65
+        "responsabilite": 65,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7823590875",
@@ -32089,7 +32540,8 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 22,
         "rankDiff": 0.25,
-        "responsabilite": null
+        "responsabilite": null,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7823603768",
@@ -32160,7 +32612,8 @@
         "avgEnemyRank": "Emerald II",
         "avgEnemyRankScore": 21.6,
         "rankDiff": 0.65,
-        "responsabilite": 59
+        "responsabilite": 55,
+        "myRankLp": 80
     },
     {
         "matchId": "EUW1_7823660997",
@@ -32231,6 +32684,151 @@
         "avgEnemyRank": "Emerald IV",
         "avgEnemyRankScore": 20.4,
         "rankDiff": 3.1,
-        "responsabilite": 57
+        "responsabilite": 50,
+        "myRankLp": 80
+    },
+    {
+        "matchId": "EUW1_7823830959",
+        "rawDate": "2026-04-17T19:20:27.958Z",
+        "date": "17/04/2026",
+        "time": "21:20",
+        "sessionId": 89,
+        "gameInSession": 1,
+        "gameDuration": "36:14",
+        "gameDurationSec": 2174,
+        "isRemake": false,
+        "champion": "Lucian",
+        "role": "BOTTOM",
+        "type": "Duo",
+        "win": "Victoire",
+        "kda": 2.89,
+        "kills": 19,
+        "deaths": 9,
+        "assists": 7,
+        "csPerMin": 9,
+        "gpm": 666,
+        "dpm": 1754,
+        "objDpm": 568,
+        "dmgShare": 35.5,
+        "kp": 74.3,
+        "vision": 29,
+        "wardsPlaced": 8,
+        "wardsKilled": 7,
+        "controlWards": 0,
+        "pctDeadTime": 16.1,
+        "bestMultiKill": "Triple",
+        "pentaKills": 0,
+        "quadraKills": 0,
+        "tripleKills": 3,
+        "doubleKills": 4,
+        "largestKillingSpree": 5,
+        "firstBlood": "Non",
+        "withYuumi": "Oui",
+        "yuumiAlliee": "Oui",
+        "totalPings": 25,
+        "helpfulPings": 16,
+        "negativePings": 9,
+        "allInPings": 0,
+        "basicPings": 0,
+        "commandPings": 1,
+        "dangerPings": 0,
+        "enemyMissingPings": 8,
+        "holdPings": 0,
+        "needVisionPings": 0,
+        "onMyWayPings": 15,
+        "pushPings": 0,
+        "retreatPings": 1,
+        "visionClearedPings": 0,
+        "ganksPerformed": null,
+        "fatalGanksReceived": 0,
+        "csDiff10": 6,
+        "goldDiff10": 251,
+        "csDiff15": 8,
+        "goldDiff15": 1170,
+        "enemyADC": "Caitlyn",
+        "dpg": 2.634,
+        "dmgRatio": 1.78,
+        "firstCoreItemMin": 11,
+        "myRank": "Emerald III",
+        "myRankScore": 21,
+        "myRankLp": 99,
+        "avgAllyRank": "Emerald IV",
+        "avgAllyRankScore": 20.25,
+        "avgEnemyRank": "Emerald III",
+        "avgEnemyRankScore": 21,
+        "rankDiff": -0.75,
+        "responsabilite": 65
+    },
+    {
+        "matchId": "EUW1_7823900067",
+        "rawDate": "2026-04-17T20:04:34.069Z",
+        "date": "17/04/2026",
+        "time": "22:04",
+        "sessionId": 89,
+        "gameInSession": 2,
+        "gameDuration": "31:08",
+        "gameDurationSec": 1868,
+        "isRemake": false,
+        "champion": "Twitch",
+        "role": "BOTTOM",
+        "type": "Duo",
+        "win": "Victoire",
+        "kda": 4,
+        "kills": 10,
+        "deaths": 5,
+        "assists": 10,
+        "csPerMin": 6.8,
+        "gpm": 487,
+        "dpm": 1168,
+        "objDpm": 358,
+        "dmgShare": 32.8,
+        "kp": 57.1,
+        "vision": 21,
+        "wardsPlaced": 3,
+        "wardsKilled": 7,
+        "controlWards": 0,
+        "pctDeadTime": 9.4,
+        "bestMultiKill": "Double",
+        "pentaKills": 0,
+        "quadraKills": 0,
+        "tripleKills": 0,
+        "doubleKills": 1,
+        "largestKillingSpree": 3,
+        "firstBlood": "Non",
+        "withYuumi": "Oui",
+        "yuumiAlliee": "Oui",
+        "totalPings": 28,
+        "helpfulPings": 21,
+        "negativePings": 7,
+        "allInPings": 2,
+        "basicPings": 0,
+        "commandPings": 2,
+        "dangerPings": 0,
+        "enemyMissingPings": 6,
+        "holdPings": 0,
+        "needVisionPings": 1,
+        "onMyWayPings": 16,
+        "pushPings": 0,
+        "retreatPings": 1,
+        "visionClearedPings": 0,
+        "ganksPerformed": null,
+        "fatalGanksReceived": 0,
+        "csDiff10": -14,
+        "goldDiff10": 219,
+        "csDiff15": -19,
+        "goldDiff15": 30,
+        "enemyADC": "Kaisa",
+        "dpg": 2.4,
+        "dmgRatio": 1.67,
+        "firstCoreItemMin": 12,
+        "myRank": "Emerald II",
+        "myRankScore": 22,
+        "myRankLp": 18,
+        "avgAllyRank": "Emerald I",
+        "avgAllyRankScore": 23.25,
+        "avgEnemyRank": "Emerald II",
+        "avgEnemyRankScore": 22,
+        "rankDiff": 1.25,
+        "responsabilite": 95
     }
 ]

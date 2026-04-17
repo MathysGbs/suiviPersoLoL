@@ -79,18 +79,38 @@ function colorKDA(cell, kda) {
 }
 
 function colorResponsabilite(cell, resp) {
-    if (resp >= 80) {
-        cell.font = { bold: true, color: { argb: C.winFg }, size: 10 };
-        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.winBg } };
-    } else if (resp <= 20) {
-        cell.font = { bold: true, color: { argb: C.lossFg }, size: 10 };
-        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.lossBg } };
-    } else if (resp >= 60) {
-        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.good } };
-    } else if (resp <= 40) {
-        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.bad } };
+    if (!Number.isFinite(resp)) return;
+
+    if (resp >= 100) {
+        cell.font = { bold: true, color: { argb: C.white }, size: 10 };
+        cell.fill = {
+            type: 'gradient',
+            gradient: 'angle',
+            degree: 0,
+            stops: [
+                { position: 0, color: { argb: 'FFEF4444' } },
+                { position: 0.2, color: { argb: 'FFF59E0B' } },
+                { position: 0.4, color: { argb: 'FFEAB308' } },
+                { position: 0.6, color: { argb: 'FF22C55E' } },
+                { position: 0.8, color: { argb: 'FF3B82F6' } },
+                { position: 1, color: { argb: 'FF8B5CF6' } },
+            ],
+        };
+    } else if (resp > 80) {
+        cell.font = { bold: true, color: { argb: 'FF713F12' }, size: 10 };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFACC15' } };
+    } else if (resp > 60) {
+        cell.font = { bold: true, color: { argb: C.white }, size: 10 };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF16A34A' } };
+    } else if (resp > 40) {
+        cell.font = { bold: true, color: { argb: C.white }, size: 10 };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF97316' } };
+    } else if (resp > 20) {
+        cell.font = { bold: true, color: { argb: C.white }, size: 10 };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFDC2626' } };
     } else {
-        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: C.warn } };
+        cell.font = { bold: true, color: { argb: C.white }, size: 10 };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF6B7280' } };
     }
 }
 

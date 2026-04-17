@@ -120,10 +120,10 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .result-badge.d{background:var(--loss-bg);color:var(--loss-text)}
 .resp-cell{border-radius:4px;padding:3px 6px;font-family:var(--font-m);font-size:11px;font-weight:600;text-align:center;display:inline-block;min-width:32px;color:#fff}
 .resp-vbad{background:#6b7280;color:#fff}
-.resp-bad{background:#1e3a8a;color:#fff}
-.resp-mid{background:#7dd3fc;color:#0c4a6e}
-.resp-good{background:#86efac;color:#14532d}
-.resp-vgood{background:#fbbf24;color:#78350f}
+.resp-bad{background:#dc2626;color:#fff}
+.resp-mid{background:#f97316;color:#fff}
+.resp-good{background:#16a34a;color:#fff}
+.resp-vgood{background:#facc15;color:#713f12}
 .resp-max{background:linear-gradient(120deg,#ef4444,#f59e0b,#eab308,#22c55e,#06b6d4,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.35) inset}
 .mk-badge{display:inline-flex;align-items:center;justify-content:center;min-width:50px;padding:3px 7px;border-radius:4px;font-family:var(--font-m);font-size:10px;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--border);background:var(--bg3);color:var(--text2)}
 .mk-badge.empty{min-width:24px;padding:3px 0;color:var(--text3)}
@@ -300,7 +300,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
     <div class="kpi" style="--kc:var(--teal)"><div class="kpi-accent"></div><div class="kpi-label">CS / Min</div><div class="kpi-val" id="kCS">—</div></div>
     <div class="kpi" style="--kc:var(--warn)"><div class="kpi-accent"></div><div class="kpi-label">DPM Moyen</div><div class="kpi-val" id="kDPM">—</div></div>
     <div class="kpi" style="--kc:#a78bfa"><div class="kpi-accent"></div><div class="kpi-label">Resp. Moyenne</div><div class="kpi-val" id="kResp">—</div></div>
-    <div class="kpi" style="--kc:var(--gold)"><div class="kpi-accent"></div><div class="kpi-label">Rang actuel</div><div class="kpi-val" id="kRank" style="font-size:16px;margin-top:4px">—</div></div>
+    <div class="kpi" style="--kc:var(--gold)"><div class="kpi-accent"></div><div class="kpi-label">Rang actuel</div><div class="kpi-val" id="kRank" style="font-size:16px;margin-top:4px">—</div><div class="kpi-sub" id="kRankLp">—</div></div>
   </div>
 
   <div class="sh"><h2>Évolution</h2><span class="sh-tag" id="trendTag"></span></div>
@@ -541,6 +541,7 @@ let allData=[], filteredData=[];
 let fRes='all', fRole='all', fChamp='', sortKey='date', sortDir='desc';
 let latestRankScore=null;
 let latestRankLabel='—';
+let latestRankLp=null;
 
 // ─── Load ────────────────────────────────────────────────
 async function loadData(){
@@ -658,14 +659,21 @@ function renderKPIs(data){
   document.getElementById('kResp').textContent=isNaN(avgResp) ? '—' : avgResp.toFixed(1);
   const respEl = document.getElementById('kResp').parentElement;
   if (!isNaN(avgResp)) {
-    respEl.style.setProperty('--kc', avgResp >= 60 ? 'var(--win)' : avgResp >= 40 ? '#f59e0b' : 'var(--loss)');
+    if (avgResp >= 100) respEl.style.setProperty('--kc', '#8b5cf6');
+    else if (avgResp > 80) respEl.style.setProperty('--kc', '#facc15');
+    else if (avgResp > 60) respEl.style.setProperty('--kc', '#16a34a');
+    else if (avgResp > 40) respEl.style.setProperty('--kc', '#f97316');
+    else if (avgResp > 20) respEl.style.setProperty('--kc', '#dc2626');
+    else respEl.style.setProperty('--kc', '#6b7280');
   } else {
     respEl.style.setProperty('--kc', '#a78bfa');
   }
   
   latestRankScore = Number.isFinite(last?.myRankScore) ? last.myRankScore : rankLabelToScore(last?.myRank);
   latestRankLabel = last?.myRank || (latestRankScore != null ? scoreToLabel(latestRankScore) : '—');
+  latestRankLp = Number.isFinite(last?.myRankLp) ? last.myRankLp : null;
   document.getElementById('kRank').textContent=latestRankLabel;
+  document.getElementById('kRankLp').textContent=latestRankLp!=null?`${latestRankLp} LP`:'LP indisponibles';
   const wr10=wPct(data.slice(-10));
   document.getElementById('kWRSub').textContent=(wr10*100).toFixed(0)+'% (10 dernières)';
   document.getElementById('kWRCard').className='kpi '+(wr>=0.5?'green':'red');
@@ -694,9 +702,18 @@ function setLpDefaultTarget(){
   sel.value=String(target);
 }
 
+function setLpDefaultCurrentLp(){
+  const input=document.getElementById('lpCurrentInput');
+  if(!input || input.dataset.userTouched==='true') return;
+  if(!Number.isFinite(latestRankLp)) return;
+  const clamped=Math.max(0,Math.min(99,Math.round(latestRankLp)));
+  input.value=String(clamped);
+}
+
 function refreshLpCalculator(data){
   ensureLpRankOptions();
   setLpDefaultTarget();
+  setLpDefaultCurrentLp();
 
   const wrSample=data.slice(-50);
   const wr50=wPct(wrSample);
@@ -780,6 +797,10 @@ function refreshLpCalculator(data){
 ['lpGainInput','lpLossInput','lpCurrentInput','lpTargetRank','lpTargetLpInput'].forEach(id=>{
   const el=document.getElementById(id);
   if(id==='lpTargetRank' && el){
+    el.addEventListener('input',()=>{ el.dataset.userTouched='true'; });
+    el.addEventListener('change',()=>{ el.dataset.userTouched='true'; });
+  }
+  if(id==='lpCurrentInput' && el){
     el.addEventListener('input',()=>{ el.dataset.userTouched='true'; });
     el.addEventListener('change',()=>{ el.dataset.userTouched='true'; });
   }
@@ -1094,28 +1115,31 @@ function applyFilters(){
 }
 
 function getRespClass(resp) {
-  if (resp === undefined || resp === null) return '';
-  if (resp >= 100) return 'resp-max';
-  return '';
+  const s = parseFloat(resp);
+  if (!Number.isFinite(s)) return '';
+  if (s >= 100) return 'resp-max';
+  if (s > 80) return 'resp-vgood';
+  if (s > 60) return 'resp-good';
+  if (s > 40) return 'resp-mid';
+  if (s > 20) return 'resp-bad';
+  return 'resp-vbad';
 }
 
 function getRespInlineStyle(resp){
   const s=parseFloat(resp);
-  if(!Number.isFinite(s) || s>=100) return '';
-
-  if(s>=70) return 'background:#f97316;color:#ffffff';
-  if(s>=40) return 'background:#14b8a6;color:#0f172a';
-  return 'background:#1e3a8a;color:#ffffff';
+  if(!Number.isFinite(s)) return '';
+  return '';
 }
 
 function getRespTooltip(resp, m) {
   if (isRemakeMatch(m)) return 'Remake: score non attribué';
   if (resp === undefined || resp === null) return 'Donnée manquante';
-  if (resp >= 80) return 'Impact extrêmement positif (Solo Win)';
-  if (resp >= 60) return 'Impact positif (A grandement aidé)';
-  if (resp >= 40) return 'Impact neutre (Dans la moyenne)';
-  if (resp >= 20) return 'Impact négatif';
-  return 'Impact très négatif (Int)';
+  if (resp >= 100) return '100: performance maximale';
+  if (resp > 80) return 'Excellent';
+  if (resp > 60) return 'Correct';
+  if (resp > 40) return 'Moyen';
+  if (resp > 20) return 'Mauvais';
+  return 'Pire';
 }
 
 function getRowScoreClass(m){
