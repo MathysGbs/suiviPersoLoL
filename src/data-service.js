@@ -101,6 +101,49 @@ function needsTimelineMigration(entry) {
         || hasSuspiciousFirstCore(entry);
 }
 
+function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+}
+
+function normalizeTo100(value, min, max) {
+    if (!Number.isFinite(value)) return 50;
+    if (max <= min) return 50;
+    return clamp(((value - min) / (max - min)) * 100, 0, 100);
+}
+
+function computeResponsabiliteScore(metrics) {
+    if (metrics.isRemake) return null;
+
+    const kdaScore = normalizeTo100(metrics.kda, 0.8, 5.2);
+    const kpScore = normalizeTo100(metrics.kp, 20, 75);
+    const dmgShareScore = normalizeTo100(metrics.dmgShare, 10, 35);
+    const deadTimeScore = 100 - normalizeTo100(metrics.pctDeadTime, 2, 20);
+
+    const gpmRatio = metrics.teamAvgGpm > 0 ? (metrics.gpm / metrics.teamAvgGpm) : 1;
+    const gpmScore = normalizeTo100(gpmRatio, 0.75, 1.30);
+
+    const pingEngaged = metrics.helpfulPings + metrics.negativePings;
+    const pingQualityScore = pingEngaged > 0 ? (metrics.helpfulPings / pingEngaged) * 100 : 50;
+    const pingVolumeScore = normalizeTo100(metrics.totalPings, 3, 24);
+    const pingScore = clamp((pingQualityScore * 0.7) + (pingVolumeScore * 0.3), 0, 100);
+
+    let multiKillScore = 0;
+    if (metrics.pentaKills > 0) multiKillScore = 100;
+    else if (metrics.quadraKills > 0) multiKillScore = 90;
+    else if (metrics.tripleKills > 0) multiKillScore = 70;
+    else if (metrics.doubleKills > 0) multiKillScore = 50;
+
+    const rawScore = (kdaScore * 0.20)
+        + (kpScore * 0.15)
+        + (dmgShareScore * 0.15)
+        + (deadTimeScore * 0.15)
+        + (gpmScore * 0.15)
+        + (pingScore * 0.10)
+        + (multiKillScore * 0.10);
+
+    return Math.round(clamp(rawScore, 0, 100));
+}
+
 function loadData() {
     if (!fs.existsSync(JSON_FILENAME)) return [];
     return JSON.parse(fs.readFileSync(JSON_FILENAME, 'utf8'));
@@ -250,6 +293,8 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
         + enemyMissingPings + holdPings + needVisionPings
         + onMyWayPings + pushPings + retreatPings + visionClearedPings;
     const negativePings = dangerPings + retreatPings + enemyMissingPings;
+    const helpfulPings = allInPings + commandPings + holdPings + needVisionPings
+        + onMyWayPings + pushPings + visionClearedPings;
 
     console.log('   -> Analyse de la Timeline (Ganks, Lane phase, Core item)...');
     let fatalGanksReceived = 0;
@@ -359,35 +404,28 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
 
     const pctDeadTime = parseFloat((((me.totalTimeSpentDead || 0) / match.info.gameDuration) * 100).toFixed(1));
     const kda = parseFloat(((me.kills + me.assists) / Math.max(1, me.deaths)).toFixed(2));
-    
-    // Calcul de la Responsabilité
-    let resp = 50;
-    
-    // Impact KDA
-    if (kda < 1.0) resp -= 20;
-    else if (kda < 2.0) resp -= 10;
-    else if (kda >= 3.0 && kda < 4.0) resp += 10;
-    else if (kda >= 4.0) resp += 20;
+    const gpm = parseFloat((me.goldEarned / minutes).toFixed(0));
+    const teamAvgGpm = myTeam.length
+        ? myTeam.reduce((sum, p) => sum + ((p.goldEarned || 0) / minutes), 0) / myTeam.length
+        : gpm;
+    const isRemake = Boolean(me.gameEndedInEarlySurrender) || match.info.gameDuration <= 300;
 
-    // Impact KP
-    if (kp < 30) resp -= 15;
-    else if (kp < 40) resp -= 5;
-    else if (kp >= 50 && kp < 60) resp += 10;
-    else if (kp >= 60) resp += 15;
-
-    // Impact DMG %
-    if (dmgShare < 15) resp -= 15;
-    else if (dmgShare < 20) resp -= 5;
-    else if (dmgShare >= 20 && dmgShare < 25) resp += 5;
-    else if (dmgShare >= 25 && dmgShare < 30) resp += 10;
-    else if (dmgShare >= 30) resp += 15;
-
-    // Impact Temps mort
-    if (pctDeadTime > 15) resp -= 15;
-    else if (pctDeadTime > 10) resp -= 10;
-    else if (pctDeadTime < 5) resp += 10;
-    
-    const responsabilite = Math.max(0, Math.min(100, Math.round(resp)));
+    const responsabilite = computeResponsabiliteScore({
+        isRemake,
+        kda,
+        kp,
+        dmgShare,
+        pctDeadTime,
+        gpm,
+        teamAvgGpm,
+        helpfulPings,
+        negativePings,
+        totalPings,
+        pentaKills: me.pentaKills || 0,
+        quadraKills: me.quadraKills || 0,
+        tripleKills: me.tripleKills || 0,
+        doubleKills: me.doubleKills || 0,
+    });
 
     return {
         matchId,
@@ -398,6 +436,7 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
         gameInSession: 0,
         gameDuration: secToMmSs(match.info.gameDuration),
         gameDurationSec: match.info.gameDuration,
+        isRemake,
         champion: me.championName,
         role,
         type: isDuo ? 'Duo' : 'Solo',
@@ -407,7 +446,7 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
         deaths: me.deaths,
         assists: me.assists,
         csPerMin: parseFloat((totalCS / minutes).toFixed(1)),
-        gpm: parseFloat((me.goldEarned / minutes).toFixed(0)),
+        gpm,
         dpm: parseFloat((me.totalDamageDealtToChampions / minutes).toFixed(0)),
         objDpm: parseFloat(((me.damageDealtToObjectives || 0) / minutes).toFixed(0)),
         dmgShare: parseFloat(dmgShare.toFixed(1)),
@@ -428,6 +467,7 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
         yuumiAlliee: myTeam.some((p) => p.puuid !== myPuuid && p.championName === 'Yuumi') ? 'Oui' : 'Non',
 
         totalPings,
+        helpfulPings,
         negativePings,
         allInPings,
         basicPings,
@@ -467,6 +507,7 @@ async function extractMatchMetrics(matchId, myPuuid, duoPuuid) {
 
 function needsMigration(m) {
     return m.gameDurationSec == null
+        || m.isRemake == null
         || m.yuumiAlliee == null
         || m.firstBlood == null
         || m.pctDeadTime == null
@@ -511,6 +552,7 @@ async function migrateOldEntries(data, myPuuid, duoPuuid) {
 
             entry.gameDurationSec = match.info.gameDuration;
             entry.gameDuration = secToMmSs(match.info.gameDuration);
+            entry.isRemake = Boolean(me.gameEndedInEarlySurrender) || match.info.gameDuration <= 300;
             entry.objDpm = parseFloat(((me.damageDealtToObjectives || 0) / minutes).toFixed(0));
             entry.wardsPlaced = me.wardsPlaced || 0;
             entry.wardsKilled = me.wardsKilled || 0;
@@ -543,11 +585,45 @@ async function migrateOldEntries(data, myPuuid, duoPuuid) {
                 + entry.dangerPings + entry.enemyMissingPings + entry.holdPings
                 + entry.needVisionPings + entry.onMyWayPings + entry.pushPings
                 + entry.retreatPings + entry.visionClearedPings;
+            entry.helpfulPings = entry.allInPings + entry.commandPings + entry.holdPings
+                + entry.needVisionPings + entry.onMyWayPings + entry.pushPings + entry.visionClearedPings;
             entry.negativePings = entry.dangerPings + entry.retreatPings + entry.enemyMissingPings;
 
             entry.ganksPerformed = entry.role === 'JUNGLE'
                 ? (me.challenges?.killsOnLanersEarlyJungleAsJungler ?? null)
                 : null;
+
+            const teamKills = myTeam.reduce((s, p) => s + (p.kills || 0), 0);
+            const teamDamage = myTeam.reduce((s, p) => s + (p.totalDamageDealtToChampions || 0), 0);
+            const kp = teamKills === 0 ? 0 : ((me.kills + me.assists) / teamKills) * 100;
+            const dmgShare = teamDamage === 0 ? 0 : (me.totalDamageDealtToChampions / teamDamage) * 100;
+            const kda = parseFloat(((me.kills + me.assists) / Math.max(1, me.deaths)).toFixed(2));
+            const gpm = parseFloat((me.goldEarned / minutes).toFixed(0));
+            const teamAvgGpm = myTeam.length
+                ? myTeam.reduce((sum, p) => sum + ((p.goldEarned || 0) / minutes), 0) / myTeam.length
+                : gpm;
+
+            entry.kp = parseFloat(kp.toFixed(1));
+            entry.dmgShare = parseFloat(dmgShare.toFixed(1));
+            entry.kda = kda;
+            entry.gpm = gpm;
+            entry.pctDeadTime = parseFloat((((me.totalTimeSpentDead || 0) / match.info.gameDuration) * 100).toFixed(1));
+            entry.responsabilite = computeResponsabiliteScore({
+                isRemake: entry.isRemake,
+                kda: entry.kda,
+                kp,
+                dmgShare,
+                pctDeadTime: entry.pctDeadTime,
+                gpm,
+                teamAvgGpm,
+                helpfulPings: entry.helpfulPings,
+                negativePings: entry.negativePings,
+                totalPings: entry.totalPings,
+                pentaKills: entry.pentaKills || 0,
+                quadraKills: entry.quadraKills || 0,
+                tripleKills: entry.tripleKills || 0,
+                doubleKills: entry.doubleKills || 0,
+            });
 
             if (entry.dpg === undefined) {
                 entry.dpg = parseFloat((me.totalDamageDealtToChampions / Math.max(1, me.goldEarned)).toFixed(3));

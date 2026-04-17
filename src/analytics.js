@@ -3,6 +3,9 @@ const { safeN, avgOf, winPct, pushTo } = require('./utils');
 function computeAnalytics(data) {
     if (!data.length) return null;
 
+    const isRemakeMatch = (m) => Boolean(m?.isRemake)
+        || (safeN(m?.gameDurationSec, 0) > 0 && safeN(m?.gameDurationSec, 0) <= 300);
+
     const champMap = {};
     const byGameInSession = {};
     const byRole = {};
@@ -94,7 +97,7 @@ function computeAnalytics(data) {
             avgDmgShare: avgOf(data, 'dmgShare'),
             avgKP: avgOf(data, 'kp'),
             avgVision: avgOf(data, 'vision'),
-            avgResp: avgOf(data, 'responsabilite'),
+            avgResp: avgOf(data.filter((m) => !isRemakeMatch(m) && m.responsabilite != null), 'responsabilite'),
         },
     };
 }

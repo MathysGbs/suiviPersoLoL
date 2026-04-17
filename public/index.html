@@ -787,6 +787,7 @@ header {
 let ws;
 let isRunning = false;
 let defaultMatchesToFetch = 200;
+let currentMatchesToFetch = 200;
 let pendingFetchResolver = null;
 const MATCHES_STORAGE_KEY = 'lolTracker.matchesToFetch';
 
@@ -819,13 +820,7 @@ function setWSStatus(connected) {
 function handleMessage(msg) {
     switch (msg.type) {
         case 'start':
-            isRunning = true;
-            setStatus('running', `${msg.mode.toUpperCase()} en cours…`);
-            setCardsDisabled(true);
-            setProgressBar(true);
-            document.getElementById('btnStop').style.display = 'inline-flex';
-            document.getElementById('terminalProgress').textContent = '';
-            document.querySelector('.progress-bar-inner').style.width = '0%';
+            applyRunningState(msg.mode);
             appendLog(`▶ Mode ${msg.mode.toUpperCase()} démarré`, 'system');
             break;
         case 'log':
@@ -836,33 +831,43 @@ function handleMessage(msg) {
             document.querySelector('.progress-bar-inner').style.width = msg.percent + '%';
             break;
         case 'done':
-            isRunning = false;
-            setStatus('success', 'Terminé');
-            setCardsDisabled(false);
-            setProgressBar(false);
-            document.getElementById('btnStop').style.display = 'none';
-            document.getElementById('terminalProgress').textContent = '';
-            document.querySelector('.progress-bar-inner').style.width = '0%';
+            applyIdleState('success', 'Terminé');
             appendLog('✓ Terminé avec succès', 'ok');
             if (msg.stats) updateStats(msg.stats);
             break;
         case 'error':
-            isRunning = false;
-            setStatus('error', 'Erreur');
-            setCardsDisabled(false);
-            setProgressBar(false);
-            document.getElementById('btnStop').style.display = 'none';
-            document.getElementById('terminalProgress').textContent = '';
-            document.querySelector('.progress-bar-inner').style.width = '0%';
+            applyIdleState('error', 'Erreur');
             appendLog('✗ ' + msg.message, 'error');
             break;
     }
+}
+
+function applyRunningState(mode) {
+    isRunning = true;
+    const modeLabel = mode ? `${String(mode).toUpperCase()} en cours…` : 'En cours…';
+    setStatus('running', modeLabel);
+    setCardsDisabled(true);
+    setProgressBar(true);
+    document.getElementById('btnStop').style.display = 'inline-flex';
+    document.getElementById('terminalProgress').textContent = '';
+    document.querySelector('.progress-bar-inner').style.width = '0%';
+}
+
+function applyIdleState(status = 'idle', text = 'Prêt') {
+    isRunning = false;
+    setStatus(status, text);
+    setCardsDisabled(false);
+    setProgressBar(false);
+    document.getElementById('btnStop').style.display = 'none';
+    document.getElementById('terminalProgress').textContent = '';
+    document.querySelector('.progress-bar-inner').style.width = '0%';
 }
 
 function setDefaultMatchesToFetch(value) {
     const parsed = Number.parseInt(value, 10);
     if (Number.isFinite(parsed) && parsed > 0) {
         defaultMatchesToFetch = parsed;
+        currentMatchesToFetch = parsed;
         try {
             localStorage.setItem(MATCHES_STORAGE_KEY, String(parsed));
         } catch (_) {
@@ -930,7 +935,16 @@ function setProgressBar(active) {
 function openGamesModal() {
     const modal = document.getElementById('gamesModal');
     const input = document.getElementById('gamesInput');
-    input.value = String(defaultMatchesToFetch);
+    const keepValue = Number.isFinite(currentMatchesToFetch) && currentMatchesToFetch > 0
+        ? currentMatchesToFetch
+        : defaultMatchesToFetch;
+    input.value = String(keepValue);
+
+    const title = document.getElementById('gamesModalTitle');
+    const keepBtn = document.getElementById('gamesKeepBtn');
+    if (title) title.textContent = `Conserver ${keepValue} games ?`;
+    if (keepBtn) keepBtn.textContent = `Conserver (${keepValue})`;
+
     modal.classList.add('open');
     input.focus();
     input.select();
@@ -1041,6 +1055,7 @@ document.getElementById('gamesChangeBtn').addEventListener('click', () => {
         return;
     }
     setDefaultMatchesToFetch(value);
+    currentMatchesToFetch = value;
     resolveGamesModal(value);
 });
 
@@ -1057,16 +1072,21 @@ checkExcelFile();
 fetch('/api/status')
     .then(r => r.json())
     .then(data => {
-        const storedMatches = getStoredMatchesToFetch();
-        if (storedMatches) {
-            setDefaultMatchesToFetch(storedMatches);
+        if (data.current?.matchesToFetch) {
+            setDefaultMatchesToFetch(data.current.matchesToFetch);
+            currentMatchesToFetch = data.current.matchesToFetch;
         } else if (data.defaults?.matchesToFetch) {
             setDefaultMatchesToFetch(data.defaults.matchesToFetch);
+            currentMatchesToFetch = data.defaults.matchesToFetch;
+        } else {
+            const storedMatches = getStoredMatchesToFetch();
+            if (storedMatches) {
+                setDefaultMatchesToFetch(storedMatches);
+                currentMatchesToFetch = storedMatches;
+            }
         }
         if (data.isRunning) {
-            setStatus('running', 'En cours…');
-            setCardsDisabled(true);
-            setProgressBar(true);
+            applyRunningState(data.runningMode);
         }
         if (data.stats) updateStats(data.stats);
     })

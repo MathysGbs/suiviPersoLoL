@@ -20,6 +20,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ── État global ────────────────────────────────────────────
 let isRunning = false;
+let runningMode = null;
+let currentMatchesToFetch = MATCHES_TO_FETCH;
+
+function normalizeMatchesToFetch(value) {
+    const parsed = Number.parseInt(value, 10);
+    if (!Number.isFinite(parsed) || parsed <= 0) return null;
+    return parsed;
+}
 
 // ── Broadcast vers tous les clients WS connectés ──────────
 function broadcast(type, data = {}) {
@@ -89,14 +97,20 @@ function runMode(modeFn, modeName) {
             return res.status(409).json({ error: 'Un mode est déjà en cours d\'exécution.' });
         }
 
+        const requestedMatchesToFetch = normalizeMatchesToFetch(req.body?.matchesToFetch);
+        if (requestedMatchesToFetch !== null) {
+            currentMatchesToFetch = requestedMatchesToFetch;
+        }
+
         isRunning = true;
+        runningMode = modeName;
         const unpatch = patchConsole();
 
         broadcast('start', { mode: modeName });
         res.json({ ok: true });
 
         try {
-            const matchesToFetch = req.body?.matchesToFetch;
+            const matchesToFetch = requestedMatchesToFetch ?? currentMatchesToFetch;
             await modeFn({ matchesToFetch });
             broadcast('done', { mode: modeName, stats: getStats() });
         } catch (err) {
@@ -106,13 +120,20 @@ function runMode(modeFn, modeName) {
         } finally {
             unpatch();
             isRunning = false;
+            runningMode = null;
         }
     };
 }
 
 // ── Routes API ─────────────────────────────────────────────
 app.get('/api/status', (_req, res) => {
-    res.json({ isRunning, stats: getStats(), defaults: { matchesToFetch: MATCHES_TO_FETCH } });
+    res.json({
+        isRunning,
+        runningMode,
+        stats: getStats(),
+        defaults: { matchesToFetch: MATCHES_TO_FETCH },
+        current: { matchesToFetch: currentMatchesToFetch },
+    });
 });
 
 app.get('/api/data', (_req, res) => {

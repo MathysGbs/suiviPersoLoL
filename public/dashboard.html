@@ -105,28 +105,40 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .games-count{font-family:var(--font-m);font-size:11px;color:var(--text3);white-space:nowrap}
 
 .games-table{background:var(--bg2);border-radius:var(--rl);box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden}
-.gt-head{display:grid;grid-template-columns:90px 36px 110px 60px 72px 90px 70px 70px 60px 80px 40px 50px;gap:0;padding:10px 16px;background:var(--navy);font-family:var(--font-m);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.gt-head{display:grid;grid-template-columns:minmax(86px,1.1fr) minmax(34px,.45fr) minmax(120px,1.6fr) minmax(64px,.8fr) minmax(70px,.85fr) minmax(92px,1fr) minmax(70px,.8fr) minmax(70px,.8fr) minmax(60px,.75fr) minmax(84px,1.2fr) minmax(54px,.7fr) minmax(64px,.9fr);column-gap:10px;padding:11px 18px;background:var(--navy);font-family:var(--font-m);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)}
 .gt-body{max-height:calc(100vh - 240px);overflow-y:auto}
 .gt-body::-webkit-scrollbar{width:6px}.gt-body::-webkit-scrollbar-track{background:transparent}.gt-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-.gt-row{display:grid;grid-template-columns:90px 36px 110px 60px 72px 90px 70px 70px 60px 80px 40px 50px;gap:0;padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;align-items:center;font-size:13px}   
+.gt-row{display:grid;grid-template-columns:minmax(86px,1.1fr) minmax(34px,.45fr) minmax(120px,1.6fr) minmax(64px,.8fr) minmax(70px,.85fr) minmax(92px,1fr) minmax(70px,.8fr) minmax(70px,.8fr) minmax(60px,.75fr) minmax(84px,1.2fr) minmax(54px,.7fr) minmax(64px,.9fr);column-gap:10px;padding:11px 18px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;align-items:center;font-size:13px}   
 .gt-row:last-child{border-bottom:none}
 .gt-row:hover{background:var(--bg3)}
 .gt-row.win-row{border-left:3px solid var(--win)}
 .gt-row.loss-row{border-left:3px solid var(--loss)}
+.gt-row.score-max{background:linear-gradient(90deg, rgba(250,204,21,.18), rgba(245,158,11,.12));box-shadow:inset 0 0 0 1px rgba(217,119,6,.35)}
+.gt-row.score-max:hover{background:linear-gradient(90deg, rgba(250,204,21,.24), rgba(245,158,11,.16))}
 .result-badge{display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-m);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;width:28px;height:22px;border-radius:5px}
 .result-badge.v{background:var(--win-bg);color:var(--win-text)}
 .result-badge.d{background:var(--loss-bg);color:var(--loss-text)}
 .resp-cell{border-radius:4px;padding:3px 6px;font-family:var(--font-m);font-size:11px;font-weight:600;text-align:center;display:inline-block;min-width:32px;color:#fff}
-.resp-vbad{background:var(--loss);color:#fff}
-.resp-bad{background:rgba(239, 68, 68, 0.6);color:#fff}
-.resp-mid{background:#f59e0b;color:#fff}
-.resp-good{background:#10b981;color:#fff}
-.resp-vgood{background:var(--win);color:#fff}
+.resp-vbad{background:#6b7280;color:#fff}
+.resp-bad{background:#1e3a8a;color:#fff}
+.resp-mid{background:#7dd3fc;color:#0c4a6e}
+.resp-good{background:#86efac;color:#14532d}
+.resp-vgood{background:#fbbf24;color:#78350f}
+.resp-max{background:linear-gradient(120deg,#ef4444,#f59e0b,#eab308,#22c55e,#06b6d4,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.35) inset}
+.mk-badge{display:inline-flex;align-items:center;justify-content:center;min-width:50px;padding:3px 7px;border-radius:4px;font-family:var(--font-m);font-size:10px;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--border);background:var(--bg3);color:var(--text2)}
+.mk-badge.empty{min-width:24px;padding:3px 0;color:var(--text3)}
+.mk-badge.double{background:rgba(37,99,235,.12);border-color:rgba(37,99,235,.35);color:#1d4ed8}
+.mk-badge.triple{background:rgba(13,148,136,.12);border-color:rgba(13,148,136,.35);color:#0f766e}
+.mk-badge.quadra{background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.35);color:#6d28d9}
+.mk-badge.penta{background:rgba(225,29,72,.12);border-color:rgba(225,29,72,.35);color:#be123c}
 .champ-name{font-weight:600;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .role-tag{font-family:var(--font-m);font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:4px;background:var(--bg3);color:var(--text2);display:inline-block}
 .kda-cell{font-family:var(--font-m);font-weight:500}
 .kda-cell.good{color:var(--win)}.kda-cell.bad{color:var(--loss)}
 .mono-cell{font-family:var(--font-m);font-size:12px;color:var(--text2)}
+.hist-date-cell{display:flex;flex-direction:column;line-height:1.15}
+.hist-date-main{font-family:var(--font-m);font-size:11px;color:var(--text2)}
+.hist-date-sub{font-family:var(--font-m);font-size:10px;color:var(--text3)}
 .rank-cell{font-family:var(--font-m);font-size:10px;color:var(--text3)}
 .no-data-row{padding:40px;text-align:center;font-family:var(--font-m);font-size:12px;color:var(--text3);letter-spacing:.08em}
 
@@ -214,11 +226,30 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 /* no-data overlay inside card */
 .chart-nodata{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:140px;gap:6px;font-family:var(--font-m);font-size:11px;color:var(--text3);letter-spacing:.08em}
 
+/* ── LP calculator ── */
+.lp-grid{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:10px;align-items:end}
+.lp-field{display:flex;flex-direction:column;gap:6px}
+.lp-field label{font-family:var(--font-m);font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--text3)}
+.lp-field input,.lp-field select{font-family:var(--font-b);font-size:13px;padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);outline:none}
+.lp-field input:focus,.lp-field select:focus{border-color:var(--blue)}
+.lp-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.lp-wr{font-family:var(--font-m);font-size:11px;color:var(--text2)}
+.lp-result{font-family:var(--font-h);font-size:20px;line-height:1.2;color:var(--navy)}
+.lp-result.never{color:var(--loss)}
+.lp-result.done{color:var(--win)}
+.lp-sub{font-family:var(--font-m);font-size:10px;letter-spacing:.04em;color:var(--text3);margin-top:4px}
+
+.insight-card{display:flex;flex-direction:column;justify-content:center;gap:6px}
+.insight-label{font-family:var(--font-m);font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--text3)}
+.insight-value{font-family:var(--font-h);font-size:24px;line-height:1;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.insight-sub{font-family:var(--font-m);font-size:11px;color:var(--text2)}
+
 @media(max-width:960px){
   .kpi-strip{grid-template-columns:repeat(3,1fr)}
   .grid2,.grid31,.grid13{grid-template-columns:1fr}
-  .gt-head,.gt-row{grid-template-columns:80px 32px 100px 55px 70px 85px 1fr}
-  .gt-head .rank-cell,.gt-head>.resp-cell,.gt-head>:nth-child(8),.gt-head>:nth-child(9),.gt-head>:nth-child(10),.gt-head>:nth-child(11),.gt-row .rank-cell,.gt-row .resp-cell,.gt-row>:nth-child(8),.gt-row>:nth-child(9),.gt-row>:nth-child(10),.gt-row>:nth-child(11){display:none}
+  .lp-grid{grid-template-columns:1fr 1fr}
+  .gt-head,.gt-row{grid-template-columns:minmax(74px,1fr) minmax(30px,.45fr) minmax(95px,1.5fr) minmax(52px,.8fr) minmax(60px,.75fr) minmax(78px,1fr) minmax(70px,1fr);column-gap:8px;padding:10px 14px}
+  .gt-head .rank-cell,.gt-head>.resp-cell,.gt-head>:nth-child(8),.gt-head>:nth-child(9),.gt-head>:nth-child(10),.gt-head>:nth-child(11),.gt-head>:nth-child(12),.gt-row .rank-cell,.gt-row .resp-cell,.gt-row>:nth-child(8),.gt-row>:nth-child(9),.gt-row>:nth-child(10),.gt-row>:nth-child(11),.gt-row>:nth-child(12){display:none}
   .detail-panel{width:100vw}
 }
 </style>
@@ -301,6 +332,18 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
       <div class="chart-box" style="height:265px;display:flex;align-items:center;justify-content:center"><canvas id="cRoles" style="max-height:240px"></canvas></div>
     </div>
   </div>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card insight-card" style="height:120px">
+      <div class="insight-label">Meilleur Champion (historique)</div>
+      <div class="insight-value" id="bestChampName">—</div>
+      <div class="insight-sub" id="bestChampMeta">—</div>
+    </div>
+    <div class="card insight-card" style="height:120px">
+      <div class="insight-label">Rôle le plus joué avec ce champion</div>
+      <div class="insight-value" id="bestChampRoleName">—</div>
+      <div class="insight-sub" id="bestChampRoleMeta">—</div>
+    </div>
+  </div>
 
   <div class="sh"><h2>Comportement & Impact</h2></div>
   <div class="grid2">
@@ -348,6 +391,43 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
     </div>
   </div>
 
+  <div class="sh"><h2>Projection LP</h2></div>
+  <div class="card">
+    <div class="card-title">Calculateur d'atteinte de rang <b>Basé sur WR des 50 dernières parties</b></div>
+    <div class="lp-grid">
+      <div class="lp-field">
+        <label for="lpGainInput">Gain LP / victoire</label>
+        <input id="lpGainInput" type="number" min="1" step="1" value="20" />
+      </div>
+      <div class="lp-field">
+        <label for="lpLossInput">Perte LP / défaite</label>
+        <input id="lpLossInput" type="number" min="1" step="1" value="20" />
+      </div>
+      <div class="lp-field">
+        <label for="lpCurrentInput">LP actuel (division)</label>
+        <input id="lpCurrentInput" type="number" min="0" max="99" step="1" value="0" />
+      </div>
+      <div class="lp-field">
+        <label for="lpTargetRank">Rang souhaité</label>
+        <select id="lpTargetRank"></select>
+      </div>
+      <div class="lp-field">
+        <label for="lpTargetLpInput">LP d'arrivée (objectif)</label>
+        <input id="lpTargetLpInput" type="number" min="0" step="1" value="0" />
+      </div>
+    </div>
+    <div class="lp-meta">
+      <div>
+        <div class="lp-wr" id="lpWrInfo">WR 50 dernières: —</div>
+        <div class="lp-sub" id="lpCurrentRankInfo">Rang actuel: —</div>
+      </div>
+      <div>
+        <div class="lp-result" id="lpCalcResult">—</div>
+        <div class="lp-sub" id="lpCalcSub"></div>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /.wrap -->
 </div><!-- /#tab-overview -->
 
@@ -383,9 +463,9 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 
   <div class="games-table">
     <div class="gt-head">
-      <div>Date</div><div></div><div>Champion</div><div>Rôle</div>
+      <div>Date / Heure</div><div></div><div>Champion</div><div>Rôle</div>
       <div>KDA</div><div>K / D / A</div><div>CS/Min</div>
-      <div>DPM</div><div>Vision</div><div>Rang</div><div title="Responsabilité (Int->Carry)">Resp.</div><div></div>
+      <div>DPM</div><div>Vision</div><div>Rang</div><div title="Responsabilité (Int->Carry)">Resp.</div><div>Multi</div>
     </div>
     <div class="gt-body" id="gtBody"></div>
   </div>
@@ -422,6 +502,11 @@ const ROLE_LABEL = {TOP:'TOP',JUNGLE:'JGL',MIDDLE:'MID',BOTTOM:'BOT',UTILITY:'SU
 const avg  = (arr,k) => arr.length ? arr.reduce((s,x)=>s+(parseFloat(x[k])||0),0)/arr.length : 0;
 const wPct = arr => arr.length ? arr.filter(g=>g.win==='Victoire').length/arr.length : 0;
 const safeN = (v,d=0) => { const n=parseFloat(v); return isNaN(n)?d:n; };
+const isRemakeMatch = m => Boolean(m?.isRemake) || (safeN(m?.gameDurationSec,0) > 0 && safeN(m?.gameDurationSec,0) <= 300);
+function avgValid(arr, key){
+  const vals=(arr||[]).map(x=>parseFloat(x?.[key])).filter(v=>Number.isFinite(v));
+  return vals.length ? vals.reduce((s,v)=>s+v,0)/vals.length : NaN;
+}
 function scoreToLabel(s){
   if(s<0) return 'Non classé';
   if(s>=30) return 'Challenger';
@@ -430,6 +515,18 @@ function scoreToLabel(s){
   const T=['Iron','Bronze','Silver','Gold','Plat','Emerald','Diamond'];
   const D=['IV','III','II','I'];
   return T[Math.floor(s/4)]+' '+D[s%4];
+}
+function rankLabelToScore(rank){
+  if(!rank) return null;
+  const t=String(rank).trim().toUpperCase();
+  if(t.includes('CHALLENGER')) return 30;
+  if(t.includes('GRANDMASTER')) return 29;
+  if(t.includes('MASTER')) return 28;
+  const m=t.match(/(IRON|BRONZE|SILVER|GOLD|PLAT(?:INUM)?|EMERALD|DIAMOND)\s*(IV|III|II|I)/);
+  if(!m) return null;
+  const base={IRON:0,BRONZE:4,SILVER:8,GOLD:12,PLAT:16,PLATINUM:16,EMERALD:20,DIAMOND:24};
+  const div={IV:0,III:1,II:2,I:3};
+  return (base[m[1]] ?? null) === null ? null : base[m[1]] + div[m[2]];
 }
 function rl(r){ return ROLE_LABEL[r]||r||'?'; }
 
@@ -442,6 +539,8 @@ function axD(extra={}){
 // ─── State ───────────────────────────────────────────────
 let allData=[], filteredData=[];
 let fRes='all', fRole='all', fChamp='', sortKey='date', sortDir='desc';
+let latestRankScore=null;
+let latestRankLabel='—';
 
 // ─── Load ────────────────────────────────────────────────
 async function loadData(){
@@ -477,7 +576,71 @@ function renderAll(data){
     new Date(last.rawDate).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});
   renderKPIs(data);
   renderCharts(data);
+  renderChampionRoleInsights(data);
+  refreshLpCalculator(data);
   applyFilters();
+}
+
+function renderChampionRoleInsights(data){
+  const bestChampNameEl=document.getElementById('bestChampName');
+  const bestChampMetaEl=document.getElementById('bestChampMeta');
+  const bestChampRoleNameEl=document.getElementById('bestChampRoleName');
+  const bestChampRoleMetaEl=document.getElementById('bestChampRoleMeta');
+  if(!bestChampNameEl || !bestChampMetaEl || !bestChampRoleNameEl || !bestChampRoleMetaEl) return;
+
+  const champMap={};
+  data.forEach(m=>{
+    const champ=(m.champion||'').trim();
+    if(!champ) return;
+    if(!champMap[champ]) champMap[champ]=[];
+    champMap[champ].push(m);
+  });
+
+  const entries=Object.entries(champMap);
+  if(!entries.length){
+    bestChampNameEl.textContent='—';
+    bestChampMetaEl.textContent='Aucune donnée disponible';
+    bestChampRoleNameEl.textContent='—';
+    bestChampRoleMetaEl.textContent='Aucune donnée disponible';
+    return;
+  }
+
+  const minGames=10;
+
+  const ranked=entries
+    .filter(([,games])=>games.length>=minGames)
+    .map(([name,games])=>({
+      name,
+      games,
+      total:games.length,
+      wr:wPct(games),
+      wrPerGame:wPct(games)/games.length,
+      kda:avg(games,'kda'),
+    }))
+    .sort((a,b)=>b.wrPerGame-a.wrPerGame || b.wr-a.wr || b.total-a.total || b.kda-a.kda);
+
+  const best=ranked[0] || null;
+  if(!best){
+    bestChampNameEl.textContent='—';
+    bestChampMetaEl.textContent='Aucun champion avec 10+ parties (échantillon insuffisant)';
+    bestChampRoleNameEl.textContent='—';
+    bestChampRoleMetaEl.textContent='Joue au moins 10 parties sur un champion';
+    return;
+  }
+
+  const roleMap={};
+  best.games.forEach(g=>{
+    const role=rl(g.role);
+    roleMap[role]=(roleMap[role]||0)+1;
+  });
+  const roleTop=Object.entries(roleMap).sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0]))[0] || ['—',0];
+  const wrPct=best.wr*100;
+  const wrPerGamePct=best.wrPerGame*100;
+
+  bestChampNameEl.textContent=best.name;
+  bestChampMetaEl.textContent=`WR ${wrPct.toFixed(1)}% · ${best.total} parties · Ratio WR/games ${wrPerGamePct.toFixed(2)} · KDA ${best.kda.toFixed(2)}`;
+  bestChampRoleNameEl.textContent=roleTop[0];
+  bestChampRoleMetaEl.textContent=`${roleTop[1]} partie${roleTop[1]>1?'s':''} sur ${best.name}`;
 }
 
 // ─── KPIs ────────────────────────────────────────────────
@@ -490,14 +653,19 @@ function renderKPIs(data){
   document.getElementById('kCS').textContent=avg(data,'csPerMin').toFixed(1);
   document.getElementById('kDPM').textContent=Math.round(avg(data,'dpm'));
   
-  const avgResp = avg(data,'responsabilite');
+  const scoreData=data.filter(m=>!isRemakeMatch(m) && m.responsabilite != null);
+  const avgResp = avgValid(scoreData,'responsabilite');
   document.getElementById('kResp').textContent=isNaN(avgResp) ? '—' : avgResp.toFixed(1);
   const respEl = document.getElementById('kResp').parentElement;
   if (!isNaN(avgResp)) {
     respEl.style.setProperty('--kc', avgResp >= 60 ? 'var(--win)' : avgResp >= 40 ? '#f59e0b' : 'var(--loss)');
+  } else {
+    respEl.style.setProperty('--kc', '#a78bfa');
   }
   
-  document.getElementById('kRank').textContent=last?.myRank||'—';
+  latestRankScore = Number.isFinite(last?.myRankScore) ? last.myRankScore : rankLabelToScore(last?.myRank);
+  latestRankLabel = last?.myRank || (latestRankScore != null ? scoreToLabel(latestRankScore) : '—');
+  document.getElementById('kRank').textContent=latestRankLabel;
   const wr10=wPct(data.slice(-10));
   document.getElementById('kWRSub').textContent=(wr10*100).toFixed(0)+'% (10 dernières)';
   document.getElementById('kWRCard').className='kpi '+(wr>=0.5?'green':'red');
@@ -507,6 +675,117 @@ function renderKPIs(data){
   document.getElementById('trendTag').textContent=trend;
   document.getElementById('wrGlobal').textContent='WR global '+((wr*100).toFixed(1))+'%';
 }
+
+function ensureLpRankOptions(){
+  const sel=document.getElementById('lpTargetRank');
+  if(!sel || sel.options.length) return;
+  for(let s=0;s<=30;s++){
+    const opt=document.createElement('option');
+    opt.value=String(s);
+    opt.textContent=scoreToLabel(s);
+    sel.appendChild(opt);
+  }
+}
+
+function setLpDefaultTarget(){
+  const sel=document.getElementById('lpTargetRank');
+  if(!sel || sel.dataset.userTouched==='true' || latestRankScore==null || !Number.isFinite(latestRankScore)) return;
+  const target=Math.min(30, Math.max(0, Math.round(latestRankScore + 1)));
+  sel.value=String(target);
+}
+
+function refreshLpCalculator(data){
+  ensureLpRankOptions();
+  setLpDefaultTarget();
+
+  const wrSample=data.slice(-50);
+  const wr50=wPct(wrSample);
+  const wr50Pct=(wr50*100).toFixed(1);
+
+  const gain=safeN(document.getElementById('lpGainInput')?.value,0);
+  const loss=safeN(document.getElementById('lpLossInput')?.value,0);
+  const currentLpRaw=safeN(document.getElementById('lpCurrentInput')?.value,0);
+  const currentLp=Math.min(99,Math.max(0,Math.round(currentLpRaw)));
+  const targetScore=safeN(document.getElementById('lpTargetRank')?.value,-1);
+  const targetLpRaw=safeN(document.getElementById('lpTargetLpInput')?.value,0);
+  const targetLpInput=document.getElementById('lpTargetLpInput');
+  const targetLpUnbounded=Math.max(0,Math.round(targetLpRaw));
+  const targetLp=targetScore>=28 ? targetLpUnbounded : Math.min(99,targetLpUnbounded);
+  if(targetLpInput && Number.parseInt(targetLpInput.value,10)!==targetLp){
+    targetLpInput.value=String(targetLp);
+  }
+
+  const wrInfo=document.getElementById('lpWrInfo');
+  const curInfo=document.getElementById('lpCurrentRankInfo');
+  const result=document.getElementById('lpCalcResult');
+  const sub=document.getElementById('lpCalcSub');
+
+  wrInfo.textContent=`WR 50 dernières: ${wr50Pct}% (${wrSample.length} partie${wrSample.length>1?'s':''})`;
+  curInfo.textContent=`Rang actuel: ${latestRankLabel} · ${currentLp} LP`;
+  result.className='lp-result';
+
+  if(!wrSample.length){
+    result.textContent='Données insuffisantes';
+    sub.textContent='Aucune projection possible sans historique.';
+    return;
+  }
+  if(latestRankScore==null || latestRankScore<0){
+    result.textContent='Rang actuel inconnu';
+    sub.textContent='Impossible de projeter sans rang de départ.';
+    return;
+  }
+  if(gain<=0 || loss<=0){
+    result.textContent='Valeurs invalides';
+    sub.textContent='Renseigne un gain et une perte LP positifs.';
+    return;
+  }
+  if(targetScore<0){
+    result.textContent='Rang cible invalide';
+    sub.textContent='Sélectionne un rang souhaité.';
+    return;
+  }
+
+  const currentTotal=safeN(latestRankScore,0)*100 + currentLp;
+  const targetTotal=safeN(targetScore,0)*100 + targetLp;
+
+  if(targetTotal<=currentTotal){
+    result.textContent='Déjà atteint';
+    result.classList.add('done');
+    sub.textContent='Le rang cible est déjà atteint ou dépassé.';
+    return;
+  }
+
+  const expectedLpPerGame=(wr50*gain)-((1-wr50)*loss);
+  if(expectedLpPerGame<=0){
+    result.textContent='Jamais';
+    result.classList.add('never');
+    if(wr50<0.5){
+      sub.textContent=`Objectif: ${scoreToLabel(targetScore)} · ${targetLp} LP · WR < 50% et espérance LP/game non positive.`;
+    } else {
+      sub.textContent=`Objectif: ${scoreToLabel(targetScore)} · ${targetLp} LP · Espérance LP/game non positive.`;
+    }
+    return;
+  }
+
+  const remaining=targetTotal-currentTotal;
+  const games=Math.ceil(remaining/expectedLpPerGame);
+  result.textContent=`${games} game${games>1?'s':''} estimée${games>1?'s':''}`;
+  if(wr50<0.5 && gain>loss){
+    sub.textContent=`Objectif: ${scoreToLabel(targetScore)} · ${targetLp} LP · WR < 50% mais gain LP > perte LP · LP restant: ${remaining} · Espérance: ${expectedLpPerGame.toFixed(2)} LP/game`;
+    return;
+  }
+  sub.textContent=`Objectif: ${scoreToLabel(targetScore)} · ${targetLp} LP · LP restant: ${remaining} · Espérance: ${expectedLpPerGame.toFixed(2)} LP/game`;
+}
+
+['lpGainInput','lpLossInput','lpCurrentInput','lpTargetRank','lpTargetLpInput'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(id==='lpTargetRank' && el){
+    el.addEventListener('input',()=>{ el.dataset.userTouched='true'; });
+    el.addEventListener('change',()=>{ el.dataset.userTouched='true'; });
+  }
+  if(el) el.addEventListener('input',()=>refreshLpCalculator(allData));
+  if(el) el.addEventListener('change',()=>refreshLpCalculator(allData));
+});
 
 // ─── All charts ──────────────────────────────────────────
 function renderCharts(data){
@@ -597,8 +876,12 @@ function chartRoles(data){
   const mp={};
   data.forEach(m=>{const r=rl(m.role);mp[r]=(mp[r]||0)+1;});
   const labels=Object.keys(mp), vals=Object.values(mp);
-  const rCol={TOP:C.navy,JGL:C.teal,MID:C.blue,BOT:C.win,SUP:C.warn,'?':'#9aa5b4'};
-  const colors=labels.map(l=>rCol[l]||'#9aa5b4');
+  const warmToCold=['#ef4444','#f97316','#f59e0b','#22c55e','#14b8a6','#3b82f6','#6366f1','#64748b'];
+  const byFrequency=vals.map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v || a.i-b.i);
+  const colors=Array(vals.length).fill('#64748b');
+  byFrequency.forEach((item,rank)=>{
+    colors[item.i]=warmToCold[Math.min(rank,warmToCold.length-1)];
+  });
   charts.roles=new Chart(document.getElementById('cRoles'),{type:'doughnut',
   data:{labels,datasets:[{data:vals,backgroundColor:colors.map(c=>c+'cc'),borderColor:colors,borderWidth:2,hoverOffset:8}]},
   options:{responsive:true,maintainAspectRatio:true,cutout:'60%',
@@ -646,7 +929,7 @@ function chartRespWr(data){
   dc('respWr');
   const b = {'Int (<20)':[], 'Bas (20-40)':[], 'Neutre (40-60)':[], 'Bon (60-80)':[], 'Carry (>80)':[]};
   data.forEach(m => {
-    if (m.responsabilite == null) return;
+    if (isRemakeMatch(m) || m.responsabilite == null) return;
     if (m.responsabilite < 20) b['Int (<20)'].push(m);
     else if (m.responsabilite < 40) b['Bas (20-40)'].push(m);
     else if (m.responsabilite < 60) b['Neutre (40-60)'].push(m);
@@ -677,7 +960,7 @@ function chartTiltResp(data){
   const afterBad=[], afterMid=[], afterGood=[];
   for(let i=1; i<data.length; i++){
     const prev = data[i-1];
-    if (prev.responsabilite == null) continue;
+    if (isRemakeMatch(prev) || prev.responsabilite == null) continue;
     if (prev.responsabilite < 40) afterBad.push(data[i]);
     else if (prev.responsabilite < 60) afterMid.push(data[i]);
     else afterGood.push(data[i]);
@@ -718,15 +1001,29 @@ function chartTime(data){
 function chartFarm(data){
   dc('farm');
   const sl=data.slice(-50);
+  const labels=sl.map(m=>new Date(m.rawDate).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}));
   charts.farm=new Chart(document.getElementById('cFarm'),{type:'line',
-  data:{labels:sl.map((_,i)=>i+1),datasets:[
+  data:{labels,datasets:[
     {label:'CS/Min',data:sl.map(m=>safeN(m.csPerMin)),borderColor:C.teal,borderWidth:1.5,pointRadius:1.5,tension:.35,yAxisID:'y'},
     {label:'GPM÷100',data:sl.map(m=>safeN(m.gpm)/100),borderColor:C.warn,borderWidth:1.5,pointRadius:1.5,tension:.35,yAxisID:'y2'},
   ]},
   options:{responsive:true,maintainAspectRatio:false,
-    scales:{x:{...axD(),ticks:{display:false}},y:{...axD({position:'left'}),ticks:{color:C.teal,callback:v=>v.toFixed(1)}},y2:{...axD({position:'right'}),grid:{display:false},ticks:{color:C.warn,callback:v=>(v*100).toFixed(0)+'g'}}},
+    layout:{padding:{left:6,right:6,bottom:4}},
+    scales:{
+      x:{
+        ...axD(),
+        offset:true,
+        bounds:'ticks',
+        ticks:{...axD().ticks,autoSkip:true,maxTicksLimit:8,maxRotation:0,minRotation:0}
+      },
+      y:{...axD({position:'left'}),ticks:{color:C.teal,callback:v=>v.toFixed(1)}},
+      y2:{...axD({position:'right'}),grid:{display:false},ticks:{color:C.warn,callback:v=>(v*100).toFixed(0)+'g'}}
+    },
     plugins:{legend:{display:true,position:'top',labels:{color:'#9aa5b4',boxWidth:10,font:{size:10}}},
-    tooltip:{callbacks:{label:ctx=>ctx.dataset.label==='CS/Min'?` CS/Min: ${ctx.raw.toFixed(1)}`:` GPM: ${(ctx.raw*100).toFixed(0)}`}}},
+    tooltip:{callbacks:{
+      title:ctx=>`Partie du ${labels[ctx[0].dataIndex] || ''}`,
+      label:ctx=>ctx.dataset.label==='CS/Min'?` CS/Min: ${ctx.raw.toFixed(1)}`:` GPM: ${(ctx.raw*100).toFixed(0)}`
+    }}},
   }});
 }
 
@@ -793,20 +1090,60 @@ function applyFilters(){
 
 function getRespClass(resp) {
   if (resp === undefined || resp === null) return '';
-  if (resp >= 80) return 'resp-vgood';
-  if (resp >= 60) return 'resp-good';
-  if (resp >= 40) return 'resp-mid';
-  if (resp >= 20) return 'resp-bad';
-  return 'resp-vbad';
+  if (resp >= 100) return 'resp-max';
+  return '';
 }
 
-function getRespTooltip(resp) {
+function getRespInlineStyle(resp){
+  const s=parseFloat(resp);
+  if(!Number.isFinite(s) || s>=100) return '';
+
+  if(s>=70) return 'background:#f97316;color:#ffffff';
+  if(s>=40) return 'background:#14b8a6;color:#0f172a';
+  return 'background:#1e3a8a;color:#ffffff';
+}
+
+function getRespTooltip(resp, m) {
+  if (isRemakeMatch(m)) return 'Remake: score non attribué';
   if (resp === undefined || resp === null) return 'Donnée manquante';
   if (resp >= 80) return 'Impact extrêmement positif (Solo Win)';
   if (resp >= 60) return 'Impact positif (A grandement aidé)';
   if (resp >= 40) return 'Impact neutre (Dans la moyenne)';
   if (resp >= 20) return 'Impact négatif';
   return 'Impact très négatif (Int)';
+}
+
+function getRowScoreClass(m){
+  if(isRemakeMatch(m)) return '';
+  const score=parseFloat(m?.responsabilite);
+  if(!Number.isFinite(score)) return '';
+  if(score>=100) return 'score-max';
+  return '';
+}
+
+function formatClockTime(dateValue){
+  const t=new Date(dateValue).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  return t.replace(':','h');
+}
+
+function getMultiKillInfo(m){
+  const best=String(m.bestMultiKill||'').trim();
+  if(!best || best==='-') return { label: '—', className: 'empty', title: 'Aucun multikill' };
+
+  const key=best.toLowerCase();
+  const countByType={
+    penta: safeN(m.pentaKills,0),
+    quadra: safeN(m.quadraKills,0),
+    triple: safeN(m.tripleKills,0),
+    double: safeN(m.doubleKills,0),
+  };
+  const count=countByType[key] || 0;
+  const suffix=count > 1 ? ` x${count}` : '';
+  return {
+    label: `${best}${suffix}`,
+    className: ['penta','quadra','triple','double'].includes(key) ? key : '',
+    title: count > 0 ? `${best} kill${count>1?'s':''} (${count})` : `${best} kill`,
+  };
 }
 
 function renderGamesList(data){
@@ -820,11 +1157,16 @@ function renderGamesList(data){
     const isWin=m.win==='Victoire';
     const kda=safeN(m.kda);
     const kdaClass=kda>=4?'good':kda<1.5?'bad':'';
-    const date=new Date(m.rawDate).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit'});
+    const dt=new Date(m.rawDate);
+    const date=dt.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit'});
+    const hour=formatClockTime(dt);
+    const sessionGame=safeN(m.gameInSession,0);
+    const sessionLabel=sessionGame>0?`Partie ${sessionGame}`:'Partie —';
+    const mk=getMultiKillInfo(m);
     const row=document.createElement('div');
-    row.className='gt-row '+(isWin?'win-row':'loss-row');
+    row.className=`gt-row ${isWin?'win-row':'loss-row'} ${getRowScoreClass(m)}`.trim();
     row.innerHTML=`
-      <span class="mono-cell">${date}</span>
+      <span class="hist-date-cell"><span class="hist-date-main">${date}</span><span class="hist-date-sub">${hour} · ${sessionLabel}</span></span>
       <span><span class="result-badge ${isWin?'v':'d'}">${isWin?'V':'D'}</span></span>
       <span class="champ-name">${m.champion||'—'}</span>
       <span><span class="role-tag">${rl(m.role)}</span></span>
@@ -834,8 +1176,8 @@ function renderGamesList(data){
       <span class="mono-cell">${Math.round(safeN(m.dpm))}</span>
       <span class="mono-cell">${m.vision||0}</span>
       <span class="rank-cell">${m.myRank||'—'}</span>
-      <span class="resp-cell ${getRespClass(m.responsabilite)}" title="${getRespTooltip(m.responsabilite)}">${m.responsabilite!==undefined?m.responsabilite:'—'}</span>
-      <span class="mono-cell" style="color:#9aa5b4;font-size:11px">›</span>
+      <span class="resp-cell ${(!isRemakeMatch(m) && m.responsabilite!=null)?getRespClass(m.responsabilite):''}" style="${(!isRemakeMatch(m) && m.responsabilite!=null)?getRespInlineStyle(m.responsabilite):''}" title="${getRespTooltip(m.responsabilite,m)}">${(!isRemakeMatch(m) && m.responsabilite!=null)?m.responsabilite:'—'}</span>
+      <span><span class="mk-badge ${mk.className}" title="${mk.title}">${mk.label}</span></span>
     `;
     row.onclick=()=>openDetail(m);
     body.appendChild(row);
@@ -846,7 +1188,7 @@ function renderGamesList(data){
 function openDetail(m){
   const isWin=m.win==='Victoire';
   const date=new Date(m.rawDate).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
-  const time=new Date(m.rawDate).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  const time=formatClockTime(m.rawDate);
 
   document.getElementById('dpHeader').innerHTML=`
     <div class="dp-banner ${isWin?'win-banner':'loss-banner'}">
