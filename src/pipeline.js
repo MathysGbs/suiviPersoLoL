@@ -15,6 +15,17 @@ function normalizeMatchesToFetch(value) {
     return Math.min(parsed, MAX_MATCHES_TO_FETCH);
 }
 
+function rebuildRecentHistory(data, matchesToFetch) {
+    const normalizedLimit = normalizeMatchesToFetch(matchesToFetch);
+    const timeline = recalculateTimeline(data);
+
+    if (timeline.length <= normalizedLimit) {
+        return timeline;
+    }
+
+    return recalculateTimeline(timeline.slice(-normalizedLimit));
+}
+
 async function runFetchOnly(options = {}) {
     const matchesToFetch = normalizeMatchesToFetch(options.matchesToFetch);
 
@@ -31,13 +42,22 @@ async function runFetchOnly(options = {}) {
     const { newIds, newMatches, ok, ko, stopped } = await fetchNewMatches(data, player.puuid, duo.puuid, { matchesToFetch });
 
     if (newIds.length === 0) {
-        console.log('\n-> Aucune nouvelle partie detectee.');
+        if (data.length > matchesToFetch) {
+            console.log('\n4. Consolidation et recalcul chronologique...');
+            data = rebuildRecentHistory(data, matchesToFetch);
+            console.log('   -> Sauvegarde JSON...');
+            saveData(data);
+            console.log(`   -> Historique réduit aux ${data.length} parties les plus récentes.`);
+        } else {
+            console.log('\n-> Aucune nouvelle partie detectee.');
+        }
+
         return { data, added: 0, ok: 0, ko: 0, player, duo };
     }
 
     console.log('\n4. Consolidation et recalcul chronologique...');
     if (newMatches.length > 0) {
-        data = recalculateTimeline(data.concat(newMatches));
+        data = rebuildRecentHistory(data.concat(newMatches), matchesToFetch);
         console.log('   -> Sauvegarde JSON...');
         saveData(data);
     }

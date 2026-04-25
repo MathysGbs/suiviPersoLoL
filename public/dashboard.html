@@ -74,6 +74,9 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .kpi-sub{font-family:var(--font-m);font-size:10px;color:var(--text3);margin-top:5px}
 .kpi.green .kpi-val{color:var(--win)}
 .kpi.red   .kpi-val{color:var(--loss)}
+.kpi.rank-current{background:var(--rank-bg,var(--bg2));border-color:var(--rank-bg,var(--border));}
+.kpi.rank-current .kpi-label,.kpi.rank-current .kpi-val,.kpi.rank-current .kpi-sub{color:var(--rank-fg,var(--text))}
+.kpi.rank-current .kpi-label,.kpi.rank-current .kpi-sub{opacity:.9}
 
 /* ── Section header ── */
 .sh{display:flex;align-items:center;gap:12px;margin:32px 0 14px}
@@ -244,10 +247,19 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .insight-value{font-family:var(--font-h);font-size:24px;line-height:1;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .insight-sub{font-family:var(--font-m);font-size:11px;color:var(--text2)}
 
+.goldlead-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.goldlead-metric{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.goldlead-metric .gm-label{font-family:var(--font-m);font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3)}
+.goldlead-metric .gm-value{font-family:var(--font-h);font-size:22px;line-height:1.05;color:var(--navy);margin-top:6px}
+.goldlead-metric .gm-sub{font-family:var(--font-m);font-size:10px;color:var(--text3);margin-top:4px}
+.goldlead-metric.loss .gm-value{color:var(--loss)}
+.goldlead-metric.win .gm-value{color:var(--win)}
+
 @media(max-width:960px){
   .kpi-strip{grid-template-columns:repeat(3,1fr)}
   .grid2,.grid31,.grid13{grid-template-columns:1fr}
   .lp-grid{grid-template-columns:1fr 1fr}
+  .goldlead-metrics{grid-template-columns:1fr}
   .gt-head,.gt-row{grid-template-columns:minmax(74px,1fr) minmax(30px,.45fr) minmax(95px,1.5fr) minmax(52px,.8fr) minmax(60px,.75fr) minmax(78px,1fr) minmax(70px,1fr);column-gap:8px;padding:10px 14px}
   .gt-head .rank-cell,.gt-head>.resp-cell,.gt-head>:nth-child(8),.gt-head>:nth-child(9),.gt-head>:nth-child(10),.gt-head>:nth-child(11),.gt-head>:nth-child(12),.gt-row .rank-cell,.gt-row .resp-cell,.gt-row>:nth-child(8),.gt-row>:nth-child(9),.gt-row>:nth-child(10),.gt-row>:nth-child(11),.gt-row>:nth-child(12){display:none}
   .detail-panel{width:100vw}
@@ -300,7 +312,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
     <div class="kpi" style="--kc:var(--teal)"><div class="kpi-accent"></div><div class="kpi-label">CS / Min</div><div class="kpi-val" id="kCS">—</div></div>
     <div class="kpi" style="--kc:var(--warn)"><div class="kpi-accent"></div><div class="kpi-label">DPM Moyen</div><div class="kpi-val" id="kDPM">—</div></div>
     <div class="kpi" style="--kc:#a78bfa"><div class="kpi-accent"></div><div class="kpi-label">Resp. Moyenne</div><div class="kpi-val" id="kResp">—</div></div>
-    <div class="kpi" style="--kc:var(--gold)"><div class="kpi-accent"></div><div class="kpi-label">Rang actuel</div><div class="kpi-val" id="kRank" style="font-size:16px;margin-top:4px">—</div><div class="kpi-sub" id="kRankLp">—</div></div>
+    <div class="kpi" id="kRankCard" style="--kc:var(--gold)"><div class="kpi-accent"></div><div class="kpi-label">Rang actuel</div><div class="kpi-val" id="kRank" style="font-size:16px;margin-top:4px">—</div><div class="kpi-sub" id="kRankLp">—</div></div>
   </div>
 
   <div class="sh"><h2>Évolution</h2><span class="sh-tag" id="trendTag"></span></div>
@@ -364,6 +376,54 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
     <div class="card" style="height:280px">
       <div class="card-title">Tilt factor — WR après Mvse/Bne Performance</div>
       <div class="chart-box" style="height:225px"><canvas id="cTiltResp"></canvas></div>
+    </div>
+  </div>
+
+  <div class="sh"><h2>Gold Lead</h2><span class="sh-tag">10min / 15min</span></div>
+  <div class="card" style="height:320px">
+    <div class="card-title">Win Rate selon avance/retard en or</div>
+    <div class="chart-box" style="height:245px"><canvas id="cGoldLeadWr"></canvas></div>
+  </div>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card" style="height:180px">
+      <div class="card-title">Checkpoint 10 min <b id="gl10Sample">—</b></div>
+      <div class="goldlead-metrics">
+        <div class="goldlead-metric win">
+          <div class="gm-label">WR si devant</div>
+          <div class="gm-value" id="gl10AheadWr">—</div>
+          <div class="gm-sub" id="gl10AheadSub">—</div>
+        </div>
+        <div class="goldlead-metric">
+          <div class="gm-label">WR si derrière</div>
+          <div class="gm-value" id="gl10BehindWr">—</div>
+          <div class="gm-sub" id="gl10BehindSub">—</div>
+        </div>
+        <div class="goldlead-metric loss">
+          <div class="gm-label">Chance de perdre derrière</div>
+          <div class="gm-value" id="gl10LoseBehind">—</div>
+          <div class="gm-sub" id="gl10LoseSub">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="height:180px">
+      <div class="card-title">Checkpoint 15 min <b id="gl15Sample">—</b></div>
+      <div class="goldlead-metrics">
+        <div class="goldlead-metric win">
+          <div class="gm-label">WR si devant</div>
+          <div class="gm-value" id="gl15AheadWr">—</div>
+          <div class="gm-sub" id="gl15AheadSub">—</div>
+        </div>
+        <div class="goldlead-metric">
+          <div class="gm-label">WR si derrière</div>
+          <div class="gm-value" id="gl15BehindWr">—</div>
+          <div class="gm-sub" id="gl15BehindSub">—</div>
+        </div>
+        <div class="goldlead-metric loss">
+          <div class="gm-label">Chance de perdre derrière</div>
+          <div class="gm-value" id="gl15LoseBehind">—</div>
+          <div class="gm-sub" id="gl15LoseSub">—</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -528,6 +588,19 @@ function rankLabelToScore(rank){
   const div={IV:0,III:1,II:2,I:3};
   return (base[m[1]] ?? null) === null ? null : base[m[1]] + div[m[2]];
 }
+function rankTheme(score){
+  if(score<0) return {bg:'var(--bg2)', fg:'var(--text)'};
+  if(score<4) return {bg:'#8b8b8b', fg:'#ffffff'};
+  if(score<8) return {bg:'#b87333', fg:'#ffffff'};
+  if(score<12) return {bg:'#a8a9ad', fg:'#0f1729'};
+  if(score<16) return {bg:'#facc15', fg:'#0f1729'};
+  if(score<20) return {bg:'#0bc4b5', fg:'#0f1729'};
+  if(score<24) return {bg:'#50c878', fg:'#0f1729'};
+  if(score<28) return {bg:'#b9f2ff', fg:'#0f1729'};
+  if(score<29) return {bg:'#9b59b6', fg:'#ffffff'};
+  if(score<30) return {bg:'#e74c3c', fg:'#ffffff'};
+  return {bg:'#f0e68c', fg:'#0f1729'};
+}
 function rl(r){ return ROLE_LABEL[r]||r||'?'; }
 
 const charts={};
@@ -577,9 +650,53 @@ function renderAll(data){
     new Date(last.rawDate).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});
   renderKPIs(data);
   renderCharts(data);
+  renderGoldLeadMetrics(data);
   renderChampionRoleInsights(data);
   refreshLpCalculator(data);
   applyFilters();
+}
+
+function computeGoldLeadSplit(data, key){
+  const valid=(data||[]).filter(m=>Number.isFinite(parseFloat(m?.[key])));
+  const ahead=valid.filter(m=>safeN(m[key])>0);
+  const behind=valid.filter(m=>safeN(m[key])<0);
+  const wrAhead=ahead.length ? wPct(ahead)*100 : null;
+  const wrBehind=behind.length ? wPct(behind)*100 : null;
+  return {
+    validCount: valid.length,
+    aheadCount: ahead.length,
+    behindCount: behind.length,
+    wrAhead,
+    wrBehind,
+    loseBehind: wrBehind==null ? null : 100-wrBehind,
+  };
+}
+
+function fmtPct(v){
+  return Number.isFinite(v) ? `${v.toFixed(1)}%` : '—';
+}
+
+function renderGoldLeadMetrics(data){
+  const s10=computeGoldLeadSplit(data,'goldDiff10');
+  const s15=computeGoldLeadSplit(data,'goldDiff15');
+
+  const apply=(prefix,stats,cp)=>{
+    const setText=(id,value)=>{
+      const el=document.getElementById(id);
+      if(el) el.textContent=value;
+    };
+
+    setText(`${prefix}Sample`, `${stats.validCount} parties exploitables`);
+    setText(`${prefix}AheadWr`, fmtPct(stats.wrAhead));
+    setText(`${prefix}AheadSub`, `${stats.aheadCount} parties devant`);
+    setText(`${prefix}BehindWr`, fmtPct(stats.wrBehind));
+    setText(`${prefix}BehindSub`, `${stats.behindCount} parties derrière`);
+    setText(`${prefix}LoseBehind`, fmtPct(stats.loseBehind));
+    setText(`${prefix}LoseSub`, `défaite conditionnelle @${cp}`);
+  };
+
+  apply('gl10',s10,'10min');
+  apply('gl15',s15,'15min');
 }
 
 function renderChampionRoleInsights(data){
@@ -674,6 +791,14 @@ function renderKPIs(data){
   latestRankLp = Number.isFinite(last?.myRankLp) ? last.myRankLp : null;
   document.getElementById('kRank').textContent=latestRankLabel;
   document.getElementById('kRankLp').textContent=latestRankLp!=null?`${latestRankLp} LP`:'LP indisponibles';
+  const rankCard=document.getElementById('kRankCard');
+  if(rankCard){
+    const rankUi = rankTheme(latestRankScore);
+    rankCard.style.setProperty('--rank-bg', rankUi.bg);
+    rankCard.style.setProperty('--rank-fg', rankUi.fg);
+    rankCard.style.setProperty('--kc', rankUi.bg);
+    rankCard.classList.add('rank-current');
+  }
   const wr10=wPct(data.slice(-10));
   document.getElementById('kWRSub').textContent=(wr10*100).toFixed(0)+'% (10 dernières)';
   document.getElementById('kWRCard').className='kpi '+(wr>=0.5?'green':'red');
@@ -812,7 +937,47 @@ function refreshLpCalculator(data){
 function renderCharts(data){
   chartWR(data); chartKDA(data); chartRank(data); chartChamps(data);
   chartRoles(data); chartFatigue(data); chartTilt(data); chartRespWr(data); chartTiltResp(data); chartTime(data);
-  chartFarm(data); chartSD(data); chartDuo(data);
+  chartFarm(data); chartSD(data); chartDuo(data); chartGoldLeadWr(data);
+}
+
+function chartGoldLeadWr(data){
+  dc('goldLeadWr');
+  const s10=computeGoldLeadSplit(data,'goldDiff10');
+  const s15=computeGoldLeadSplit(data,'goldDiff15');
+
+  const values=[s10.wrAhead,s10.wrBehind,s15.wrAhead,s15.wrBehind];
+  const hasData=values.some(v=>Number.isFinite(v));
+  if(!hasData){ noData('cGoldLeadWr'); return; }
+
+  charts.goldLeadWr=new Chart(document.getElementById('cGoldLeadWr'),{type:'bar',
+    data:{
+      labels:['Devant @10', 'Derrière @10', 'Devant @15', 'Derrière @15'],
+      datasets:[{
+        label:'Win Rate',
+        data:values,
+        backgroundColor:[C.winBg, C.lossBg, C.winBg, C.lossBg],
+        borderColor:[C.win, C.loss, C.win, C.loss],
+        borderWidth:2,
+        borderRadius:8,
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{x:{...axD()},y:{...axD(),min:0,max:100,ticks:{callback:v=>v+'%'}}},
+      plugins:{
+        legend:{display:true,position:'top',labels:{color:'#9aa5b4',boxWidth:10,font:{size:10}}},
+        tooltip:{callbacks:{
+          label:ctx=>` WR: ${Number.isFinite(ctx.raw)?ctx.raw.toFixed(1)+'%':'—'}`,
+          afterLabel:ctx=>{
+            const i=ctx.dataIndex;
+            if(i===0) return `Échantillon: ${s10.aheadCount} parties`;
+            if(i===1) return `Échantillon: ${s10.behindCount} parties | Chance de perdre: ${fmtPct(s10.loseBehind)}`;
+            if(i===2) return `Échantillon: ${s15.aheadCount} parties`;
+            return `Échantillon: ${s15.behindCount} parties | Chance de perdre: ${fmtPct(s15.loseBehind)}`;
+          }
+        }}
+      }
+    }
+  });
 }
 
 function chartWR(data){
